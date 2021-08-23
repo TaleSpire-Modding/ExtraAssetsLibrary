@@ -1,0 +1,11 @@
+{
+    "name": "Extra Assets Library",
+    "version_number": "1.0.0",
+    "website_url": "https://www.patreon.com/HolloFox",
+    "description": "Extra Assets Library is a new tool to allow the injection of new assets into your game.",
+    "dependencies":
+	[
+        "bbepisTaleSpire-BepInExPack-5.4.10",
+	"brcoding-SetInjectionFlagPlugin-2.3.0"
+    ]
+}
