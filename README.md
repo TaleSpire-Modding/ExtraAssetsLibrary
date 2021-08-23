@@ -1,5 +1,5 @@
-## Extra Assets Library
-
+## Extra Assets Library (EAL)
+The Extra Assets Library is a plugin to register custom assets into TaleSpire. 
 
 ## Installing With R2ModMan
 This package is designed specifically for R2ModMan and Talespire. 
