@@ -31,7 +31,7 @@ var asset = new ExtraAssetsLibrary.DTO.Asset
     // optional method to load custom base, null loads DefaultBase()
     BaseCallback = BaseCallback, 
 };
-ExtraAssetsLibrary.ExtraAssetPlugin.AddAsset(asset); // Name still WIP but methods the same.
+ExtraAssetsLibrary.ExtraAssetPlugin.AddAsset(asset);
 ```
 
 Example Callback
