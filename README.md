@@ -48,6 +48,7 @@ public static GameObject BaseCallback(NGuid id){
 ## Recommended Extra Plugin (WIP)
 In the works is an Asset Distribution plugin that will be paired with this plugin.
 - Asset Downloader
+   - Downloader GUI
 - CMP
 
 ## Changelog
