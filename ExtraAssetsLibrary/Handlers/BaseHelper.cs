@@ -1,18 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
+﻿using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Reflection;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 using Bounce.Unmanaged;
-using ExtraAssetLibrary.Patches;
+using ExtraAssetsLibrary.Patches;
 using Unity.Mathematics;
 using UnityEngine;
 
-namespace ExtraAssetLibrary.Handlers
+namespace ExtraAssetsLibrary.Handlers
 {
     public static class BaseHelper
     {

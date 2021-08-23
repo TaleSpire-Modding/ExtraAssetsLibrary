@@ -1,7 +1,7 @@
 ﻿using System.IO;
 using UnityEngine;
 
-namespace ExtraAssetLibrary
+namespace ExtraAssetsLibrary.Handlers
 {
     public static class ImageHandler
     {

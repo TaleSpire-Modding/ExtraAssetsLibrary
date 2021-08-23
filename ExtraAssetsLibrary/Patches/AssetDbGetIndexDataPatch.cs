@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Bounce.Unmanaged;
 using HarmonyLib;
 
-namespace ExtraAssetLibrary.Patches
+namespace ExtraAssetsLibrary.Patches
 {
     [HarmonyPatch(typeof(AssetDb), "GetIndexData")]
     public class AssetDbGetIndexDataPatch

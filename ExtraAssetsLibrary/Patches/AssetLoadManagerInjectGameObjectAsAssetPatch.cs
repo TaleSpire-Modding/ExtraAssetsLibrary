@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using Bounce.BlobAssets;
 using Bounce.TaleSpire.AssetManagement;
 using Bounce.Unmanaged;
@@ -12,7 +8,7 @@ using Unity.Entities;
 using Unity.Mathematics;
 using UnityEngine;
 
-namespace ExtraAssetLibrary.Patches
+namespace ExtraAssetsLibrary.Patches
 {
     [HarmonyPatch(typeof(AssetLoadManager), "InjectGameObjectAsAsset")]
     public class AssetLoadManagerInjectGameObjectAsAssetPatch

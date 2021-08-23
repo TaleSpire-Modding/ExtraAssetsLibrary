@@ -4,7 +4,7 @@ using Bounce.TaleSpire.AssetManagement;
 using Bounce.Unmanaged;
 using HarmonyLib;
 
-namespace ExtraAssetLibrary.Patches
+namespace ExtraAssetsLibrary.Patches
 {
     [HarmonyPatch(typeof(AssetDb), "TryGetCreatureData")]
     public class AssetDbTryGetCreatureDataPatch

@@ -3,11 +3,9 @@ using Bounce.BlobAssets;
 using Bounce.TaleSpire.AssetManagement;
 using Bounce.Unmanaged;
 using HarmonyLib;
-using Unity.Collections;
-using Unity.Entities;
 using UnityEngine;
 
-namespace ExtraAssetLibrary.Patches
+namespace ExtraAssetsLibrary.Patches
 {
     [HarmonyPatch(typeof(TilePreviewBoardAsset), "Init")]
     public class TilePreviewBoardAssetInitPatch

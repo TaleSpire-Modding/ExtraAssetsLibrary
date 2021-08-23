@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using Bounce.TaleSpire.AssetManagement;
 using Bounce.Unmanaged;
+using ExtraAssetsLibrary.Handlers;
 using HarmonyLib;
 using UnityEngine;
 
-namespace ExtraAssetLibrary.Patches
+namespace ExtraAssetsLibrary.Patches
 {
     [HarmonyPatch(typeof(UI_AssetBrowser), "SetupAssetIndex")]
     public class UI_AssetBrowserSetupAssetIndexPatch

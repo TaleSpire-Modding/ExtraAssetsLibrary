@@ -3,7 +3,7 @@ using Bounce.TaleSpire.AssetManagement;
 using Unity.Collections;
 using Unity.Entities;
 
-namespace ExtraAssetLibrary
+namespace ExtraAssetsLibrary.Handlers
 {
     public static class BlobHandler
     {

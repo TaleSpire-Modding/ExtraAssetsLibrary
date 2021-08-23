@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Bounce.TaleSpire.AssetManagement;
+﻿using Bounce.TaleSpire.AssetManagement;
 using Bounce.Unmanaged;
 using HarmonyLib;
 using Unity.Collections;
 using UnityEngine;
 
-namespace ExtraAssetLibrary.Patches
+namespace ExtraAssetsLibrary.Patches
 {
     [HarmonyPatch(typeof(PlaceableManager), "RegisterPlaceable")]
     class PlaceableManagerRegisterPlaceablePatch

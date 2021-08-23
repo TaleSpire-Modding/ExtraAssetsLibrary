@@ -1,16 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Bounce.BlobAssets;
+﻿using Bounce.BlobAssets;
 using Bounce.TaleSpire.AssetManagement;
 using Bounce.Unmanaged;
 using HarmonyLib;
 using Unity.Collections;
 using Unity.Entities;
 
-namespace ExtraAssetLibrary.Patches
+namespace ExtraAssetsLibrary.Patches
 {
     [HarmonyPatch(typeof(AssetDb), "AddIdAsDummyPlaceable")]
     class AssetDbAddIdAsDummyPlaceablePatch

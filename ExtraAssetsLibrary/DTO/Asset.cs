@@ -5,7 +5,7 @@ using JetBrains.Annotations;
 using Unity.Mathematics;
 using UnityEngine;
 
-namespace ExtraAssetLibrary
+namespace ExtraAssetsLibrary.DTO
 {
     public class Asset
     {

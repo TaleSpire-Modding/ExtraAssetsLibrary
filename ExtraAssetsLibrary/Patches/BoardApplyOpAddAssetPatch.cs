@@ -2,7 +2,7 @@
 using HarmonyLib;
 using UnityEngine;
 
-namespace ExtraAssetLibrary.Patches
+namespace ExtraAssetsLibrary.Patches
 {
     [HarmonyPatch(typeof(Board), "ApplyOp",typeof(MessageInfo), typeof(ClientGuid), typeof(AddAssetOp))]
     class BoardApplyOpAddAssetPatch

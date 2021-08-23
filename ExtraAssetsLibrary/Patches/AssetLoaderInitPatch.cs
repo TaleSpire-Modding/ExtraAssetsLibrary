@@ -1,13 +1,12 @@
 ﻿using Bounce.BlobAssets;
-using Bounce.Singletons;
 using Bounce.TaleSpire.AssetManagement;
 using Bounce.Unmanaged;
-using ExtraAssetLibrary.Handlers;
+using ExtraAssetsLibrary.Handlers;
 using HarmonyLib;
 using Unity.Mathematics;
 using UnityEngine;
 
-namespace ExtraAssetLibrary.Patches
+namespace ExtraAssetsLibrary.Patches
 {
     [HarmonyPatch(typeof(AssetLoader), "Init")]
     public class AssetLoaderInitPatch

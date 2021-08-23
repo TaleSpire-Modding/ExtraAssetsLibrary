@@ -1,10 +1,12 @@
 ﻿using BepInEx;
 using Bounce.TaleSpire.AssetManagement;
-using ExtraAssetLibrary.Patches;
+using ExtraAssetsLibrary.DTO;
+using ExtraAssetsLibrary.Handlers;
+using ExtraAssetsLibrary.Patches;
 using HarmonyLib;
 using UnityEngine;
 
-namespace ExtraAssetLibrary
+namespace ExtraAssetsLibrary
 {
     [BepInPlugin(Guid, Name, Version)]
     public class ExtraAssetPlugin:BaseUnityPlugin
