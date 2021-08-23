@@ -41,6 +41,12 @@ namespace ExtraAssetsLibrary.Handlers
 
             var myBundle = AssetBundle.LoadFromFile($"{assemblyFolder}\\default_base");
             var miniBase = myBundle.LoadAsset<GameObject>("clothBase");
+            var baseRenderer = miniBase.GetComponent<Renderer>();
+            baseRenderer.material.shader = Shader.Find("Taleweaver/CreatureShader");
+            foreach (var renderer in miniBase.GetComponentsInChildren<Renderer>())
+            {
+                renderer.material.shader = Shader.Find("Taleweaver/CreatureShader");
+            }
             _loadedBases[id] = miniBase;
 
             AssetLoadManagerInjectGameObjectAsAssetPatch.InjectGameObjectAsAssetPatch(
