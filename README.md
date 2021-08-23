@@ -49,7 +49,8 @@ public static GameObject BaseCallback(NGuid id){
 In the works is an Asset Distribution plugin that will be paired with this plugin.
 
 ## Changelog
-- 1.0.0: Alpha release
+- 0.9.1: Null handler for CMP (WIP)
+- 0.9.0: Alpha release
 
 Shoutout to my Patreons on https://www.patreon.com/HolloFox recognising your
 mighty contribution to my caffeine addiction:
