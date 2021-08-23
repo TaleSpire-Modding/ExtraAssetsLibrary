@@ -27,7 +27,9 @@ var asset = new ExtraAssetsLibrary.DTO.Asset
     groupTagOrder = 2, //Index in group
     Icon = icon, //Sprite (128x128)
     ModelCallback = ModelCallback, // Method
-    BaseCallback = BaseCallback, // optional method to load custom base
+    
+    // optional method to load custom base, null loads DefaultBase()
+    BaseCallback = BaseCallback, 
 };
 ExtraAssetsLibrary.ExtraAssetPlugin.AddAsset(asset); // Name still WIP but methods the same.
 ```
