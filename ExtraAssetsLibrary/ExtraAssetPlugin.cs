@@ -4,6 +4,7 @@ using ExtraAssetsLibrary.DTO;
 using ExtraAssetsLibrary.Handlers;
 using ExtraAssetsLibrary.Patches;
 using HarmonyLib;
+using System.Reflection;
 using UnityEngine;
 
 namespace ExtraAssetsLibrary
@@ -34,6 +35,8 @@ namespace ExtraAssetsLibrary
         {
         }
 
+        private const BindingFlags bindFlags = BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static;
+
         /// <summary>
         /// This method should be run on awake by your plugin.
         /// </summary>
@@ -57,8 +60,10 @@ namespace ExtraAssetsLibrary
 
             if (FindObjectOfType<UI_AssetBrowser>() != null)
             {
+                // Adding to existing UI
                 var UI = FindObjectOfType<UI_AssetBrowser>();
-                //
+                MethodInfo dynMethod = typeof(UI_AssetBrowser).GetMethod("Start",bindFlags);
+                dynMethod.Invoke(UI, new object[] { });
             }
         }
     }
