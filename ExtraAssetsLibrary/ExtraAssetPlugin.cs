@@ -54,6 +54,12 @@ namespace ExtraAssetsLibrary
 
             if (asset.BaseCallback != null) UI_AssetBrowserSetupAssetIndexPatch.Bases.Add(asset.Id,asset.BaseCallback);
             UI_AssetBrowserSetupAssetIndexPatch.AddEntity(asset.Kind,entry.GroupTagName,entry,cd,asset.ModelCallback);
+
+            if (FindObjectOfType<UI_AssetBrowser>() != null)
+            {
+                var UI = FindObjectOfType<UI_AssetBrowser>();
+                //
+            }
         }
     }
 }
