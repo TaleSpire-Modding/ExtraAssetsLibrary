@@ -14,6 +14,8 @@ namespace ExtraAssetsLibrary.Patches
         private static DictionaryList<NGuid, BlobView<AssetLoaderData.Packed>> blobs =
             new DictionaryList<NGuid, BlobView<AssetLoaderData.Packed>>();
 
+        internal static bool stopSpawn = false;
+
         static bool Prefix(ref AssetLoader __instance, ref Transform ____transform, ref IAssetContainer ____assetContainer, IAssetContainer boardAsset, Transform parent,
             ref BlobView<AssetLoaderData.Packed> data)
         {
@@ -28,6 +30,11 @@ namespace ExtraAssetsLibrary.Patches
                     model = UI_AssetBrowserSetupAssetIndexPatch.Bases.ContainsKey(AssetDbTryGetCreatureDataPatch.LastLoaded) ?
                         UI_AssetBrowserSetupAssetIndexPatch.Bases[AssetDbTryGetCreatureDataPatch.LastLoaded](AssetDbTryGetCreatureDataPatch.LastLoaded)
                         : BaseHelper.DefaultBase();
+                    if (model == null)
+                    {
+                        stopSpawn = true;
+                        return false;
+                    }
                 }
                 else
                 {
@@ -39,6 +46,11 @@ namespace ExtraAssetsLibrary.Patches
                     else
                     {
                         model = UI_AssetBrowserSetupAssetIndexPatch.NguidMethods[AssetDbTryGetCreatureDataPatch.LastLoaded](AssetDbTryGetCreatureDataPatch.LastLoaded);
+                        if (model == null)
+                        {
+                            stopSpawn = true;
+                            return false;
+                        }
                         var blob = AssetLoadManagerInjectGameObjectAsAssetPatch.InjectGameObjectAsAssetPatch(
                             model,new float3(0,0,0),new quaternion(0,0,0,0),new float3(1,1,1),
                             AssetDbTryGetCreatureDataPatch.LastLoaded, AssetDbTryGetCreatureDataPatch.LastLoaded

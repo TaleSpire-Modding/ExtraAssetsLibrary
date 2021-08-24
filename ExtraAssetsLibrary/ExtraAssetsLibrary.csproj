@@ -429,6 +429,7 @@
     <Compile Include="Patches\AssetLoaderInitPatch.cs" />
     <Compile Include="Patches\AssetLoadManagerInjectGameObjectAsAssetPatch.cs" />
     <Compile Include="Patches\BoardApplyOpAddAssetPatch.cs" />
+    <Compile Include="Patches\CreaturePreviewBoardAssetSpawnPatch.cs" />
     <Compile Include="Patches\PlaceableManagerRegisterPlaceablePatch.cs" />
     <Compile Include="Patches\TilePreviewBoardAssetInitPatch.cs" />
     <Compile Include="Patches\UI_AssetBrowserSetupAssetIndexPatch.cs" />
