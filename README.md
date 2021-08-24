@@ -52,7 +52,8 @@ In the works is an Asset Distribution plugin that will be paired with this plugi
 - CMP
 
 ## Changelog
-- 0.9.1: Null handler for CMP (WIP)
+- 1.0.1: prevent race condition.
+- 1.0.0: Null callback stops creature spawn in prep for CMP Effects.
 - 0.9.0: Alpha release
 
 Shoutout to my Patreons on https://www.patreon.com/HolloFox recognising your
