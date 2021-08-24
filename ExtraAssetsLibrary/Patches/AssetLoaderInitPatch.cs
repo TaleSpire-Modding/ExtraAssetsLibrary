@@ -26,6 +26,7 @@ namespace ExtraAssetsLibrary.Patches
 
                 if (AssetDbTryGetCreatureDataPatch.LoadedBefore != AssetDbTryGetCreatureDataPatch.LastLoaded)
                 {
+                    stopSpawn = false;
                     Debug.Log("Loading Base");
                     model = UI_AssetBrowserSetupAssetIndexPatch.Bases.ContainsKey(AssetDbTryGetCreatureDataPatch.LastLoaded) ?
                         UI_AssetBrowserSetupAssetIndexPatch.Bases[AssetDbTryGetCreatureDataPatch.LastLoaded](AssetDbTryGetCreatureDataPatch.LastLoaded)
@@ -48,6 +49,7 @@ namespace ExtraAssetsLibrary.Patches
                         model = UI_AssetBrowserSetupAssetIndexPatch.NguidMethods[AssetDbTryGetCreatureDataPatch.LastLoaded](AssetDbTryGetCreatureDataPatch.LastLoaded);
                         if (model == null)
                         {
+                            model = new GameObject();
                             stopSpawn = true;
                             return false;
                         }
