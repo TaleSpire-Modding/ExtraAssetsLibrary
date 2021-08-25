@@ -1,4 +1,5 @@
-﻿using BepInEx;
+﻿using System.Collections;
+using BepInEx;
 using Bounce.TaleSpire.AssetManagement;
 using ExtraAssetsLibrary.DTO;
 using ExtraAssetsLibrary.Handlers;
@@ -64,6 +65,8 @@ namespace ExtraAssetsLibrary
                 var UI = FindObjectOfType<UI_AssetBrowser>();
                 MethodInfo dynMethod = typeof(UI_AssetBrowser).GetMethod("Start",bindFlags);
                 dynMethod.Invoke(UI, new object[] { });
+
+                Debug.Log("Loaded asset");
             }
         }
     }

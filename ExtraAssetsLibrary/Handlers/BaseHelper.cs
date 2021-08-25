@@ -1,5 +1,4 @@
 ﻿using System.IO;
-using System.Reflection;
 using Bounce.Unmanaged;
 using ExtraAssetsLibrary.Patches;
 using Unity.Mathematics;
@@ -12,7 +11,7 @@ namespace ExtraAssetsLibrary.Handlers
         /// <summary>
         /// Need to adjust and point this towards TaleSpire.exe
         /// </summary>
-        private static string assemblyFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+        private static string assemblyFolder = $"{Path.GetDirectoryName(BepInEx.Paths.ExecutablePath)}";
 
         /// <summary>
         /// Cache of bases as needed.
@@ -33,12 +32,13 @@ namespace ExtraAssetsLibrary.Handlers
         /// <returns>non-initialized gameobject template for base</returns>
         public static GameObject DefaultBase(NGuid nguid = new NGuid())
         {
-            if (AssetLoadManager.Instance.TryGetAsset("d71427a1-5535-4fa7-82d7-4ca1e75edbfdchar_base01_1462710208clothBase", out var reference) == AssetLoadManager.AssetLoadStatus.Loaded) return reference;
+            // Debug.Log($"Path:{Path.GetDirectoryName(BepInEx.Paths.ExecutablePath)}\\Taleweaver\\d71427a1-5535-4fa7-82d7-4ca1e75edbfd\\Assets\\char_base01_1462710208");
+        if (AssetLoadManager.Instance.TryGetAsset("d71427a1-5535-4fa7-82d7-4ca1e75edbfdchar_base01_1462710208clothBase", out var reference) == AssetLoadManager.AssetLoadStatus.Loaded) return reference;
 
             string id = "DefaultClothBase";
             // if (_loadedBases.ContainsKey(id)) return _loadedBases[id];
 
-            var myBundle = AssetBundle.LoadFromFile($"{assemblyFolder}\\default_base");
+            var myBundle = AssetBundle.LoadFromFile($"{assemblyFolder}\\Taleweaver\\d71427a1-5535-4fa7-82d7-4ca1e75edbfd\\Assets\\char_base01_1462710208");
             var miniBase = myBundle.LoadAsset<GameObject>("clothBase");
             var baseRenderer = miniBase.GetComponent<Renderer>();
             baseRenderer.material.shader = Shader.Find("Taleweaver/CreatureShader");
