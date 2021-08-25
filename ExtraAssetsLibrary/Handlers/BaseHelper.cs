@@ -14,11 +14,6 @@ namespace ExtraAssetsLibrary.Handlers
         private static string assemblyFolder = $"{Path.GetDirectoryName(BepInEx.Paths.ExecutablePath)}";
 
         /// <summary>
-        /// Cache of bases as needed.
-        /// </summary>
-        // public static Dictionary<string, GameObject> _loadedBases = new Dictionary<string, GameObject>();
-
-        /// <summary>
         /// Provides an empty gameobject as a template for a creature that wants no base.
         /// </summary>
         /// <param name="nguid">ID of creature using the base</param>
@@ -32,12 +27,7 @@ namespace ExtraAssetsLibrary.Handlers
         /// <returns>non-initialized gameobject template for base</returns>
         public static GameObject DefaultBase(NGuid nguid = new NGuid())
         {
-            // Debug.Log($"Path:{Path.GetDirectoryName(BepInEx.Paths.ExecutablePath)}\\Taleweaver\\d71427a1-5535-4fa7-82d7-4ca1e75edbfd\\Assets\\char_base01_1462710208");
-        if (AssetLoadManager.Instance.TryGetAsset("d71427a1-5535-4fa7-82d7-4ca1e75edbfdchar_base01_1462710208clothBase", out var reference) == AssetLoadManager.AssetLoadStatus.Loaded) return reference;
-
-            string id = "DefaultClothBase";
-            // if (_loadedBases.ContainsKey(id)) return _loadedBases[id];
-
+            if (AssetLoadManager.Instance.TryGetAsset("d71427a1-5535-4fa7-82d7-4ca1e75edbfdchar_base01_1462710208clothBase", out var reference) == AssetLoadManager.AssetLoadStatus.Loaded) return reference;
             var myBundle = AssetBundle.LoadFromFile($"{assemblyFolder}\\Taleweaver\\d71427a1-5535-4fa7-82d7-4ca1e75edbfd\\Assets\\char_base01_1462710208");
             var miniBase = myBundle.LoadAsset<GameObject>("clothBase");
             var baseRenderer = miniBase.GetComponent<Renderer>();
@@ -46,7 +36,6 @@ namespace ExtraAssetsLibrary.Handlers
             {
                 renderer.material.shader = Shader.Find("Taleweaver/CreatureShader");
             }
-            // _loadedBases[id] = miniBase;
 
             AssetLoadManagerInjectGameObjectAsAssetPatch.InjectGameObjectAsAssetPatch(
                 miniBase,
