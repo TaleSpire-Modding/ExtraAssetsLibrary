@@ -1,4 +1,4 @@
-## Extra Assets Library (EAL)
+## Extra Assets Library
 The Extra Assets Library is a plugin to register custom assets into TaleSpire. 
 
 ## Installing With R2ModMan
@@ -11,7 +11,6 @@ Upon doing so, you'll need to configure the plugin manual by updating the config
 
 ## Player Usage
 Players will start to find all your minis within the UI Asset Browser with every other minis.
-
 
 ## Writing Mods with this
 
@@ -28,10 +27,10 @@ var asset = new ExtraAssetsLibrary.DTO.Asset
     Icon = icon, //Sprite (128x128)
     ModelCallback = ModelCallback, // Method
     
-    // optional method to load custom base, null loads DefaultBase()
+    // optional method to load custom base, null callback loads DefaultBase()
     BaseCallback = BaseCallback, 
 };
-ExtraAssetsLibrary.ExtraAssetPlugin.AddAsset(asset);
+ExtraAssetsLibrary.ExtraAssetPlugin.AddAsset(asset); // Name still WIP but methods the same.
 ```
 
 Example Callback
@@ -47,11 +46,10 @@ public static GameObject BaseCallback(NGuid id){
 
 ## Recommended Extra Plugin (WIP)
 In the works is an Asset Distribution plugin that will be paired with this plugin.
-- Asset Downloader
-   - Downloader GUI
-- CMP
 
 ## Changelog
+- 1.0.3: Assets can be added to existing groups
+- 1.0.2: optimized package by pointing to existing default base instead of copy
 - 1.0.1: prevent race condition.
 - 1.0.0: Null callback stops creature spawn in prep for CMP Effects.
 - 0.9.0: Alpha release
