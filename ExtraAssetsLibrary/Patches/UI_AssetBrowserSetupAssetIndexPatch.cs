@@ -102,7 +102,15 @@ namespace ExtraAssetsLibrary.Patches
                 var kind = all[categoryIndex];
                 var injecting = _injecting[(int)kind.Item1];
                 var injectingGroups = injecting;
-                kind.Item2.AddRange(injectingGroups);
+                foreach (var group in injectingGroups)
+                {
+                    if (kind.Item2.Any(g => g.Name == group.Name))
+                    {
+                        var loc = kind.Item2.Single(g => g.Name == group.Name);
+                        loc.Entries.AddRange(group.Entries);
+                    }
+                    else kind.Item2.Add(group);
+                }
                 var groups = kind.Item2.OrderBy(i => i.Name).ToList();
                 all[categoryIndex] = (kind.Item1, groups);
             }
