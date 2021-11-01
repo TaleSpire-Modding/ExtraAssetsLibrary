@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Bounce.TaleSpire.AssetManagement;
 using Bounce.Unmanaged;
+using ExtraAssetsLibrary.DTO;
 using ExtraAssetsLibrary.Handlers;
 using HarmonyLib;
 using UnityEngine;
@@ -35,8 +36,9 @@ namespace ExtraAssetsLibrary.Patches
         {
             if (_injecting == null)
             {
-                _injecting = new List<AssetDb.DbGroup>[3]
+                _injecting = new List<AssetDb.DbGroup>[4]
                 {
+                    new List<AssetDb.DbGroup>(),
                     new List<AssetDb.DbGroup>(),
                     new List<AssetDb.DbGroup>(),
                     new List<AssetDb.DbGroup>(),
@@ -51,6 +53,7 @@ namespace ExtraAssetsLibrary.Patches
             return groups.Single(g => g.Name == groupName);
         }
 
+        public static Dictionary<NGuid, Asset> assets = new Dictionary<NGuid, Asset>();
 
         public static void AddEntity(AssetDb.DbEntry.EntryKind kind, string groupName, (AssetDb.DbEntry entity, CreatureData creatures, Func<NGuid, GameObject> callback)[] t)
         {
@@ -76,23 +79,29 @@ namespace ExtraAssetsLibrary.Patches
             }
         }
 
+        
+
         public static void AddEntity(AssetDb.DbEntry.EntryKind kind, string groupName, AssetDb.DbEntry entity, CreatureData creatures, Func<NGuid, GameObject> callback)
         => AddEntity(kind, groupName, new[]{(entity, creatures, callback)});
 
-        
+
         static void Prefix(ref (AssetDb.DbEntry.EntryKind, List<AssetDb.DbGroup>)[] all, ref string[] ___defaultFoldersInCategories)
         {
             Debug.Log("Prefix Started:");
-            // AddEffects(ref all, ref ___defaultFoldersInCategories);
             Inject(ref all);
+            _ = BaseHelper.DefaultBase();
+            var t = ___defaultFoldersInCategories.ToList();
+            t.Add("Effects");
+            ___defaultFoldersInCategories = t.ToArray();
+            foreach (var cat in ___defaultFoldersInCategories) Debug.Log(cat);
+            // Print(ref all);
+            Debug.Log($"prefix all count:{all.Length}");
             Debug.Log("Prefix Ended");
         }
 
-        private static void AddEffects(ref (AssetDb.DbEntry.EntryKind, List<AssetDb.DbGroup>)[] all,
-            ref string[] ___defaultFoldersInCategories)
+        static void Postfix(UI_AssetBrowser __instance)
         {
-            ___defaultFoldersInCategories.AddToArray("Effects");
-            all.AddToArray(((AssetDb.DbEntry.EntryKind)3, new List<AssetDb.DbGroup>()));
+            // __instance.SwitchCatagory(3);
         }
 
         private static void Inject(ref (AssetDb.DbEntry.EntryKind, List<AssetDb.DbGroup>)[] all)
@@ -107,7 +116,10 @@ namespace ExtraAssetsLibrary.Patches
                     if (kind.Item2.Any(g => g.Name == group.Name))
                     {
                         var loc = kind.Item2.Single(g => g.Name == group.Name);
-                        loc.Entries.AddRange(group.Entries);
+                        foreach (var e in group.Entries)
+                        {
+                            if (loc.Entries.All(le => le.Id != e.Id)) loc.Entries.Add(e);
+                        }
                     }
                     else kind.Item2.Add(group);
                 }

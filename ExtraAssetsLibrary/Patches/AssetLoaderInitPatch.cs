@@ -26,6 +26,11 @@ namespace ExtraAssetsLibrary.Patches
 
                 if (AssetDbTryGetCreatureDataPatch.LoadedBefore != AssetDbTryGetCreatureDataPatch.LastLoaded)
                 {
+                    if (!AssetDbTryGetCreatureDataPatch.canLoad)
+                    {
+                        stopSpawn = true;
+                        return false;
+                    }
                     stopSpawn = false;
                     Debug.Log("Loading Base");
                     model = UI_AssetBrowserSetupAssetIndexPatch.Bases.ContainsKey(AssetDbTryGetCreatureDataPatch.LastLoaded) ?
@@ -39,7 +44,7 @@ namespace ExtraAssetsLibrary.Patches
                 }
                 else
                 {
-                    Debug.Log("Loading Root");
+                    Debug.Log($"Loading Root");
                     if (blobs.ContainsKey(AssetDbTryGetCreatureDataPatch.LastLoaded))
                     {
                         data = blobs[AssetDbTryGetCreatureDataPatch.LastLoaded];
@@ -95,7 +100,7 @@ namespace ExtraAssetsLibrary.Patches
             }
             else
             {
-                Debug.Log($"ID:{data.Value.GenFullyQualifiedId()}");
+                Debug.Log($"ID:{data.Value.AssetPackId}");
             }
             return true;
         }

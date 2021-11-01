@@ -418,6 +418,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AssetDbExtension\AuraDb.cs" />
+    <Compile Include="DTO\Audio.cs" />
     <Compile Include="DTO\Asset.cs" />
     <Compile Include="Handlers\BaseHelper.cs" />
     <Compile Include="Handlers\BlobHandler.cs" />
@@ -426,15 +428,17 @@
     <Compile Include="Patches\AssetDbAddIdAsDummyPlaceablePatch.cs" />
     <Compile Include="Patches\AssetDbGetIndexDataPatch.cs" />
     <Compile Include="Patches\AssetDbTryGetCreatureDataPatch.cs" />
+    <Compile Include="Patches\AssetDbTryGetTagsByKindPatch.cs" />
     <Compile Include="Patches\AssetLoaderInitPatch.cs" />
     <Compile Include="Patches\AssetLoadManagerInjectGameObjectAsAssetPatch.cs" />
+    <Compile Include="Patches\CreatureManagerPatchAddOrRequestAddCreature.cs" />
     <Compile Include="Patches\BoardApplyOpAddAssetPatch.cs" />
     <Compile Include="Patches\CreaturePreviewBoardAssetSpawnPatch.cs" />
     <Compile Include="Patches\PlaceableManagerRegisterPlaceablePatch.cs" />
     <Compile Include="Patches\TilePreviewBoardAssetInitPatch.cs" />
     <Compile Include="Patches\UI_AssetBrowserSetupAssetIndexPatch.cs" />
     <Compile Include="ExtraAssetPlugin.cs" />
-    <Compile Include="Patches\UI_AssetBrowserStartPatch.cs" />
+    <Compile Include="Patches\AssetDbGetAllGroupsPatch.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

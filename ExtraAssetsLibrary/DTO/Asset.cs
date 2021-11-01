@@ -7,9 +7,30 @@ using UnityEngine;
 
 namespace ExtraAssetsLibrary.DTO
 {
+    public enum CustomEntryKind
+    {
+        Tile,
+        Creature,
+        Prop,
+        /// <summary>
+        /// Planned to extend UI. Currently just setting up infrastructure.
+        /// </summary>
+        Aura,
+    }
+
     public class Asset
     {
         public AssetDb.DbEntry.EntryKind Kind = AssetDb.DbEntry.EntryKind.Creature;
+
+        /// <summary>
+        /// Extends Kind to use CustomEntryKind instead of EntryKind
+        /// </summary>
+        public CustomEntryKind CustomKind
+        {
+            get => (CustomEntryKind) (int) Kind;
+            set => Kind = (AssetDb.DbEntry.EntryKind) (int) value;
+        }
+
         public NGuid Id;
         public string GroupName;
         public string Name;
@@ -17,12 +38,18 @@ namespace ExtraAssetsLibrary.DTO
         public bool isDeprecated = false;
         public int groupTagOrder;
         public Sprite Icon;
+
+        // All Callbacks
+        [CanBeNull] public Func<NGuid,bool> PreCallback;
         [CanBeNull] public Func<NGuid, GameObject> BaseCallback;
         public Func<NGuid, GameObject> ModelCallback;
+        [CanBeNull] public Action<NGuid,CreatureGuid> PostCallback;
+
         public float3 Scale = 1;
         public float DefaultScale = 1;
         public float3 TransformOffset = Vector3.zero;
         public Quaternion Rotation = new Quaternion(0,0,0,0);
+        public string[] tags;
         
         /// <summary>
         /// Generates a static NGuid based on a string.

@@ -1,7 +1,9 @@
-﻿using Bounce.BlobAssets;
+﻿using System;
+using Bounce.BlobAssets;
 using Bounce.TaleSpire.AssetManagement;
 using Unity.Collections;
 using Unity.Entities;
+using UnityEngine;
 
 namespace ExtraAssetsLibrary.Handlers
 {
@@ -10,17 +12,25 @@ namespace ExtraAssetsLibrary.Handlers
         public static BlobString ConstructBlobString(string input)
         {
             var builder = new BlobBuilder(Allocator.Temp);
-            ref var root = ref builder.ConstructRoot<BlobString>();
-            builder.AllocateString(ref root, input);
+            // builder.AllocateString(ref input, input.Length);
             return builder.CreateBlobAssetReference<BlobString>(Allocator.Persistent).Value;
         }
 
         public static BlobArray<BlobString> ConstructBlobData(string[] tags)
         {
             var builder = new BlobBuilder(Allocator.Temp);
-            ref var root = ref builder.ConstructRoot<BlobArray<BlobString>>();
-            var nodearray = builder.Allocate(ref root, tags.Length);
-            for (var i = 0; i < tags.Length; i++) nodearray[i] = ConstructBlobString(tags[i]);
+            try
+            {
+                ref var root = ref builder.ConstructRoot<BlobArray<BlobString>>();
+                var nodearray = builder.Allocate(ref root, tags.Length);
+                for (var i = 0; i < tags.Length; i++) nodearray[i] = ConstructBlobString(tags[i]);
+                return builder.CreateBlobAssetReference<BlobArray<BlobString>>(Allocator.Persistent).Value;
+            }
+            catch (Exception e)
+            {
+                Debug.Log($"ConstructBlobError:{e}");
+            }
+
             return builder.CreateBlobAssetReference<BlobArray<BlobString>>(Allocator.Persistent).Value;
         }
 
