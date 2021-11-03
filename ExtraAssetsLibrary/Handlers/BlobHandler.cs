@@ -28,7 +28,7 @@ namespace ExtraAssetsLibrary.Handlers
             }
             catch (Exception e)
             {
-                Debug.Log($"ConstructBlobError:{e}");
+                Debug.Log($"Extra Asset Library Plugin:ConstructBlobError:{e}");
             }
 
             return builder.CreateBlobAssetReference<BlobArray<BlobString>>(Allocator.Persistent).Value;

@@ -14,7 +14,7 @@ namespace ExtraAssetsLibrary.Patches
             var list = __result.ToList();
             list.Add(((AssetDb.DbEntry.EntryKind)3,AuraDb._auraGroups));
             __result = list.ToArray();
-            // Debug.Log($"Group Length:{__result.Length}");
+            Debug.Log($"Extra Asset Library Plugin: Added {__result.Length} Auras");
         }
     }
 }

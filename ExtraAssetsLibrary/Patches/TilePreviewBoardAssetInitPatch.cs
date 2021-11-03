@@ -22,9 +22,9 @@ namespace ExtraAssetsLibrary.Patches
                 if (!AssetDb.Placeables.ContainsKey(boardAssetId))
                 {
                     AssetDb.AddIdAsDummyPlaceable(boardAssetId, PlaceableKind.Tile);
-                    Debug.Log($"Create dummy for {boardAssetId}");
+                    Debug.Log($"Extra Asset Library Plugin:Create dummy for {boardAssetId}");
                 }
-                Debug.Log("Load Exist");
+                Debug.Log("Extra Asset Library Plugin:Load Exist");
                 LastLoaded = boardAssetId;
                 ___AssetId = boardAssetId;
 

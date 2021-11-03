@@ -25,7 +25,7 @@ namespace ExtraAssetsLibrary.Patches
             }
             tags = temp.Distinct().ToList();
             var end = tags.Count;
-            Debug.Log($"Added {end-start} tags");
+            Debug.Log($"Extra Asset Library Plugin:Added {end-start} tags");
             return original;
         }
     }

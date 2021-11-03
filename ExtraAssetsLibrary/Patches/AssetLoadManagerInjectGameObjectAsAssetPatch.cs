@@ -61,7 +61,7 @@ namespace ExtraAssetsLibrary.Patches
                             : FullyQualifiedIdReplacer, src);
 
                     __result = blobAssetReference.TakeView<AssetLoaderData.Packed>();
-                    Debug.Log(blobAssetReference.Value.GenFullyQualifiedId());
+                    Debug.Log($"Extra Asset Library Plugin:{blobAssetReference.Value.GenFullyQualifiedId()}");
                 }
                 return false;
             }

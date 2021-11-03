@@ -87,16 +87,13 @@ namespace ExtraAssetsLibrary.Patches
 
         static void Prefix(ref (AssetDb.DbEntry.EntryKind, List<AssetDb.DbGroup>)[] all, ref string[] ___defaultFoldersInCategories)
         {
-            Debug.Log("Prefix Started:");
             Inject(ref all);
             _ = BaseHelper.DefaultBase();
             var t = ___defaultFoldersInCategories.ToList();
             t.Add("Effects");
             ___defaultFoldersInCategories = t.ToArray();
-            foreach (var cat in ___defaultFoldersInCategories) Debug.Log(cat);
+            foreach (var cat in ___defaultFoldersInCategories) Debug.Log("Extra Asset Library Plugin:" + cat);
             // Print(ref all);
-            Debug.Log($"prefix all count:{all.Length}");
-            Debug.Log("Prefix Ended");
         }
 
         static void Postfix(UI_AssetBrowser __instance)
@@ -133,13 +130,13 @@ namespace ExtraAssetsLibrary.Patches
             for (int categoryIndex = 0; categoryIndex<all.Length; ++categoryIndex)
             {
                 var kind = all[categoryIndex];
-                Debug.Log($"Kind:{kind.Item1}");
+                Debug.Log($"Extra Asset Library Plugin:Kind:{kind.Item1}");
                 foreach (var group in kind.Item2)
                 {
-                    Debug.Log($"Group:{group.Name}");
+                    Debug.Log($"Extra Asset Library Plugin:Group:{group.Name}");
                     foreach (var entry in group.Entries)
                     {
-                        Debug.Log($"Entry:{entry.Name}");
+                        Debug.Log($"Extra Asset Library Plugin:Entry:{entry.Name}");
                     }
                 }
             }

@@ -16,7 +16,7 @@ namespace ExtraAssetsLibrary
     {
         // constants
         public const string Guid = "org.TMC.plugins.ExtraAssetLib";
-        public const string Version = "1.2.0.0";
+        public const string Version = "1.1.1.0";
         private const string Name = "TMCs' Extra Asset Library";
 
         public static void DoPatching()
@@ -27,7 +27,7 @@ namespace ExtraAssetsLibrary
 
         void Awake()
         {
-            Debug.Log($"{Name} is Active.");
+            Debug.Log($"Extra Asset Library Plugin:{Name} is Active.");
             UI_AssetBrowserSetupAssetIndexPatch.initStatic();
             ModdingUtils.Initialize(this, Logger);
             DoPatching();
@@ -60,7 +60,7 @@ namespace ExtraAssetsLibrary
         public static void AddAsset(Asset asset)
         {
             
-            Debug.Log($"Adding: {asset.Id}");
+            Debug.Log($"Extra Asset Library Plugin:Adding: {asset.Id}");
             if (!UI_AssetBrowserSetupAssetIndexPatch.assets.ContainsKey(asset.Id))
             {
                 UI_AssetBrowserSetupAssetIndexPatch.assets.Add(asset.Id,asset);
@@ -81,7 +81,7 @@ namespace ExtraAssetsLibrary
 
             if (asset.BaseCallback != null) UI_AssetBrowserSetupAssetIndexPatch.Bases.Add(asset.Id,asset.BaseCallback);
             UI_AssetBrowserSetupAssetIndexPatch.AddEntity(asset.Kind,entry.GroupTagName,entry,cd,asset.ModelCallback);
-            Debug.Log($"{asset.Id} Added");
+            Debug.Log($"Extra Asset Library Plugin:{asset.Id} Added");
         }
     }
 }

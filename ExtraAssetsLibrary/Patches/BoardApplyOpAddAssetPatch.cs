@@ -9,8 +9,8 @@ namespace ExtraAssetsLibrary.Patches
     {
         static bool Prefix(MessageInfo info, ClientGuid hostId, AddAssetOp op)
         {
-            Debug.Log("Loading Object");
-            Debug.Log($"ID:{op.AssetId}");
+            Debug.Log("Extra Asset Library Plugin:Loading Object");
+            Debug.Log($"Extra Asset Library Plugin:ID:{op.AssetId}");
             return true;
         }
     }

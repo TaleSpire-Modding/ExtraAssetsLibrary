@@ -13,14 +13,13 @@ namespace ExtraAssetsLibrary.Patches
         {
             if (TilePreviewBoardAssetInitPatch.newDb.Contains(tileId))
             {
-                Debug.Log($"Found tile: {tileId}");
+                Debug.Log($"Extra Asset Library Plugin:Found tile: {tileId}");
                 var state = new PlaceableLoadState
                 {
 
                 };
-                // ____placeableInfoMap.Add(tileId,);
-                Debug.Log(____placeableInfoMap[tileId].IsRegistered);
-                Debug.Log(____placeableInfoMap[tileId].Index.Count);
+                Debug.Log($"Extra Asset Library Plugin:{____placeableInfoMap[tileId].IsRegistered}");
+                Debug.Log($"Extra Asset Library Plugin:{____placeableInfoMap[tileId].Index.Count}");
             }
             return true;
         }

@@ -204,9 +204,6 @@ namespace ExtraAssetsLibrary
                 byte[] buffer = ReceiveAll(socket);
                 int bytesRec = buffer.Length;
                 string data = Encoding.UTF8.GetString(buffer, 0, bytesRec);
-
-                //Debug.Log("OOB Response: " + data);
-                //Debug.Log("Buffer Len:" + bytesRec.ToString());
                 return data;
             }
         }
@@ -291,7 +288,6 @@ namespace ExtraAssetsLibrary
 
         public static string GetBoards()
         {
-            //Debug.Log("Current Board Name: " + BoardSessionManager.CurrentBoardInfo.BoardName);
             List<CustomBoardInfo> lbi = new List<CustomBoardInfo>();
             foreach (BoardInfo bi in CampaignSessionManager.MostRecentBoardList)
             {
@@ -583,15 +579,11 @@ namespace ExtraAssetsLibrary
             TextMeshProUGUI stat;
             for (int i = 0; i < customStatNames.Length; i++)
             {
-
                 if (customStatNames[i] != "")
                 {
-                    //Debug.Log("Inside statnames");
-                    //Debug.Log("Stat " + (i + 1));
                     stat = GetUITextContainsString("Stat " + (i + 1));
                     if (stat)
                     {
-                        //Debug.Log("Found stat " + i);
                         stat.text = customStatNames[i];
                     }
                 }
