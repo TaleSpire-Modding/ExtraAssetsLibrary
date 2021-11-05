@@ -427,14 +427,16 @@
     <Compile Include="ModdingUtil.cs" />
     <Compile Include="Patches\AssetDbAddIdAsDummyPlaceablePatch.cs" />
     <Compile Include="Patches\AssetDbGetIndexDataPatch.cs" />
-    <Compile Include="Patches\AssetDbTryGetCreatureDataPatch.cs" />
+    <Compile Include="Patches\Minis\AssetDbTryGetCreatureDataPatch.cs" />
     <Compile Include="Patches\AssetDbTryGetTagsByKindPatch.cs" />
     <Compile Include="Patches\AssetLoaderInitPatch.cs" />
     <Compile Include="Patches\AssetLoadManagerInjectGameObjectAsAssetPatch.cs" />
-    <Compile Include="Patches\CreatureManagerPatchAddOrRequestAddCreature.cs" />
+    <Compile Include="Patches\Minis\CreatureManagerPatchAddOrRequestAddCreature.cs" />
     <Compile Include="Patches\BoardApplyOpAddAssetPatch.cs" />
-    <Compile Include="Patches\CreaturePreviewBoardAssetSpawnPatch.cs" />
+    <Compile Include="Patches\Minis\CreaturePreviewBoardAssetSpawnPatch.cs" />
+    <Compile Include="Patches\Minis\UI_AssetBrowserSlotItemSpawnCreaturePatch.cs" />
     <Compile Include="Patches\PlaceableManagerRegisterPlaceablePatch.cs" />
+    <Compile Include="Patches\BoardSessionManagerPatch.cs" />
     <Compile Include="Patches\TilePreviewBoardAssetInitPatch.cs" />
     <Compile Include="Patches\UI_AssetBrowserSetupAssetIndexPatch.cs" />
     <Compile Include="ExtraAssetPlugin.cs" />
@@ -455,7 +457,9 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Patches\Tiles\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PreBuildEvent>

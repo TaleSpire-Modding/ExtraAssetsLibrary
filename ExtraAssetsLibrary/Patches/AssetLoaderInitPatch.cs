@@ -26,11 +26,6 @@ namespace ExtraAssetsLibrary.Patches
 
                 if (AssetDbTryGetCreatureDataPatch.LoadedBefore != AssetDbTryGetCreatureDataPatch.LastLoaded)
                 {
-                    if (!AssetDbTryGetCreatureDataPatch.canLoad)
-                    {
-                        stopSpawn = true;
-                        return false;
-                    }
                     stopSpawn = false;
                     Debug.Log("Extra Asset Library Plugin:Loading Base");
                     model = UI_AssetBrowserSetupAssetIndexPatch.Bases.ContainsKey(AssetDbTryGetCreatureDataPatch.LastLoaded) ?
@@ -72,6 +67,10 @@ namespace ExtraAssetsLibrary.Patches
                 ____assetContainer = boardAsset;
                 ____transform = __instance.transform;
                 ____transform.SetParent(parent, false);
+                ____transform.localPosition = (Vector3)new float3(0, 0, 0);
+                ____transform.localRotation = (Quaternion)new quaternion(0, 0, 0, 0);
+                ____transform.localScale = (Vector3)new float3(1, 1, 1);
+
                 string str = AssetDbTryGetCreatureDataPatch.LastLoaded.ToString();
 
                 AssetDbTryGetCreatureDataPatch.LoadedBefore = AssetDbTryGetCreatureDataPatch.LastLoaded;

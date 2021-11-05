@@ -10,7 +10,7 @@ namespace ExtraAssetsLibrary.Patches
     {
         static void Postfix(CreatureDataV2 info, ref CreaturePreviewBoardAsset ____pickupObject)
         {
-           
+            
             if (UI_AssetBrowserSetupAssetIndexPatch.assets.ContainsKey(____pickupObject.DbEntry.Id))
             {
                 CreatureManager.SetCreatureScale(____pickupObject.CreatureData.CreatureId, 0,2);

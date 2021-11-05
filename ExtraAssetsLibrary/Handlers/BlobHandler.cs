@@ -18,6 +18,7 @@ namespace ExtraAssetsLibrary.Handlers
 
         public static BlobArray<BlobString> ConstructBlobData(string[] tags)
         {
+            if (tags == null) tags = new string[0];
             var builder = new BlobBuilder(Allocator.Temp);
             try
             {

@@ -16,7 +16,7 @@ namespace ExtraAssetsLibrary
     {
         // constants
         public const string Guid = "org.TMC.plugins.ExtraAssetLib";
-        public const string Version = "1.1.1.0";
+        public const string Version = "1.1.4.0";
         private const string Name = "TMCs' Extra Asset Library";
 
         public static void DoPatching()
@@ -48,10 +48,11 @@ namespace ExtraAssetsLibrary
 
         }
 
-        private static void AddCoreCallback(Func<NGuid> callback)
-        {
-
-        }
+        /// <summary>
+        /// List of all callbacks being run on an asset being loaded
+        /// </summary>
+        public static DictionaryList<string, Func<NGuid, AssetDb.DbEntry.EntryKind,bool>> CoreAssetPrefixCallbacks =
+            new DictionaryList<string, Func<NGuid, AssetDb.DbEntry.EntryKind,bool>>();
 
         /// <summary>
         /// This method should be run on awake by your plugin.
