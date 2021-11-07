@@ -425,10 +425,10 @@
     <Compile Include="Handlers\BlobHandler.cs" />
     <Compile Include="Handlers\ImageHandler.cs" />
     <Compile Include="ModdingUtil.cs" />
-    <Compile Include="Patches\AssetDbAddIdAsDummyPlaceablePatch.cs" />
-    <Compile Include="Patches\AssetDbGetIndexDataPatch.cs" />
+    <Compile Include="Patches\AssetDb\AssetDbAddIdAsDummyPlaceablePatch.cs" />
+    <Compile Include="Patches\AssetDb\AssetDbGetIndexDataPatch.cs" />
     <Compile Include="Patches\Minis\AssetDbTryGetCreatureDataPatch.cs" />
-    <Compile Include="Patches\AssetDbTryGetTagsByKindPatch.cs" />
+    <Compile Include="Patches\AssetDb\AssetDbTryGetTagsByKindPatch.cs" />
     <Compile Include="Patches\AssetLoaderInitPatch.cs" />
     <Compile Include="Patches\AssetLoadManagerInjectGameObjectAsAssetPatch.cs" />
     <Compile Include="Patches\Minis\CreatureManagerPatchAddOrRequestAddCreature.cs" />
@@ -440,7 +440,7 @@
     <Compile Include="Patches\TilePreviewBoardAssetInitPatch.cs" />
     <Compile Include="Patches\UI_AssetBrowserSetupAssetIndexPatch.cs" />
     <Compile Include="ExtraAssetPlugin.cs" />
-    <Compile Include="Patches\AssetDbGetAllGroupsPatch.cs" />
+    <Compile Include="Patches\AssetDb\AssetDbGetAllGroupsPatch.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

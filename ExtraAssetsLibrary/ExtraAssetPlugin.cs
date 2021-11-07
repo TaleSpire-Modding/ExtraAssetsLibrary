@@ -77,7 +77,7 @@ namespace ExtraAssetsLibrary
                 // ModelAsset = *modelAsset.Value,
                 Tags = tags,
                 DefaultScale = asset.DefaultScale,
-                BaseRadius = 1,
+                BaseRadius = asset.DefaultScale,
             };
 
             if (asset.BaseCallback != null) UI_AssetBrowserSetupAssetIndexPatch.Bases.Add(asset.Id,asset.BaseCallback);
