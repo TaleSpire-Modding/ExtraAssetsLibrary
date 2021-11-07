@@ -432,12 +432,12 @@
     <Compile Include="Patches\AssetLoaderInitPatch.cs" />
     <Compile Include="Patches\AssetLoadManagerInjectGameObjectAsAssetPatch.cs" />
     <Compile Include="Patches\Minis\CreatureManagerPatchAddOrRequestAddCreature.cs" />
-    <Compile Include="Patches\BoardApplyOpAddAssetPatch.cs" />
+    <Compile Include="Patches\Tiles\BoardApplyOpAddAssetPatch.cs" />
     <Compile Include="Patches\Minis\CreaturePreviewBoardAssetSpawnPatch.cs" />
     <Compile Include="Patches\Minis\UI_AssetBrowserSlotItemSpawnCreaturePatch.cs" />
-    <Compile Include="Patches\PlaceableManagerRegisterPlaceablePatch.cs" />
-    <Compile Include="Patches\BoardSessionManagerPatch.cs" />
-    <Compile Include="Patches\TilePreviewBoardAssetInitPatch.cs" />
+    <Compile Include="Patches\Tiles\PlaceableManagerRegisterPlaceablePatch.cs" />
+    <Compile Include="Patches\Tiles\BoardSessionManagerPatch.cs" />
+    <Compile Include="Patches\Tiles\TilePreviewBoardAssetInitPatch.cs" />
     <Compile Include="Patches\UI_AssetBrowserSetupAssetIndexPatch.cs" />
     <Compile Include="ExtraAssetPlugin.cs" />
     <Compile Include="Patches\AssetDb\AssetDbGetAllGroupsPatch.cs" />
@@ -457,9 +457,7 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Patches\Tiles\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PreBuildEvent>
