@@ -147,6 +147,14 @@
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Xml" />
+    <Reference Include="Unity.Burst, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\TaleSpire\TaleSpire_Data\Managed\Unity.Burst.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Burst.Unsafe, Version=4.0.5.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\TaleSpire\TaleSpire_Data\Managed\Unity.Burst.Unsafe.dll</HintPath>
+    </Reference>
     <Reference Include="Unity.Collections, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\TaleSpire\TaleSpire_Data\Managed\Unity.Collections.dll</HintPath>
@@ -156,6 +164,13 @@
     <Reference Include="Unity.Mathematics, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\TaleSpire\TaleSpire_Data\Managed\Unity.Mathematics.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Physics, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\TaleSpire\TaleSpire_Data\Managed\Unity.Physics.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Physics.Hybrid">
+      <HintPath>..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\TaleSpire\TaleSpire_Data\Managed\Unity.Physics.Hybrid.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Postprocessing.Runtime, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -421,6 +436,7 @@
     <Compile Include="AssetDbExtension\AuraDb.cs" />
     <Compile Include="DTO\Audio.cs" />
     <Compile Include="DTO\Asset.cs" />
+    <Compile Include="DTO\TileProperties.cs" />
     <Compile Include="Handlers\BaseHelper.cs" />
     <Compile Include="Handlers\BlobHandler.cs" />
     <Compile Include="Handlers\ImageHandler.cs" />
@@ -435,10 +451,15 @@
     <Compile Include="Patches\Tiles\BoardApplyOpAddAssetPatch.cs" />
     <Compile Include="Patches\Minis\CreaturePreviewBoardAssetSpawnPatch.cs" />
     <Compile Include="Patches\Minis\UI_AssetBrowserSlotItemSpawnCreaturePatch.cs" />
+    <Compile Include="Patches\Tiles\PalceableManagerLoadPlaceablePrototypePatch.cs" />
     <Compile Include="Patches\Tiles\PlaceableManagerRegisterPlaceablePatch.cs" />
     <Compile Include="Patches\Tiles\BoardSessionManagerPatch.cs" />
     <Compile Include="Patches\Tiles\TilePreviewBoardAssetInitPatch.cs" />
-    <Compile Include="Patches\UI_AssetBrowserSetupAssetIndexPatch.cs" />
+    <Compile Include="Patches\UI\UI_AssetBrowserListClickCallbackPatch.cs" />
+    <Compile Include="Patches\UI\UI_AssetBrowserMoveToAndSelectFolderLocationPatch.cs" />
+    <Compile Include="Patches\UI\UI_AssetBrowserSetupCategoryPatch.cs" />
+    <Compile Include="Patches\UI\UI_ListArrangePatch.cs" />
+    <Compile Include="Patches\UI\UI_AssetBrowserSetupAssetIndexPatch.cs" />
     <Compile Include="ExtraAssetPlugin.cs" />
     <Compile Include="Patches\AssetDb\AssetDbGetAllGroupsPatch.cs" />
     <Compile Include="Properties\Resources.Designer.cs">

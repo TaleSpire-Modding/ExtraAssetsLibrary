@@ -1,4 +1,5 @@
 ﻿using Bounce.Unmanaged;
+using ExtraAssetsLibrary.DTO;
 using UnityEngine;
 using HarmonyLib;
 using Unity.Mathematics;
@@ -10,12 +11,44 @@ namespace ExtraAssetsLibrary.Patches.Minis
     {
         static bool Prefix(NGuid ____nGuid,AssetDb.DbEntry.EntryKind ____entityKind)
         {
+            Debug.Log($"Entry Kind:{(CustomEntryKind)____entityKind}");
             var pass = true;
             foreach (var action in ExtraAssetPlugin.CoreAssetPrefixCallbacks.Values)
             {
                 pass = pass && action.Invoke(____nGuid,____entityKind);
             }
             Debug.Log($"Extra Asset Library Plugin: CoreAssetPrefixCallbacks: {pass}");
+
+            if (pass){
+                if ((CustomEntryKind)____entityKind == CustomEntryKind.Aura)
+                {
+                    if (SlotItemSpawnPatch(____nGuid))
+                    {
+                        Debug.Log($"Extra Asset Library Plugin: Aura being called");
+                        var asset = UI_AssetBrowserSetupAssetIndexPatch.assets[____nGuid];
+                        asset.ModelCallback(____nGuid);
+                    }
+                }
+                else if ((CustomEntryKind) ____entityKind == CustomEntryKind.Effects)
+                {
+                    if (SlotItemSpawnPatch(____nGuid))
+                    {
+                        Debug.Log($"Extra Asset Library Plugin: Effects being called");
+                        var asset = UI_AssetBrowserSetupAssetIndexPatch.assets[____nGuid];
+                        asset.ModelCallback(____nGuid);
+                    }
+                }
+                else if ((CustomEntryKind)____entityKind == CustomEntryKind.Slab)
+                {
+                    if (SlotItemSpawnPatch(____nGuid))
+                    {
+                        Debug.Log($"Extra Asset Library Plugin: Slab being called");
+                        var asset = UI_AssetBrowserSetupAssetIndexPatch.assets[____nGuid];
+                        asset.ModelCallback(____nGuid);
+                    }
+                }
+            }
+
             return pass;
         }
 

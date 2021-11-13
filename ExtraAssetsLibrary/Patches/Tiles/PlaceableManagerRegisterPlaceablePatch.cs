@@ -1,8 +1,25 @@
-﻿using Bounce.TaleSpire.AssetManagement;
+﻿using System;
+using System.Collections.Generic;
+using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
+using Bounce;
+using Bounce.BlobAssets;
+using Bounce.ManagedCollections;
+using Bounce.Singletons;
+using Bounce.TaleSpire.AssetManagement;
+using Bounce.TaleSpire.Physics;
 using Bounce.Unmanaged;
 using HarmonyLib;
+using Unity.Burst;
 using Unity.Collections;
+using Unity.Entities;
+using Unity.Jobs;
+using Unity.Mathematics;
 using UnityEngine;
+using Unity.Physics;
+
+
+
 
 namespace ExtraAssetsLibrary.Patches
 {
@@ -14,12 +31,21 @@ namespace ExtraAssetsLibrary.Patches
             if (TilePreviewBoardAssetInitPatch.newDb.Contains(tileId))
             {
                 Debug.Log($"Extra Asset Library Plugin:Found tile: {tileId}");
-                var state = new PlaceableLoadState
-                {
+                ____placeableInfoMap[tileId] = new PlaceableLoadState(0, 1);
+                return true;
+            }
+            return true;
+        }
+    }
 
-                };
-                Debug.Log($"Extra Asset Library Plugin:{____placeableInfoMap[tileId].IsRegistered}");
-                Debug.Log($"Extra Asset Library Plugin:{____placeableInfoMap[tileId].Index.Count}");
+    [HarmonyPatch(typeof(PlaceableManager), "ProcessAssetForPlaceable")]
+    class PlaceableManagerProcessAssetForPlaceablePatch
+    {
+        public static bool Prefix(NGuid assetPackId, string fullyQualifiedAssetId, ref GameObject asset)
+        {
+            if (UI_AssetBrowserSetupAssetIndexPatch.assets.ContainsKey(assetPackId))
+            {
+                asset = UI_AssetBrowserSetupAssetIndexPatch.assets[assetPackId].ModelCallback(assetPackId);
             }
             return true;
         }

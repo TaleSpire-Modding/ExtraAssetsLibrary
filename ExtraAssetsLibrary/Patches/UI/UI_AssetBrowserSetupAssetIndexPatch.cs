@@ -13,7 +13,7 @@ namespace ExtraAssetsLibrary.Patches
     [HarmonyPatch(typeof(UI_AssetBrowser), "SetupAssetIndex")]
     public class UI_AssetBrowserSetupAssetIndexPatch
     {
-        private static List<AssetDb.DbGroup>[] _injecting;
+        internal static List<AssetDb.DbGroup>[] _injecting;
         public static Dictionary<NGuid, Func<NGuid,GameObject>> NguidMethods = new Dictionary<NGuid, Func<NGuid, GameObject>>();
         public static Dictionary<NGuid, Func<NGuid,GameObject>> Bases = new Dictionary<NGuid, Func<NGuid, GameObject>>();
 
@@ -36,12 +36,14 @@ namespace ExtraAssetsLibrary.Patches
         {
             if (_injecting == null)
             {
-                _injecting = new List<AssetDb.DbGroup>[4]
+                _injecting = new List<AssetDb.DbGroup>[]
                 {
-                    new List<AssetDb.DbGroup>(),
-                    new List<AssetDb.DbGroup>(),
-                    new List<AssetDb.DbGroup>(),
-                    new List<AssetDb.DbGroup>(),
+                    new List<AssetDb.DbGroup>(), // Tiles
+                    new List<AssetDb.DbGroup>(), // 
+                    new List<AssetDb.DbGroup>(), // 
+                    new List<AssetDb.DbGroup>(), // Auras and Effects
+                    new List<AssetDb.DbGroup>(), // Slabs
+                    new List<AssetDb.DbGroup>(), // IDK
                 };
             }
         }
@@ -57,6 +59,10 @@ namespace ExtraAssetsLibrary.Patches
 
         public static void AddEntity(AssetDb.DbEntry.EntryKind kind, string groupName, (AssetDb.DbEntry entity, CreatureData creatures, Func<NGuid, GameObject> callback)[] t)
         {
+            if ((int)kind > 3)
+            {
+                kind = (AssetDb.DbEntry.EntryKind)((int)kind - 1);
+            }
             AddGroup(kind, groupName);
             var groups = _injecting[(int)kind];
             var group = groups.Single(g => g.Name.Equals(groupName));
@@ -90,7 +96,8 @@ namespace ExtraAssetsLibrary.Patches
             Inject(ref all);
             _ = BaseHelper.DefaultBase();
             var t = ___defaultFoldersInCategories.ToList();
-            t.Add("Effects");
+            t.Add("Aura");
+            t.Add("Slab");
             ___defaultFoldersInCategories = t.ToArray();
             foreach (var cat in ___defaultFoldersInCategories) Debug.Log("Extra Asset Library Plugin:" + cat);
             // Print(ref all);

@@ -12,10 +12,15 @@ namespace ExtraAssetsLibrary.DTO
         Tile,
         Creature,
         Prop,
+        
         /// <summary>
         /// Planned to extend UI. Currently just setting up infrastructure.
         /// </summary>
         Aura,
+        Effects,
+        Slab,
+//         Audio,
+//         Base,
     }
 
     public class Asset
@@ -30,6 +35,8 @@ namespace ExtraAssetsLibrary.DTO
             get => (CustomEntryKind) (int) Kind;
             set => Kind = (AssetDb.DbEntry.EntryKind) (int) value;
         }
+
+        public TileProperties TileProperties = new TileProperties();
 
         public NGuid Id;
         public string GroupName;

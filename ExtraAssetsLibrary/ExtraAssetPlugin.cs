@@ -16,8 +16,8 @@ namespace ExtraAssetsLibrary
     {
         // constants
         public const string Guid = "org.TMC.plugins.ExtraAssetLib";
-        public const string Version = "1.1.4.0";
-        private const string Name = "TMCs' Extra Asset Library";
+        public const string Version = "1.2.0.0";
+        private const string Name = "HolloFoxes' Extra Asset Library";
 
         public static void DoPatching()
         {
@@ -60,8 +60,8 @@ namespace ExtraAssetsLibrary
         /// <param name="asset">Description of your asset you are injecting.</param>
         public static void AddAsset(Asset asset)
         {
-            
             Debug.Log($"Extra Asset Library Plugin:Adding: {asset.Id}");
+            // asset.CustomKind = CustomEntryKind.Aura;
             if (!UI_AssetBrowserSetupAssetIndexPatch.assets.ContainsKey(asset.Id))
             {
                 UI_AssetBrowserSetupAssetIndexPatch.assets.Add(asset.Id,asset);
