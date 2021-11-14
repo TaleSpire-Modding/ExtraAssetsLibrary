@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using ExtraAssetsLibrary.DTO;
 using GameSequencer;
 
@@ -7,15 +8,26 @@ namespace ExtraAssetsLibrary.AssetDbExtension
 {
     public static class ExtraDb
     {
-        // new List<AssetDb.DbGroup>(128);
-        internal static readonly DictionaryList<CustomEntryKind, List<AssetDb.DbGroup>> extraGroups =
-            new DictionaryList<CustomEntryKind, List<AssetDb.DbGroup>>
+        public static List<AssetDb.DbGroup> Zip(List<AssetDb.DbGroup> list1, List<AssetDb.DbGroup> list2)
+        {
+            var actual = new List<AssetDb.DbGroup>();
+            actual.AddRange(list1);
+            foreach (var item in list2)
             {
-                {CustomEntryKind.Aura, new List<AssetDb.DbGroup>(128)}, // Aura and Effects
-                {CustomEntryKind.Slab, new List<AssetDb.DbGroup>(128)},
-            };
-        internal static readonly Dictionary<string, List<AssetDb.DbEntry>> _auraByTag = new Dictionary<string, List<AssetDb.DbEntry>>(128);
-        internal static readonly HashList<string> _auraTags = new HashList<string>();
+                if (actual.Any(a => a.Name == item.Name))
+                {
+                    var group = actual.Single(a => a.Name == item.Name);
+                    group.Entries.AddRange(item.Entries);
+                    group.Entries.OrderBy(a => a.Name).ToList();
+                }
+                else
+                {
+                    actual.Add(item);
+                }
+            }
+            actual = actual.OrderBy(a => a.Name).ToList();
+            return actual;
+        }
 
         public static object call(this object o, string methodName, params object[] args)
         {

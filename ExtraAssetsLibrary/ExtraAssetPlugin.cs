@@ -7,11 +7,13 @@ using ExtraAssetsLibrary.Patches;
 using HarmonyLib;
 using System.Reflection;
 using Bounce.Unmanaged;
+using LordAshes;
 using UnityEngine;
 
 namespace ExtraAssetsLibrary
 {
     [BepInPlugin(Guid, Name, Version)]
+    [BepInDependency(FileAccessPlugin.Guid)]
     public class ExtraAssetPlugin:BaseUnityPlugin
     {
         // constants
@@ -61,7 +63,7 @@ namespace ExtraAssetsLibrary
         public static void AddAsset(Asset asset)
         {
             Debug.Log($"Extra Asset Library Plugin:Adding: {asset.Id}");
-            // asset.CustomKind = CustomEntryKind.Aura;
+            asset.CustomKind = CustomEntryKind.Effects;
             if (!UI_AssetBrowserSetupAssetIndexPatch.assets.ContainsKey(asset.Id))
             {
                 UI_AssetBrowserSetupAssetIndexPatch.assets.Add(asset.Id,asset);

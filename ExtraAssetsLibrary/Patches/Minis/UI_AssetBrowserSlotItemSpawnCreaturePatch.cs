@@ -47,6 +47,15 @@ namespace ExtraAssetsLibrary.Patches.Minis
                         asset.ModelCallback(____nGuid);
                     }
                 }
+                else if ((CustomEntryKind)____entityKind == CustomEntryKind.Audio)
+                {
+                    if (SlotItemSpawnPatch(____nGuid))
+                    {
+                        Debug.Log($"Extra Asset Library Plugin: Audio being called");
+                        var asset = UI_AssetBrowserSetupAssetIndexPatch.assets[____nGuid];
+                        asset.ModelCallback(____nGuid);
+                    }
+                }
             }
 
             return pass;

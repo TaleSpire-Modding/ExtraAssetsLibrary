@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
 using ExtraAssetsLibrary.AssetDbExtension;
 using ExtraAssetsLibrary.DTO;
+using ExtraAssetsLibrary.Handlers;
 using HarmonyLib;
+using LordAshes;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -14,7 +16,6 @@ namespace ExtraAssetsLibrary.Patches.UI
         {
             if (index > 2)
             {
-                Debug.Log("Index slected"+index);
                 __instance.call("SetupCategory", index);
                 switch (index)
                 {
@@ -24,6 +25,9 @@ namespace ExtraAssetsLibrary.Patches.UI
                     case 4:
                         ____search.SwitchAssetKind((AssetDb.DbEntry.EntryKind) CustomEntryKind.Slab);
                         break;
+                    case 5:
+                        ____search.SwitchAssetKind((AssetDb.DbEntry.EntryKind) CustomEntryKind.Audio);
+                        break;
                 }
                 return false;
             }
@@ -32,7 +36,7 @@ namespace ExtraAssetsLibrary.Patches.UI
     }
 
     [HarmonyPatch(typeof(UI_SwitchButtonGroup), "Start")]
-    class UI_ListArrangePatch
+    class UI_SwitchButtonGroupStartPatch
     {
         private static void Add(UI_SwitchButtonGroup __instance, int i, Button template, string key, ref List<Button> ____buttons)
         {
@@ -44,6 +48,18 @@ namespace ExtraAssetsLibrary.Patches.UI
             var newPost = new Vector3(clone.transform.position.x, clone.transform.position.y - (distance * i), clone.transform.position.z);
             var rot = clone.transform.rotation;
             clone.transform.SetPositionAndRotation(newPost, rot);
+            switch (i)
+            {
+                case 3:
+                    clone.GetComponentsInChildren<Image>()[2].sprite = FileAccessPlugin.Image.LoadSprite("Images/Icons/aura-and-effects-fire.png");
+                    break;
+                case 4:
+                    clone.GetComponentsInChildren<Image>()[2].sprite = FileAccessPlugin.Image.LoadSprite("Images/Icons/slab-sketch.png");
+                    break;
+                case 5:
+                    clone.GetComponentsInChildren<Image>()[2].sprite = FileAccessPlugin.Image.LoadSprite("Images/Icons/audio-note.png");
+                    break;
+            }
         }
 
         public static void Prefix(UI_SwitchButtonGroup __instance, 
@@ -56,6 +72,7 @@ namespace ExtraAssetsLibrary.Patches.UI
                 var template = ____buttons[0];
                 Add(__instance,3,template,"Aura and Effects",ref ____buttons);
                 Add(__instance,4,template,"Slabs",ref ____buttons);
+                Add(__instance,5,template,"Audio",ref ____buttons);
             }
         }
     }

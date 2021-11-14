@@ -41,9 +41,10 @@ namespace ExtraAssetsLibrary.Patches
                     new List<AssetDb.DbGroup>(), // Tiles
                     new List<AssetDb.DbGroup>(), // 
                     new List<AssetDb.DbGroup>(), // 
-                    new List<AssetDb.DbGroup>(), // Auras and Effects
+                    new List<AssetDb.DbGroup>(), // Auras
+                    new List<AssetDb.DbGroup>(), // Effects
                     new List<AssetDb.DbGroup>(), // Slabs
-                    new List<AssetDb.DbGroup>(), // IDK
+                    new List<AssetDb.DbGroup>(), // Audio
                 };
             }
         }
@@ -59,10 +60,6 @@ namespace ExtraAssetsLibrary.Patches
 
         public static void AddEntity(AssetDb.DbEntry.EntryKind kind, string groupName, (AssetDb.DbEntry entity, CreatureData creatures, Func<NGuid, GameObject> callback)[] t)
         {
-            if ((int)kind > 3)
-            {
-                kind = (AssetDb.DbEntry.EntryKind)((int)kind - 1);
-            }
             AddGroup(kind, groupName);
             var groups = _injecting[(int)kind];
             var group = groups.Single(g => g.Name.Equals(groupName));
@@ -91,21 +88,10 @@ namespace ExtraAssetsLibrary.Patches
         => AddEntity(kind, groupName, new[]{(entity, creatures, callback)});
 
 
-        static void Prefix(ref (AssetDb.DbEntry.EntryKind, List<AssetDb.DbGroup>)[] all, ref string[] ___defaultFoldersInCategories)
+        static void Prefix(ref (AssetDb.DbEntry.EntryKind, List<AssetDb.DbGroup>)[] all)
         {
             Inject(ref all);
-            _ = BaseHelper.DefaultBase();
-            var t = ___defaultFoldersInCategories.ToList();
-            t.Add("Aura");
-            t.Add("Slab");
-            ___defaultFoldersInCategories = t.ToArray();
-            foreach (var cat in ___defaultFoldersInCategories) Debug.Log("Extra Asset Library Plugin:" + cat);
             // Print(ref all);
-        }
-
-        static void Postfix(UI_AssetBrowser __instance)
-        {
-            // __instance.SwitchCatagory(3);
         }
 
         private static void Inject(ref (AssetDb.DbEntry.EntryKind, List<AssetDb.DbGroup>)[] all)
@@ -130,6 +116,13 @@ namespace ExtraAssetsLibrary.Patches
                 var groups = kind.Item2.OrderBy(i => i.Name).ToList();
                 all[categoryIndex] = (kind.Item1, groups);
             }
+
+            var al = all.ToList();
+            al.Add(((AssetDb.DbEntry.EntryKind)CustomEntryKind.Aura,_injecting[3]));
+            al.Add(((AssetDb.DbEntry.EntryKind)CustomEntryKind.Effects,_injecting[4]));
+            al.Add(((AssetDb.DbEntry.EntryKind)CustomEntryKind.Slab,_injecting[5]));
+            al.Add(((AssetDb.DbEntry.EntryKind)CustomEntryKind.Audio,_injecting[6]));
+            all = al.ToArray();
         }
 
         private static void Print(ref (AssetDb.DbEntry.EntryKind, List<AssetDb.DbGroup>)[] all)

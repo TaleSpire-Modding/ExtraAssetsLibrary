@@ -43,19 +43,20 @@ namespace ExtraAssetsLibrary.Patches.UI
             }
             else
             {
+                Debug.Log($"match, {setIndex}");
                 if (setIndex == 3)
                 {
-                    Debug.Log("match, 3");
-                    var assets = UI_AssetBrowserSetupAssetIndexPatch._injecting[3];
-                    var folder = assets[folderIndex];
-                    instance.call("BrowseFolder", folder,false);
+                    var aura = UI_AssetBrowserSetupAssetIndexPatch._injecting[3];
+                    var effects = UI_AssetBrowserSetupAssetIndexPatch._injecting[4];
+                    var actual = ExtraDb.Zip(aura, effects);
+                    var folder = actual[folderIndex];
+                    instance.call("BrowseFolder", folder, false);
                 }
-                else if (setIndex == 4)
+                if (setIndex > 4)
                 {
-                    Debug.Log("match, 4");
-                    var assets = UI_AssetBrowserSetupAssetIndexPatch._injecting[4];
+                    var assets = UI_AssetBrowserSetupAssetIndexPatch._injecting[setIndex + 1];
                     var folder = assets[folderIndex];
-                    instance.call("BrowseFolder", folder,false);
+                    instance.call("BrowseFolder", folder, false);
                 }
             }
             
@@ -90,34 +91,43 @@ namespace ExtraAssetsLibrary.Patches.UI
                 
                 if (index == 3)
                 {
-                    for (int index1 = 0; index1 < ExtraDb.extraGroups[CustomEntryKind.Aura].Count; ++index1)
+                    var aura = UI_AssetBrowserSetupAssetIndexPatch._injecting[3];
+                    var effects = UI_AssetBrowserSetupAssetIndexPatch._injecting[4];
+                    var actual = ExtraDb.Zip(aura, effects);
+                    for (int index1 = 0; index1 < actual.Count; ++index1)
                     {
                         UIListItemClickEvents listItemClickEvents = _listItems.HireItem();
                         _activeListItems.Add(listItemClickEvents);
                         listItemClickEvents.SetupClick(index1, ListClickCallback);
-                        listItemClickEvents.SetTitle(ExtraDb.extraGroups[CustomEntryKind.Aura][index1].Name);
+                        listItemClickEvents.SetTitle(actual[index1].Name);
                     }
                 }
                 else if (index == 4)
                 {
-                    for (int index1 = 0; index1 < ExtraDb.extraGroups[CustomEntryKind.Slab].Count; ++index1)
+                    for (int index1 = 0; index1 < UI_AssetBrowserSetupAssetIndexPatch._injecting[5].Count; ++index1)
                     {
                         UIListItemClickEvents listItemClickEvents = _listItems.HireItem();
                         _activeListItems.Add(listItemClickEvents);
                         listItemClickEvents.SetupClick(index1, ListClickCallback);
-                        listItemClickEvents.SetTitle(ExtraDb.extraGroups[CustomEntryKind.Slab][index1].Name);
+                        listItemClickEvents.SetTitle(UI_AssetBrowserSetupAssetIndexPatch._injecting[5][index1].Name);
+                    }
+                }
+                else if (index == 5)
+                {
+                    for (int index1 = 0; index1 < UI_AssetBrowserSetupAssetIndexPatch._injecting[6].Count; ++index1)
+                    {
+                        UIListItemClickEvents listItemClickEvents = _listItems.HireItem();
+                        _activeListItems.Add(listItemClickEvents);
+                        listItemClickEvents.SetupClick(index1, ListClickCallback);
+                        listItemClickEvents.SetTitle(UI_AssetBrowserSetupAssetIndexPatch._injecting[6][index1].Name);
                     }
                 }
 
                 ___catagoryList.Arrange();
                 if (____activeListItems.Count <= 0)
                     return false;
-
-                Debug.Log("Start call");
                 ListClickCallback(_activeListItems.FirstOrDefault());
-                
                 __instance.call("MoveToAndSelectFolderLocation", 0, false);
-                Debug.Log("End call");
                 return false;
             }
             return true;

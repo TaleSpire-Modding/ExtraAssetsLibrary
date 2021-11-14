@@ -458,7 +458,7 @@
     <Compile Include="Patches\UI\UI_AssetBrowserListClickCallbackPatch.cs" />
     <Compile Include="Patches\UI\UI_AssetBrowserMoveToAndSelectFolderLocationPatch.cs" />
     <Compile Include="Patches\UI\UI_AssetBrowserSetupCategoryPatch.cs" />
-    <Compile Include="Patches\UI\UI_ListArrangePatch.cs" />
+    <Compile Include="Patches\UI\UI_SwitchButtonGroupStartPatch.cs" />
     <Compile Include="Patches\UI\UI_AssetBrowserSetupAssetIndexPatch.cs" />
     <Compile Include="ExtraAssetPlugin.cs" />
     <Compile Include="Patches\AssetDb\AssetDbGetAllGroupsPatch.cs" />

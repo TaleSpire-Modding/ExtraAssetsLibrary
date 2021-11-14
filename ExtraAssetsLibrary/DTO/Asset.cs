@@ -19,7 +19,7 @@ namespace ExtraAssetsLibrary.DTO
         Aura,
         Effects,
         Slab,
-//         Audio,
+        Audio,
 //         Base,
     }
 

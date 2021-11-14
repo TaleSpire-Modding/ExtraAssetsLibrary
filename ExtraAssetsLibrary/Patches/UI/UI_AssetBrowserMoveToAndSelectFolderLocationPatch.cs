@@ -13,14 +13,6 @@ namespace ExtraAssetsLibrary.Patches.UI
     {
         public static bool Prefix(ref int folderIndex, ref bool select)
         {
-            if (UI_AssetBrowserSetupCategoryPatch.setIndex == 3)
-            {
-                Debug.Log($"folder index is {folderIndex}");
-            }
-            else if (UI_AssetBrowserSetupCategoryPatch.setIndex == 4)
-            {
-                Debug.Log($"folder index is {folderIndex}");
-            }
             return true;
         }
 
