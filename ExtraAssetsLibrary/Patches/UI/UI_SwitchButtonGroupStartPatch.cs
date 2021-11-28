@@ -38,16 +38,15 @@ namespace ExtraAssetsLibrary.Patches.UI
     [HarmonyPatch(typeof(UI_SwitchButtonGroup), "Start")]
     class UI_SwitchButtonGroupStartPatch
     {
+        private static List<Button> addedButtons = new List<Button>();
+
         private static void Add(UI_SwitchButtonGroup __instance, int i, Button template, string key, ref List<Button> ____buttons)
         {
-            var distance = 30f;
             var clone = Object.Instantiate(template);
+            addedButtons.Add(clone);
             clone.transform.SetParent(__instance.transform, false);
             ____buttons.Add(clone);
             clone.gameObject.name = key;
-            var newPost = new Vector3(clone.transform.position.x, clone.transform.position.y - (distance * i), clone.transform.position.z);
-            var rot = clone.transform.rotation;
-            clone.transform.SetPositionAndRotation(newPost, rot);
             switch (i)
             {
                 case 3:
@@ -73,6 +72,27 @@ namespace ExtraAssetsLibrary.Patches.UI
                 Add(__instance,3,template,"Aura and Effects",ref ____buttons);
                 Add(__instance,4,template,"Slabs",ref ____buttons);
                 Add(__instance,5,template,"Audio",ref ____buttons);
+            }
+        }
+
+        public static void Postfix(UI_SwitchButtonGroup __instance, ref List<Button> ____buttons)
+        {
+            if (__instance.gameObject.name == "Catagory")
+            {
+                var template = ____buttons[0];
+                var secondButton = ____buttons[2];
+                var distance = template.transform.position.y - secondButton.transform.position.y;
+                Debug.Log($"Extra Asset Library: UI Distance - {distance}");
+                for (int i = 0; i < addedButtons.Count; i++)
+                {
+                    Debug.Log($"Adding item:{i}");
+                    var clone = addedButtons[i];
+                    var newPost = new Vector3(clone.transform.position.x,
+                        clone.transform.position.y - (distance * (i + 3)), clone.transform.position.z);
+                    var rot = clone.transform.rotation;
+                    clone.transform.SetPositionAndRotation(newPost, rot);
+                }
+                addedButtons.Clear();
             }
         }
     }

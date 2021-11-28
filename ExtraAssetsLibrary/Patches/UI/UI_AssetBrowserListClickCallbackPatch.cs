@@ -13,7 +13,6 @@ namespace ExtraAssetsLibrary.Patches.UI
     {
         public static bool Prefix(UIListItemClickEvents obj)
         {
-            Debug.Log("ListClickCallback Starting");
             return true;
         }
     }

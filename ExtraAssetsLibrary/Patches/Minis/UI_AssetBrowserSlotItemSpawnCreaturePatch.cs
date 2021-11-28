@@ -1,4 +1,5 @@
 ﻿using Bounce.Unmanaged;
+using ExtraAssetsLibrary.AssetDbExtension;
 using ExtraAssetsLibrary.DTO;
 using UnityEngine;
 using HarmonyLib;
@@ -9,7 +10,7 @@ namespace ExtraAssetsLibrary.Patches.Minis
     [HarmonyPatch(typeof(UI_AssetBrowserSlotItem), "Spawn")]
     public class UI_AssetBrowserSlotItemSpawnPatch
     {
-        static bool Prefix(NGuid ____nGuid,AssetDb.DbEntry.EntryKind ____entityKind)
+        static bool Prefix(UI_AssetBrowserSlotItem __instance,NGuid ____nGuid,AssetDb.DbEntry.EntryKind ____entityKind)
         {
             Debug.Log($"Entry Kind:{(CustomEntryKind)____entityKind}");
             var pass = true;
@@ -25,18 +26,22 @@ namespace ExtraAssetsLibrary.Patches.Minis
                     if (SlotItemSpawnPatch(____nGuid))
                     {
                         Debug.Log($"Extra Asset Library Plugin: Aura being called");
-                        var asset = UI_AssetBrowserSetupAssetIndexPatch.assets[____nGuid];
-                        asset.ModelCallback(____nGuid);
+                        //var asset = UI_AssetBrowserSetupAssetIndexPatch.assets[____nGuid];
+                        //asset.ModelCallback(____nGuid);
+                        __instance.call("SpawnCreature");
                     }
+                    
                 }
                 else if ((CustomEntryKind) ____entityKind == CustomEntryKind.Effects)
                 {
                     if (SlotItemSpawnPatch(____nGuid))
                     {
                         Debug.Log($"Extra Asset Library Plugin: Effects being called");
-                        var asset = UI_AssetBrowserSetupAssetIndexPatch.assets[____nGuid];
-                        asset.ModelCallback(____nGuid);
+                        //var asset = UI_AssetBrowserSetupAssetIndexPatch.assets[____nGuid];
+                        //asset.ModelCallback(____nGuid);
+                        __instance.call("SpawnCreature");
                     }
+                    
                 }
                 else if ((CustomEntryKind)____entityKind == CustomEntryKind.Slab)
                 {

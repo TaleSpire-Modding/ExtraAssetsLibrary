@@ -31,7 +31,7 @@ namespace ExtraAssetsLibrary
         {
             Debug.Log($"Extra Asset Library Plugin:{Name} is Active.");
             UI_AssetBrowserSetupAssetIndexPatch.initStatic();
-            ModdingUtils.Initialize(this, Logger);
+            // ModdingUtils.Initialize(this, Logger);
             DoPatching();
         }
 
@@ -63,7 +63,6 @@ namespace ExtraAssetsLibrary
         public static void AddAsset(Asset asset)
         {
             Debug.Log($"Extra Asset Library Plugin:Adding: {asset.Id}");
-            asset.CustomKind = CustomEntryKind.Effects;
             if (!UI_AssetBrowserSetupAssetIndexPatch.assets.ContainsKey(asset.Id))
             {
                 UI_AssetBrowserSetupAssetIndexPatch.assets.Add(asset.Id,asset);

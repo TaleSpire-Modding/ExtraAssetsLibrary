@@ -20,7 +20,6 @@ namespace ExtraAssetsLibrary.DTO
         Effects,
         Slab,
         Audio,
-//         Base,
     }
 
     public class Asset
