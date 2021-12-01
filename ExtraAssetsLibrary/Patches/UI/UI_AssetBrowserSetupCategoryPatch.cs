@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using ExtraAssetsLibrary.AssetDbExtension;
 using ExtraAssetsLibrary.DTO;
 using HarmonyLib;
+using JacksonDunstan.NativeCollections;
 using UnityEngine;
 
 namespace ExtraAssetsLibrary.Patches.UI
@@ -51,13 +53,22 @@ namespace ExtraAssetsLibrary.Patches.UI
                     var actual = ExtraDb.Zip(aura, effects);
                     var folder = actual[folderIndex];
                     instance.call("BrowseFolder", folder, false);
+                    Parallel.ForEach(ExtraAssetPlugin.OnCatagoryChange, (a) =>
+                    {
+                        a.Value(CustomEntryKind.Effects);
+                    });
                 }
                 if (setIndex > 4)
                 {
                     var assets = UI_AssetBrowserSetupAssetIndexPatch._injecting[setIndex + 1];
                     var folder = assets[folderIndex];
                     instance.call("BrowseFolder", folder, false);
+                    Parallel.ForEach(ExtraAssetPlugin.OnCatagoryChange, (a) =>
+                    {
+                        a.Value((CustomEntryKind)(setIndex+1));
+                    });
                 }
+
             }
             
         }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using BepInEx;
 using Bounce.TaleSpire.AssetManagement;
 using ExtraAssetsLibrary.DTO;
@@ -6,6 +7,7 @@ using ExtraAssetsLibrary.Handlers;
 using ExtraAssetsLibrary.Patches;
 using HarmonyLib;
 using System.Reflection;
+using BepInEx.Configuration;
 using Bounce.Unmanaged;
 using LordAshes;
 using UnityEngine;
@@ -20,6 +22,8 @@ namespace ExtraAssetsLibrary
         public const string Guid = "org.TMC.plugins.ExtraAssetLib";
         public const string Version = "1.2.0.0";
         private const string Name = "HolloFoxes' Extra Asset Library";
+
+        internal static Dictionary<string,Action<CustomEntryKind>> OnCatagoryChange = new Dictionary<string, Action<CustomEntryKind>>();
 
         public static void DoPatching()
         {
@@ -49,6 +53,13 @@ namespace ExtraAssetsLibrary
         {
 
         }
+
+        public static void AddOnCatagoryChange(string Guid, Action<CustomEntryKind> Callback)
+        {
+            if (!OnCatagoryChange.ContainsKey(Guid)) OnCatagoryChange.Add(Guid,Callback);
+        }
+
+        public static void RemoveCatagoryChange(string Guid) => OnCatagoryChange.Remove(Guid);
 
         /// <summary>
         /// List of all callbacks being run on an asset being loaded

@@ -17,7 +17,6 @@ namespace ExtraAssetsLibrary.Patches
             var effects = UI_AssetBrowserSetupAssetIndexPatch._injecting[4];
             var actual = ExtraDb.Zip(aura, effects);
             list.Add(((AssetDb.DbEntry.EntryKind)CustomEntryKind.Aura, actual));
-            list.Add(((AssetDb.DbEntry.EntryKind)CustomEntryKind.Effects, actual));
             list.Add(((AssetDb.DbEntry.EntryKind)CustomEntryKind.Slab, UI_AssetBrowserSetupAssetIndexPatch._injecting[5]));
             list.Add(((AssetDb.DbEntry.EntryKind)CustomEntryKind.Audio, UI_AssetBrowserSetupAssetIndexPatch._injecting[6]));
 

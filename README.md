@@ -1,4 +1,4 @@
-## Extra Assets Library (EAL)
+## Extra Assets Library
 The Extra Assets Library is a plugin to register custom assets into TaleSpire. 
 
 ## Installing With R2ModMan
@@ -11,7 +11,6 @@ Upon doing so, you'll need to configure the plugin manual by updating the config
 
 ## Player Usage
 Players will start to find all your minis within the UI Asset Browser with every other minis.
-
 
 ## Writing Mods with this
 
@@ -28,10 +27,10 @@ var asset = new ExtraAssetsLibrary.DTO.Asset
     Icon = icon, //Sprite (128x128)
     ModelCallback = ModelCallback, // Method
     
-    // optional method to load custom base, null loads DefaultBase()
+    // optional method to load custom base, null callback loads DefaultBase()
     BaseCallback = BaseCallback, 
 };
-ExtraAssetsLibrary.ExtraAssetPlugin.AddAsset(asset);
+ExtraAssetsLibrary.ExtraAssetPlugin.AddAsset(asset); // Name still WIP but methods the same.
 ```
 
 Example Callback
@@ -47,12 +46,19 @@ public static GameObject BaseCallback(NGuid id){
 
 ## Recommended Extra Plugin (WIP)
 In the works is an Asset Distribution plugin that will be paired with this plugin.
-- Asset Downloader
-   - Downloader GUI
-- CMP
 
 ## Changelog
-- 0.9.1: Null handler for CMP (WIP)
+- 1.2.0: Added 2 new Catagories, (Aura and Effects) and (Slabs)
+- 1.1.4: Global callback supplied for on asset load. Extra Asset information is now applicable for positions: [Torch, Spell Origin, Head Position (LOS), Hit Position (where spells aim for)]
+- 1.1.3: pre-callbacks are moved to UI Event instead of pre-load allowing to stop spawn completely and only on try to spawn (e.g. trigger to adding an aura)
+- 1.1.2: fix error thrown when tags are null
+- 1.1.1: semi-fix base loading in. Refactor logging
+- 1.1.0: Now allows callbacks before load and after placement.
+- 1.0.4: Fixed zipping issue where re-entering campaign tries appending to db again
+- 1.0.3: Assets can be added to existing groups
+- 1.0.2: optimized package by pointing to existing default base instead of copy
+- 1.0.1: prevent race condition.
+- 1.0.0: Null callback stops creature spawn in prep for CMP Effects.
 - 0.9.0: Alpha release
 
 Shoutout to my Patreons on https://www.patreon.com/HolloFox recognising your
