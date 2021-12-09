@@ -20,7 +20,7 @@ namespace ExtraAssetsLibrary
     {
         // constants
         public const string Guid = "org.TMC.plugins.ExtraAssetLib";
-        public const string Version = "1.2.0.0";
+        public const string Version = "1.3.0.0";
         private const string Name = "HolloFoxes' Extra Asset Library";
 
         internal static Dictionary<string,Action<CustomEntryKind>> OnCatagoryChange = new Dictionary<string, Action<CustomEntryKind>>();
