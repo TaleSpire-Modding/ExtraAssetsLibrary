@@ -440,7 +440,6 @@
     <Compile Include="Handlers\BaseHelper.cs" />
     <Compile Include="Handlers\BlobHandler.cs" />
     <Compile Include="Handlers\ImageHandler.cs" />
-    <Compile Include="ModdingUtil.cs" />
     <Compile Include="Patches\AssetDb\AssetDbAddIdAsDummyPlaceablePatch.cs" />
     <Compile Include="Patches\AssetDb\AssetDbGetIndexDataPatch.cs" />
     <Compile Include="Patches\Minis\AssetDbTryGetCreatureDataPatch.cs" />

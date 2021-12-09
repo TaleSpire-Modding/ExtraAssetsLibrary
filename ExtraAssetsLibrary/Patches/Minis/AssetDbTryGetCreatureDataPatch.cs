@@ -3,7 +3,6 @@ using Bounce.BlobAssets;
 using Bounce.TaleSpire.AssetManagement;
 using Bounce.Unmanaged;
 using HarmonyLib;
-using UnityEngine;
 
 namespace ExtraAssetsLibrary.Patches
 {
@@ -12,10 +11,11 @@ namespace ExtraAssetsLibrary.Patches
     {
         public static NGuid LastLoaded;
         public static NGuid LoadedBefore;
+
         internal static Dictionary<NGuid, BlobView<CreatureData>>
             newDb = new Dictionary<NGuid, BlobView<CreatureData>>();
 
-        static bool Postfix(bool original, NGuid id, ref BlobView<CreatureData> data)
+        private static bool Postfix(bool original, NGuid id, ref BlobView<CreatureData> data)
         {
             if (newDb.ContainsKey(id))
             {
@@ -29,8 +29,8 @@ namespace ExtraAssetsLibrary.Patches
                 LastLoaded = NGuid.Empty;
                 LoadedBefore = NGuid.Empty;
             }
+
             return original;
         }
     }
-
 }

@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using HarmonyLib;
+﻿using HarmonyLib;
 
 namespace ExtraAssetsLibrary.Patches.Tiles
 {
     [HarmonyPatch(typeof(PlaceableManager), "LoadPlaceablePrototype")]
-    class PalceableManagerLoadPlaceablePrototypePatch
+    internal class PalceableManagerLoadPlaceablePrototypePatch
     {
         public static bool Prefix()
         {

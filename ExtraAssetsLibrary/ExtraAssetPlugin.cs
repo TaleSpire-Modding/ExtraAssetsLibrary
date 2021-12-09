@@ -35,7 +35,6 @@ namespace ExtraAssetsLibrary
         {
             Debug.Log($"Extra Asset Library Plugin:{Name} is Active.");
             UI_AssetBrowserSetupAssetIndexPatch.initStatic();
-            // ModdingUtils.Initialize(this, Logger);
             DoPatching();
         }
 

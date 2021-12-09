@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using ExtraAssetsLibrary.AssetDbExtension;
 using ExtraAssetsLibrary.DTO;
-using ExtraAssetsLibrary.Handlers;
 using HarmonyLib;
 using LordAshes;
 using UnityEngine;
@@ -10,9 +9,9 @@ using UnityEngine.UI;
 namespace ExtraAssetsLibrary.Patches.UI
 {
     [HarmonyPatch(typeof(UI_AssetBrowser), "SwitchCatagory")]
-    class UI_AssetBrowserSwitchCatagoryPatch
+    internal class UI_AssetBrowserSwitchCatagoryPatch
     {
-        public static bool Prefix(ref int index, ref UI_AssetBrowser __instance,AssetBrowserSearch ____search)
+        public static bool Prefix(ref int index, ref UI_AssetBrowser __instance, AssetBrowserSearch ____search)
         {
             if (index > 2)
             {
@@ -29,18 +28,21 @@ namespace ExtraAssetsLibrary.Patches.UI
                         ____search.SwitchAssetKind((AssetDb.DbEntry.EntryKind) CustomEntryKind.Audio);
                         break;
                 }
+
                 return false;
             }
+
             return true;
         }
     }
 
     [HarmonyPatch(typeof(UI_SwitchButtonGroup), "Start")]
-    class UI_SwitchButtonGroupStartPatch
+    internal class UI_SwitchButtonGroupStartPatch
     {
-        private static List<Button> addedButtons = new List<Button>();
+        private static readonly List<Button> addedButtons = new List<Button>();
 
-        private static void Add(UI_SwitchButtonGroup __instance, int i, Button template, string key, ref List<Button> ____buttons)
+        private static void Add(UI_SwitchButtonGroup __instance, int i, Button template, string key,
+            ref List<Button> ____buttons)
         {
             var clone = Object.Instantiate(template);
             addedButtons.Add(clone);
@@ -50,18 +52,21 @@ namespace ExtraAssetsLibrary.Patches.UI
             switch (i)
             {
                 case 3:
-                    clone.GetComponentsInChildren<Image>()[2].sprite = FileAccessPlugin.Image.LoadSprite("Images/Icons/aura-and-effects-fire.png");
+                    clone.GetComponentsInChildren<Image>()[2].sprite =
+                        FileAccessPlugin.Image.LoadSprite("Images/Icons/aura-and-effects-fire.png");
                     break;
                 case 4:
-                    clone.GetComponentsInChildren<Image>()[2].sprite = FileAccessPlugin.Image.LoadSprite("Images/Icons/slab-sketch.png");
+                    clone.GetComponentsInChildren<Image>()[2].sprite =
+                        FileAccessPlugin.Image.LoadSprite("Images/Icons/slab-sketch.png");
                     break;
                 case 5:
-                    clone.GetComponentsInChildren<Image>()[2].sprite = FileAccessPlugin.Image.LoadSprite("Images/Icons/audio-note.png");
+                    clone.GetComponentsInChildren<Image>()[2].sprite =
+                        FileAccessPlugin.Image.LoadSprite("Images/Icons/audio-note.png");
                     break;
             }
         }
 
-        public static void Prefix(UI_SwitchButtonGroup __instance, 
+        public static void Prefix(UI_SwitchButtonGroup __instance,
             ref List<Button> ____buttons)
         {
             Debug.Log($"UI_SwitchButtonGroup Count:{____buttons.Count}");
@@ -69,9 +74,9 @@ namespace ExtraAssetsLibrary.Patches.UI
             if (__instance.gameObject.name == "Catagory")
             {
                 var template = ____buttons[0];
-                Add(__instance,3,template,"Aura and Effects",ref ____buttons);
-                Add(__instance,4,template,"Slabs",ref ____buttons);
-                Add(__instance,5,template,"Audio",ref ____buttons);
+                Add(__instance, 3, template, "Aura and Effects", ref ____buttons);
+                Add(__instance, 4, template, "Slabs", ref ____buttons);
+                Add(__instance, 5, template, "Audio", ref ____buttons);
             }
         }
 
@@ -83,15 +88,16 @@ namespace ExtraAssetsLibrary.Patches.UI
                 var secondButton = ____buttons[2];
                 var distance = template.transform.position.y - secondButton.transform.position.y;
                 Debug.Log($"Extra Asset Library: UI Distance - {distance}");
-                for (int i = 0; i < addedButtons.Count; i++)
+                for (var i = 0; i < addedButtons.Count; i++)
                 {
                     Debug.Log($"Adding item:{i}");
                     var clone = addedButtons[i];
                     var newPost = new Vector3(clone.transform.position.x,
-                        clone.transform.position.y - (distance * (i + 3)), clone.transform.position.z);
+                        clone.transform.position.y - distance * (i + 3), clone.transform.position.z);
                     var rot = clone.transform.rotation;
                     clone.transform.SetPositionAndRotation(newPost, rot);
                 }
+
                 addedButtons.Clear();
             }
         }

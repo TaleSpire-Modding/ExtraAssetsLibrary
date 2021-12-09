@@ -8,7 +8,8 @@ namespace ExtraAssetsLibrary.Patches
     [HarmonyPatch(typeof(AssetDb), "GetIndexData")]
     public class AssetDbGetIndexDataPatch
     {
-        static bool Prefix(ref Dictionary<NGuid, AssetDb.DbEntry> ____indexData, NGuid id, ref AssetDb.DbEntry __result)
+        private static bool Prefix(ref Dictionary<NGuid, AssetDb.DbEntry> ____indexData, NGuid id,
+            ref AssetDb.DbEntry __result)
         {
             try
             {
@@ -20,6 +21,7 @@ namespace ExtraAssetsLibrary.Patches
                 ____indexData[id] = UI_AssetBrowserSetupAssetIndexPatch.GetInjecting(id);
                 __result = ____indexData[id];
             }
+
             return false;
         }
     }

@@ -13,8 +13,10 @@ namespace ExtraAssetsLibrary.Patches
         internal static List<NGuid> newDb = new List<NGuid>();
         public static NGuid LastLoaded;
 
-        static bool Prefix(ref TilePreviewBoardAsset __instance, NGuid boardAssetId, Vector3 position, Quaternion rotation, 
-            ref NGuid ___AssetId, ref int ___OrientationOffset, ref Bounds ___ColliderBoundsBound, ref AssetLoader[] ____assetLoaders, 
+        private static bool Prefix(ref TilePreviewBoardAsset __instance, NGuid boardAssetId, Vector3 position,
+            Quaternion rotation,
+            ref NGuid ___AssetId, ref int ___OrientationOffset, ref Bounds ___ColliderBoundsBound,
+            ref AssetLoader[] ____assetLoaders,
             ref int ____assetsStillToLoad, ref GameObject ____container)
         {
             if (newDb.Contains(boardAssetId))
@@ -24,29 +26,30 @@ namespace ExtraAssetsLibrary.Patches
                     AssetDb.AddIdAsDummyPlaceable(boardAssetId, PlaceableKind.Tile);
                     Debug.Log($"Extra Asset Library Plugin:Create dummy for {boardAssetId}");
                 }
+
                 Debug.Log("Extra Asset Library Plugin:Load Exist");
                 LastLoaded = boardAssetId;
                 ___AssetId = boardAssetId;
 
                 ___OrientationOffset = 0;
                 ___ColliderBoundsBound = new Bounds(new Vector3(0.5f, 0.5f, 0.5f), Vector3.one);
-                int length = 1;
+                var length = 1;
                 ____assetLoaders = new AssetLoader[length];
-                for (int index = 0; index < length; ++index)
+                for (var index = 0; index < length; ++index)
                 {
-                    GameObject gameObject = new GameObject("AssetLoader");
+                    var gameObject = new GameObject("AssetLoader");
                     ____assetLoaders[index] = gameObject.AddComponent<AssetLoader>();
                 }
+
                 ____assetsStillToLoad = length;
-                for (int index = 0; index < length; ++index)
-                    ____assetLoaders[index].Init(__instance, ____container.transform, new BlobView<AssetLoaderData.Packed>());
+                for (var index = 0; index < length; ++index)
+                    ____assetLoaders[index].Init(__instance, ____container.transform,
+                        new BlobView<AssetLoaderData.Packed>());
                 __instance.transform.SetPositionAndRotation(position, rotation);
                 return false;
             }
-            else
-            {
-                LastLoaded = NGuid.Empty;
-            }
+
+            LastLoaded = NGuid.Empty;
             return true;
         }
     }

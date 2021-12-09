@@ -1,17 +1,14 @@
 ﻿using Bounce.Unmanaged;
-using DataModel;
 using HarmonyLib;
-using Unity.Mathematics;
-using UnityEngine;
 
 namespace ExtraAssetsLibrary.Patches
 {
     [HarmonyPatch(typeof(CreatureManager), "AddOrRequestAddCreature")]
-    class CreatureManagerPatchAddOrRequestAddCreature
+    internal class CreatureManagerPatchAddOrRequestAddCreature
     {
         public static NGuid LastLoaded;
 
-        static void Postfix(ref CreatureDataV2 data,
+        private static void Postfix(ref CreatureDataV2 data,
             PlayerGuid[] owners,
             bool sync,
             bool spawnedByLoad)

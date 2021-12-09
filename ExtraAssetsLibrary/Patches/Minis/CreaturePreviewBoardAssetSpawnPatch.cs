@@ -1,16 +1,13 @@
-﻿using Bounce.TaleSpire.AssetManagement;
+﻿using HarmonyLib;
 using UnityEngine;
-using HarmonyLib;
-using Unity.Mathematics;
 
 namespace ExtraAssetsLibrary.Patches
 {
     [HarmonyPatch(typeof(CreatureSpawnerBoardTool), "SwitchCreatureTool")]
     public class CreaturePreviewBoardAssetSpawnPatch
     {
-        static void Postfix(CreatureDataV2 info, ref CreaturePreviewBoardAsset ____pickupObject)
+        private static void Postfix(CreatureDataV2 info, ref CreaturePreviewBoardAsset ____pickupObject)
         {
-            
             if (UI_AssetBrowserSetupAssetIndexPatch.assets.ContainsKey(____pickupObject.DbEntry.Id))
             {
                 // CreatureManager.SetCreatureScale(____pickupObject.CreatureData.CreatureId, 0,2);
@@ -19,7 +16,7 @@ namespace ExtraAssetsLibrary.Patches
                 //Debug.Log($"Scale:{____pickupObject.Scale}");
             }
 
-            
+
             if (AssetLoaderInitPatch.stopSpawn)
             {
                 Debug.Log("Extra Asset Library Plugin:Closing Spawner");

@@ -8,7 +8,7 @@ using UnityEngine;
 namespace ExtraAssetsLibrary.Patches
 {
     [HarmonyPatch(typeof(AssetDb), "GetAllGroups")]
-    class AssetDbGetAllGroupsPatch
+    internal class AssetDbGetAllGroupsPatch
     {
         public static void Postfix(ref (AssetDb.DbEntry.EntryKind, List<AssetDb.DbGroup>)[] __result)
         {
@@ -16,9 +16,11 @@ namespace ExtraAssetsLibrary.Patches
             var aura = UI_AssetBrowserSetupAssetIndexPatch._injecting[3];
             var effects = UI_AssetBrowserSetupAssetIndexPatch._injecting[4];
             var actual = ExtraDb.Zip(aura, effects);
-            list.Add(((AssetDb.DbEntry.EntryKind)CustomEntryKind.Aura, actual));
-            list.Add(((AssetDb.DbEntry.EntryKind)CustomEntryKind.Slab, UI_AssetBrowserSetupAssetIndexPatch._injecting[5]));
-            list.Add(((AssetDb.DbEntry.EntryKind)CustomEntryKind.Audio, UI_AssetBrowserSetupAssetIndexPatch._injecting[6]));
+            list.Add(((AssetDb.DbEntry.EntryKind) CustomEntryKind.Aura, actual));
+            list.Add(((AssetDb.DbEntry.EntryKind) CustomEntryKind.Slab,
+                UI_AssetBrowserSetupAssetIndexPatch._injecting[5]));
+            list.Add(((AssetDb.DbEntry.EntryKind) CustomEntryKind.Audio,
+                UI_AssetBrowserSetupAssetIndexPatch._injecting[6]));
 
             __result = list.ToArray();
             Debug.Log($"Extra Asset Library Plugin: Added {__result.Length} Catagories");
@@ -26,7 +28,7 @@ namespace ExtraAssetsLibrary.Patches
     }
 
     [HarmonyPatch(typeof(AssetDb), "GetGroupsByKind")]
-    class AssetDbGetGroupsByKindPatch
+    internal class AssetDbGetGroupsByKindPatch
     {
         public static void Postfix(ref AssetDb.DbEntry.EntryKind kind, ref List<AssetDb.DbGroup> __result)
         {

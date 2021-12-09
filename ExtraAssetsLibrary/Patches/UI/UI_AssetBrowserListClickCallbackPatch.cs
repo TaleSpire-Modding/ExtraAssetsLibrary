@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using HarmonyLib;
-using UnityEngine;
+﻿using HarmonyLib;
 
 namespace ExtraAssetsLibrary.Patches.UI
 {
     [HarmonyPatch(typeof(UI_AssetBrowser), "ListClickCallback")]
-    class UI_AssetBrowserListClickCallbackPatch
+    internal class UI_AssetBrowserListClickCallbackPatch
     {
         public static bool Prefix(UIListItemClickEvents obj)
         {
