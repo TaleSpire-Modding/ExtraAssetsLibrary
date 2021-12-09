@@ -48,6 +48,13 @@ public static GameObject BaseCallback(NGuid id){
 In the works is an Asset Distribution plugin that will be paired with this plugin.
 
 ## Changelog
+- 1.3.0: Released Changes from 1.2.X,
+- 1.2.6: Fixed error being thrown in Harmony Patch due to Core TS Update.
+- 1.2.5: Fixed Padding for new Icon Categories
+- 1.2.4: Fixed blob errors being thrown
+- 1.2.3: Repiped Effects via creature spawner
+- 1.2.2: Added Asset ToolTip Dependency
+- 1.2.1: Added FAP Dependencies and Icons
 - 1.2.0: Added 2 new Catagories, (Aura and Effects) and (Slabs)
 - 1.1.4: Global callback supplied for on asset load. Extra Asset information is now applicable for positions: [Torch, Spell Origin, Head Position (LOS), Hit Position (where spells aim for)]
 - 1.1.3: pre-callbacks are moved to UI Event instead of pre-load allowing to stop spawn completely and only on try to spawn (e.g. trigger to adding an aura)
