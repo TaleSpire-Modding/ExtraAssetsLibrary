@@ -26,7 +26,7 @@ namespace ExtraAssetsLibrary.Patches
         public static AssetDb.DbEntry GetInjecting(NGuid id)
         {
             foreach (var group in _injecting)
-            foreach (var g in @group)
+            foreach (var g in group)
                 if (g.Entries.Any(i => i.Id == id))
                     return g.Entries.Single(i => i.Id == id);
             return null;
@@ -100,16 +100,16 @@ namespace ExtraAssetsLibrary.Patches
                 var injecting = _injecting[(int) kind.Item1];
                 var injectingGroups = injecting;
                 foreach (var group in injectingGroups)
-                    if (kind.Item2.Any(g => g.Name == @group.Name))
+                    if (kind.Item2.Any(g => g.Name == group.Name))
                     {
-                        var loc = kind.Item2.Single(g => g.Name == @group.Name);
-                        foreach (var e in @group.Entries)
+                        var loc = kind.Item2.Single(g => g.Name == group.Name);
+                        foreach (var e in group.Entries)
                             if (loc.Entries.All(le => le.Id != e.Id))
                                 loc.Entries.Add(e);
                     }
                     else
                     {
-                        kind.Item2.Add(@group);
+                        kind.Item2.Add(group);
                     }
 
                 var groups = kind.Item2.OrderBy(i => i.Name).ToList();

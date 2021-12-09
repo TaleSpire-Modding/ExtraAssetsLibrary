@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using Bounce.ManagedCollections;
-using ExtraAssetsLibrary.AssetDbExtension;
 using ExtraAssetsLibrary.DTO;
 using HarmonyLib;
 using UnityEngine;
@@ -16,10 +15,14 @@ namespace ExtraAssetsLibrary.Patches
             // var aura = UI_AssetBrowserSetupAssetIndexPatch._injecting[3];
             // var effects = UI_AssetBrowserSetupAssetIndexPatch._injecting[4];
             // var actual = ExtraDb.Zip(aura, effects);
-            list.Add(((AssetDb.DbEntry.EntryKind) CustomEntryKind.Aura, UI_AssetBrowserSetupAssetIndexPatch._injecting[3]));
-            list.Add(((AssetDb.DbEntry.EntryKind) CustomEntryKind.Effects, UI_AssetBrowserSetupAssetIndexPatch._injecting[4]));
-            list.Add(((AssetDb.DbEntry.EntryKind) CustomEntryKind.Slab, UI_AssetBrowserSetupAssetIndexPatch._injecting[5]));
-            list.Add(((AssetDb.DbEntry.EntryKind) CustomEntryKind.Audio, UI_AssetBrowserSetupAssetIndexPatch._injecting[6]));
+            list.Add(((AssetDb.DbEntry.EntryKind) CustomEntryKind.Aura,
+                UI_AssetBrowserSetupAssetIndexPatch._injecting[3]));
+            list.Add(((AssetDb.DbEntry.EntryKind) CustomEntryKind.Effects,
+                UI_AssetBrowserSetupAssetIndexPatch._injecting[4]));
+            list.Add(((AssetDb.DbEntry.EntryKind) CustomEntryKind.Slab,
+                UI_AssetBrowserSetupAssetIndexPatch._injecting[5]));
+            list.Add(((AssetDb.DbEntry.EntryKind) CustomEntryKind.Audio,
+                UI_AssetBrowserSetupAssetIndexPatch._injecting[6]));
             __result = list.ToArray();
             Debug.Log($"Extra Asset Library Plugin: Added {__result.Length} Catagories");
         }

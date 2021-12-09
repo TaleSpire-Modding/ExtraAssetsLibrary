@@ -8,7 +8,6 @@ using UnityEngine.UI;
 
 namespace ExtraAssetsLibrary.Patches.UI
 {
-
     [HarmonyPatch(typeof(UI_AssetBrowser), "SwitchCatagory")]
     internal class UI_AssetBrowserSwitchCatagoryPatch
     {
@@ -100,7 +99,6 @@ namespace ExtraAssetsLibrary.Patches.UI
                 }
 
                 addedButtons.Clear();
-                
             }
         }
     }
