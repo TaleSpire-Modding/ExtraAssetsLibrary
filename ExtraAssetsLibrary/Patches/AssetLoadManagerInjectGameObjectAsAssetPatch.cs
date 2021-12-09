@@ -32,26 +32,28 @@ namespace ExtraAssetsLibrary.Patches
             return o;
         }
 
-        static bool Prefix(ref BlobView<AssetLoaderData.Packed> __result, GameObject src, float3 position, quaternion rotation, float3 scale, 
-            ref AssetLoadManager __instance, ref NativeList<BlobAssetReference<AssetLoaderData.Packed>>  ____injectedBlobData, 
+        private static bool Prefix(ref BlobView<AssetLoaderData.Packed> __result, GameObject src, float3 position,
+            quaternion rotation, float3 scale,
+            ref AssetLoadManager __instance,
+            ref NativeList<BlobAssetReference<AssetLoaderData.Packed>> ____injectedBlobData,
             ref Dictionary<string, GameObject> ____assets)
         {
             if (InjectAssetNGuid != NGuid.Empty)
             {
-                using (BlobBuilder blobBuilder = new BlobBuilder(Allocator.TempJob))
+                using (var blobBuilder = new BlobBuilder(Allocator.TempJob))
                 {
-                    BlobBuilder builder = blobBuilder;
-                    ref AssetLoaderData.Packed local = ref builder.ConstructRoot<AssetLoaderData.Packed>();
-                    NGuid nguid = InjectAssetNGuid;
+                    var builder = blobBuilder;
+                    ref var local = ref builder.ConstructRoot<AssetLoaderData.Packed>();
+                    var nguid = InjectAssetNGuid;
                     new AssetLoaderData
                     {
                         path = "_injected_",
                         assetName = nguid.ToString(),
-                        position = ((Vector3) position),
-                        rotation = ((Quaternion) rotation),
-                        scale = ((Vector3) scale)
+                        position = position,
+                        rotation = rotation,
+                        scale = scale
                     }.Pack(builder, InjectPackNGuid, ref local);
-                    BlobAssetReference<AssetLoaderData.Packed> blobAssetReference =
+                    var blobAssetReference =
                         blobBuilder.CreateBlobAssetReference<AssetLoaderData.Packed>(Allocator.Persistent);
                     ____injectedBlobData.Add(in blobAssetReference);
 
@@ -60,13 +62,14 @@ namespace ExtraAssetsLibrary.Patches
                             ? blobAssetReference.Value.GenFullyQualifiedId()
                             : FullyQualifiedIdReplacer, src);
 
-                    __result = blobAssetReference.TakeView<AssetLoaderData.Packed>();
-                    Debug.Log(blobAssetReference.Value.GenFullyQualifiedId());
+                    __result = blobAssetReference.TakeView();
+                    Debug.Log($"Extra Asset Library Plugin:{blobAssetReference.Value.GenFullyQualifiedId()}");
                 }
+
                 return false;
             }
+
             return true;
         }
-
     }
 }

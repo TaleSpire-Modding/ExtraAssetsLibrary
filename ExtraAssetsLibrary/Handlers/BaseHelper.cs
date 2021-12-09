@@ -1,5 +1,4 @@
 ﻿using System.IO;
-using System.Reflection;
 using Bounce.Unmanaged;
 using ExtraAssetsLibrary.Patches;
 using Unity.Mathematics;
@@ -12,12 +11,7 @@ namespace ExtraAssetsLibrary.Handlers
         /// <summary>
         /// Need to adjust and point this towards TaleSpire.exe
         /// </summary>
-        private static string assemblyFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-
-        /// <summary>
-        /// Cache of bases as needed.
-        /// </summary>
-        // public static Dictionary<string, GameObject> _loadedBases = new Dictionary<string, GameObject>();
+        private static string assemblyFolder = $"{Path.GetDirectoryName(BepInEx.Paths.ExecutablePath)}";
 
         /// <summary>
         /// Provides an empty gameobject as a template for a creature that wants no base.
@@ -34,11 +28,10 @@ namespace ExtraAssetsLibrary.Handlers
         public static GameObject DefaultBase(NGuid nguid = new NGuid())
         {
             if (AssetLoadManager.Instance.TryGetAsset("d71427a1-5535-4fa7-82d7-4ca1e75edbfdchar_base01_1462710208clothBase", out var reference) == AssetLoadManager.AssetLoadStatus.Loaded) return reference;
-
-            string id = "DefaultClothBase";
-            // if (_loadedBases.ContainsKey(id)) return _loadedBases[id];
-
-            var myBundle = AssetBundle.LoadFromFile($"{assemblyFolder}\\default_base");
+            return new GameObject();
+            
+            /*
+            var myBundle = AssetBundle.LoadFromFile($"{assemblyFolder}\\Taleweaver\\d71427a1-5535-4fa7-82d7-4ca1e75edbfd\\Assets\\char_base01_1462710208");
             var miniBase = myBundle.LoadAsset<GameObject>("clothBase");
             var baseRenderer = miniBase.GetComponent<Renderer>();
             baseRenderer.material.shader = Shader.Find("Taleweaver/CreatureShader");
@@ -46,7 +39,6 @@ namespace ExtraAssetsLibrary.Handlers
             {
                 renderer.material.shader = Shader.Find("Taleweaver/CreatureShader");
             }
-            // _loadedBases[id] = miniBase;
 
             AssetLoadManagerInjectGameObjectAsAssetPatch.InjectGameObjectAsAssetPatch(
                 miniBase,
@@ -58,7 +50,7 @@ namespace ExtraAssetsLibrary.Handlers
                 "d71427a1-5535-4fa7-82d7-4ca1e75edbfdchar_base01_1462710208clothBase"
             );
 
-            return miniBase;
+            return miniBase;*/
         }
     }
 }

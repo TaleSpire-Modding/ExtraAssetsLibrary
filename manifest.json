@@ -1,11 +1,13 @@
 {
-    "name": "Extra Assets Library",
-    "version_number": "1.0.0",
-    "website_url": "https://www.patreon.com/HolloFox",
+    "name": "Extra_Assets_Library",
+    "version_number": "1.3.0",
+    "website_url": "https://github.com/TaleSpire-Modding/ExtraAssetsLibrary",
     "description": "Extra Assets Library is a new tool to allow the injection of new assets into your game.",
     "dependencies":
 	[
         "bbepisTaleSpire-BepInExPack-5.4.10",
-	"brcoding-SetInjectionFlagPlugin-2.3.0"
+	"brcoding-SetInjectionFlagPlugin-2.3.0",
+	"HolloFox_TS-AssetToolTipPlugin-1.0.2",
+	"LordAshes-FileAccessPlugin-1.3.1"
     ]
 }
