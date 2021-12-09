@@ -44,7 +44,6 @@ namespace ExtraAssetsLibrary.Patches.UI
             }
             else
             {
-                Debug.Log($"match, {setIndex}");
                 if (setIndex == 3)
                 {
                     var aura = UI_AssetBrowserSetupAssetIndexPatch._injecting[3];
