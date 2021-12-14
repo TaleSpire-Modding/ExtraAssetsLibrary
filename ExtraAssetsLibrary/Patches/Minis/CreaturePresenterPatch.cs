@@ -22,9 +22,6 @@ namespace ExtraAssetsLibrary.Patches.Minis
 
         private static bool Prefix(in CreatureDataV2 data, ShaderStateRef shaderRef, float time)
         {
-            Debug.Log($"{data.CreatureId}");
-            Debug.Log($"{data.UniqueId}");
-            Debug.Log($"{data.BoardAssetIds[0]}");
             if (!AssetDb.TryGetCreatureData(data.BoardAssetIds[0], out var blobData))
             {
                 cg.Add(data.CreatureId, data.UniqueId);
