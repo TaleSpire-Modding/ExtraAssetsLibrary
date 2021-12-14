@@ -34,6 +34,19 @@ namespace ExtraAssetsLibrary.AssetDbExtension
             return null;
         }
 
+        public static void call<T>(string methodName, params object[] args)
+        {
+            var myClassType = Assembly.GetExecutingAssembly().GetType(typeof(T).Namespace + ".myClass"); 
+            myClassType.GetMethod(methodName, BindingFlags.NonPublic | BindingFlags.Static).Invoke(null, args);
+        }
+
+        public static I GetValue<T,I>(string methodName)
+        {
+            var mi = typeof(T).GetField(methodName, BindingFlags.NonPublic | BindingFlags.Static);
+            return (I) mi?.GetValue(null);
+        }
+
+
         public static void SetValue(this object o, string methodName, object value)
         {
             var mi = o.GetType().GetField(methodName, BindingFlags.NonPublic | BindingFlags.Instance);
