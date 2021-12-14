@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Reflection;
 using BepInEx;
+using BepInEx.Configuration;
 using Bounce.TaleSpire.AssetManagement;
 using Bounce.Unmanaged;
 using ExtraAssetsLibrary.DTO;
@@ -22,6 +23,8 @@ namespace ExtraAssetsLibrary
         public const string Version = "1.3.0.0";
         private const string Name = "HolloFoxes' Extra Asset Library";
 
+        internal static ConfigEntry<bool> AutoClear { get; set; }
+
         private const BindingFlags bindFlags =
             BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static;
 
@@ -40,11 +43,17 @@ namespace ExtraAssetsLibrary
             harmony.PatchAll();
         }
 
+        public static void DoConfig(ConfigFile Config)
+        {
+            AutoClear = Config.Bind("Mini Loading", "Auto Clear Failed Minis", false);
+        }
+
         private void Awake()
         {
             Debug.Log($"Extra Asset Library Plugin:{Name} is Active.");
             UI_AssetBrowserSetupAssetIndexPatch.initStatic();
             DoPatching();
+            DoConfig(Config);
         }
 
         private void Update()

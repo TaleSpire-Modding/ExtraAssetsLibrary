@@ -28,7 +28,8 @@ namespace ExtraAssetsLibrary.Patches.Minis
             if (!AssetDb.TryGetCreatureData(data.BoardAssetIds[0], out var blobData))
             {
                 cg.Add(data.CreatureId, data.UniqueId);
-                SystemMessage.SendSystemMessage("Error", "Creature spawn failed, do you want to remove creature?", "OK", RemoveCreature,"No");
+                if (ExtraAssetPlugin.AutoClear.Value) RemoveCreature();
+                else SystemMessage.SendSystemMessage("Error", "Creature spawn failed, do you want to remove creature?", "OK", RemoveCreature,"No");
                 return false;
             }
             return true;
