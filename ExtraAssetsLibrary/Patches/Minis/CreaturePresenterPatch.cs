@@ -22,7 +22,7 @@ namespace ExtraAssetsLibrary.Patches.Minis
 
         private static bool Prefix(in CreatureDataV2 data, ShaderStateRef shaderRef, float time)
         {
-            if (!AssetDb.TryGetCreatureData(data.BoardAssetIds[0], out var blobData))
+            if (!AssetDb.TryGetCreatureData(data.BoardAssetIds[0], out _) && !AssetDb.TryGetPlaceableData(data.BoardAssetIds[0], out _))
             {
                 cg.Add(data.CreatureId, data.UniqueId);
                 if (ExtraAssetPlugin.AutoClear.Value) RemoveCreature();
