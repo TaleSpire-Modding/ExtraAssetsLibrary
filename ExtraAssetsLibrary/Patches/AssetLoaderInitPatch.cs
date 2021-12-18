@@ -64,6 +64,7 @@ namespace ExtraAssetsLibrary.Patches
                         );
                         blobs.Add(AssetDbTryGetCreatureDataPatch.LastLoaded, blob);
                         data = blob;
+                        model.transform.localScale = model.transform.localScale/ UI_AssetBrowserSetupAssetIndexPatch.assets[AssetDbTryGetCreatureDataPatch.LastLoaded].DefaultScale;
                     }
 
                     AssetDbTryGetCreatureDataPatch.LastLoaded = NGuid.Empty;

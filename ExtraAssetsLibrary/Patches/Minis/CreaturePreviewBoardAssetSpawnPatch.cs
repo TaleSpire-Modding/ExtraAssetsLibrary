@@ -4,16 +4,14 @@ using UnityEngine;
 namespace ExtraAssetsLibrary.Patches
 {
     [HarmonyPatch(typeof(CreatureSpawnerBoardTool), "SwitchCreatureTool")]
-    public class CreaturePreviewBoardAssetSpawnPatch
+    public class CreatureSpawnBoardAssetSpawnPatch
     {
         private static void Postfix(CreatureDataV2 info, ref CreaturePreviewBoardAsset ____pickupObject)
         {
             if (UI_AssetBrowserSetupAssetIndexPatch.assets.ContainsKey(____pickupObject.DbEntry.Id))
             {
-                // CreatureManager.SetCreatureScale(____pickupObject.CreatureData.CreatureId, 0,2);
-                //Debug.Log($"found:{____pickupObject.DbEntry.Id}");
-                //Debug.Log($"Scale:{____pickupObject.BaseRadius}");
-                //Debug.Log($"Scale:{____pickupObject.Scale}");
+                var asset = UI_AssetBrowserSetupAssetIndexPatch.assets[____pickupObject.DbEntry.Id];
+                ____pickupObject.Scale = asset.DefaultScale;
             }
 
 
