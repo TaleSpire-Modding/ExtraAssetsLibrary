@@ -16,6 +16,24 @@ namespace ExtraAssetsLibrary.Patches
 
         internal static bool stopSpawn;
 
+        private static void Postfix()
+        {
+            if (CreatureSpawnBoardAssetSpawnPatch.respawn && CreatureSpawnBoardAssetSpawnPatch.tinfo != null)
+            {
+                SingletonBehaviour<BoardToolManager>.Instance.SwitchToTool<BoardTool>();
+                CreatureSpawnerBoardTool.SwitchCreatureTool(CreatureSpawnBoardAssetSpawnPatch.tinfo.Value);
+                CreatureSpawnBoardAssetSpawnPatch.respawn = false;
+                CreatureSpawnBoardAssetSpawnPatch.tinfo = null;
+            }
+
+            if (stopSpawn)
+            {
+                Debug.Log("Extra Asset Library Plugin:Closing Spawner");
+                stopSpawn = false;
+                SingletonBehaviour<BoardToolManager>.Instance.SwitchToTool<BoardTool>();
+            }
+        }
+
         private static bool Prefix(ref AssetLoader __instance, ref Transform ____transform,
             ref IAssetContainer ____assetContainer, IAssetContainer boardAsset, Transform parent,
             ref BlobView<AssetLoaderData.Packed> data)
@@ -55,6 +73,7 @@ namespace ExtraAssetsLibrary.Patches
                         {
                             model = new GameObject();
                             stopSpawn = true;
+                            CreatureSpawnBoardAssetSpawnPatch.respawn = false;
                             return false;
                         }
 

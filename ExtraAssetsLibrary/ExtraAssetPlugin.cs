@@ -8,14 +8,17 @@ using Bounce.Unmanaged;
 using ExtraAssetsLibrary.DTO;
 using ExtraAssetsLibrary.Handlers;
 using ExtraAssetsLibrary.Patches;
+using ExtraAssetsLibrary.Patches.Projectile;
 using HarmonyLib;
 using LordAshes;
+using RadialUI;
 using UnityEngine;
 
 namespace ExtraAssetsLibrary
 {
     [BepInPlugin(Guid, Name, Version)]
     [BepInDependency(FileAccessPlugin.Guid)]
+    [BepInDependency(RadialUIPlugin.Guid)]
     public class ExtraAssetPlugin : BaseUnityPlugin
     {
         // constants
@@ -56,9 +59,7 @@ namespace ExtraAssetsLibrary
             DoConfig(Config);
         }
 
-        private void Update()
-        {
-        }
+        
 
         /// <summary>
         ///     This method should be run on awake by your plugin.
@@ -84,6 +85,19 @@ namespace ExtraAssetsLibrary
         /// <param name="asset">Description of your asset you are injecting.</param>
         public static void AddAsset(Asset asset)
         {
+            if (asset.CustomKind == CustomEntryKind.Projectile)
+            {
+                RadialUIPlugin.AddCustomButtonAttacksSubmenu(Guid, new MapMenu.ItemArgs
+                    {
+                        Action = ParticleStack.CustomParticle,
+                        Title = asset.Name,
+                        Icon = asset.Icon,
+                        Obj = asset.ModelCallback
+                    }, ParticleStack.Check
+                );
+                return;
+            }
+
             Debug.Log($"Extra Asset Library Plugin:Adding: {asset.Id}");
             if (!UI_AssetBrowserSetupAssetIndexPatch.assets.ContainsKey(asset.Id))
                 UI_AssetBrowserSetupAssetIndexPatch.assets.Add(asset.Id, asset);

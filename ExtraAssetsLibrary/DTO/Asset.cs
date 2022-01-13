@@ -20,7 +20,8 @@ namespace ExtraAssetsLibrary.DTO
         Aura,
         Effects,
         Slab,
-        Audio
+        Audio,
+        Projectile,
     }
 
     public class Asset
