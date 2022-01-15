@@ -43,7 +43,8 @@ namespace ExtraAssetsLibrary.Patches
                     new List<AssetDb.DbGroup>(), // Auras
                     new List<AssetDb.DbGroup>(), // Effects
                     new List<AssetDb.DbGroup>(), // Slabs
-                    new List<AssetDb.DbGroup>() // Audio
+                    new List<AssetDb.DbGroup>(), // Audio
+                    new List<AssetDb.DbGroup>() // Projectiles
                 };
         }
 
@@ -62,7 +63,7 @@ namespace ExtraAssetsLibrary.Patches
             var group = groups.Single(g => g.Name.Equals(groupName));
             group.Entries.AddRange(t.ToList().Select(e => e.entity));
 
-            foreach (var tup in t) NguidMethods.Add(tup.creatures.Id, tup.callback);
+            foreach (var tup in t) if (!NguidMethods.ContainsKey(tup.creatures.Id)) NguidMethods.Add(tup.creatures.Id, tup.callback);
 
             foreach (var en in t.ToList().Select(e => e.entity).Where(e =>
                 !AssetDbTryGetCreatureDataPatch.newDb.ContainsKey(e.Id) &&
@@ -70,7 +71,7 @@ namespace ExtraAssetsLibrary.Patches
             {
                 var cd = t.ToList().Select(e => e.creatures).Single(c => c.Id == en.Id);
                 // var asset = AssetLoadManager.Instance.InjectGameObjectAsAsset(,new float3(0,0,0), new quaternion(0,0,0,0), new float3(1,1,1));
-                AssetDbTryGetCreatureDataPatch.newDb.Add(en.Id, BlobHandler.ToView(cd));
+                if (!AssetDbTryGetCreatureDataPatch.newDb.ContainsKey(en.Id)) AssetDbTryGetCreatureDataPatch.newDb.Add(en.Id, BlobHandler.ToView(cd));
             }
 
             foreach (var en in t.ToList().Select(e => e.entity).Where(e =>
@@ -129,11 +130,11 @@ namespace ExtraAssetsLibrary.Patches
             for (var categoryIndex = 0; categoryIndex < all.Length; ++categoryIndex)
             {
                 var kind = all[categoryIndex];
-                Debug.Log($"Extra Asset Library Plugin:Kind:{kind.Item1}");
+                if (ExtraAssetPlugin.LogLevel.Value >= LogLevel.Medium) Debug.Log($"Extra Asset Library Plugin:Kind:{kind.Item1}");
                 foreach (var group in kind.Item2)
                 {
-                    Debug.Log($"Extra Asset Library Plugin:Group:{group.Name}");
-                    foreach (var entry in group.Entries) Debug.Log($"Extra Asset Library Plugin:Entry:{entry.Name}");
+                    if (ExtraAssetPlugin.LogLevel.Value >= LogLevel.Medium) Debug.Log($"Extra Asset Library Plugin:Group:{group.Name}");
+                    foreach (var entry in group.Entries) if (ExtraAssetPlugin.LogLevel.Value >= LogLevel.High) Debug.Log($"Extra Asset Library Plugin:Entry:{entry.Name}");
                 }
             }
         }

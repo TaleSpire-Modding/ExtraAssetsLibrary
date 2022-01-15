@@ -18,20 +18,22 @@ namespace ExtraAssetsLibrary.Patches
 
         private static void Postfix()
         {
-            if (CreatureSpawnBoardAssetSpawnPatch.respawn && CreatureSpawnBoardAssetSpawnPatch.tinfo != null)
-            {
-                SingletonBehaviour<BoardToolManager>.Instance.SwitchToTool<BoardTool>();
-                CreatureSpawnerBoardTool.SwitchCreatureTool(CreatureSpawnBoardAssetSpawnPatch.tinfo.Value);
-                CreatureSpawnBoardAssetSpawnPatch.respawn = false;
-                CreatureSpawnBoardAssetSpawnPatch.tinfo = null;
-            }
-
             if (stopSpawn)
             {
-                Debug.Log("Extra Asset Library Plugin:Closing Spawner");
+                if (ExtraAssetPlugin.LogLevel.Value >= LogLevel.Medium) Debug.Log("Extra Asset Library Plugin:Closing Spawner");
                 stopSpawn = false;
                 SingletonBehaviour<BoardToolManager>.Instance.SwitchToTool<BoardTool>();
             }
+            /*else
+            {
+                CreatureSpawnBoardAssetSpawnPatch.respawn = !CreatureSpawnBoardAssetSpawnPatch.respawn;
+                if (CreatureSpawnBoardAssetSpawnPatch.respawn && CreatureSpawnBoardAssetSpawnPatch.tinfo != null)
+                {
+                    SingletonBehaviour<BoardToolManager>.Instance.SwitchToTool<BoardTool>();
+                    CreatureSpawnerBoardTool.SwitchCreatureTool(CreatureSpawnBoardAssetSpawnPatch.tinfo.Value);
+                    CreatureSpawnBoardAssetSpawnPatch.tinfo = null;
+                }
+            }*/
         }
 
         private static bool Prefix(ref AssetLoader __instance, ref Transform ____transform,
@@ -40,13 +42,13 @@ namespace ExtraAssetsLibrary.Patches
         {
             if (AssetDbTryGetCreatureDataPatch.LastLoaded != NGuid.Empty)
             {
-                Debug.Log("Extra Asset Library Plugin:Load Creature");
+                if (ExtraAssetPlugin.LogLevel.Value >= LogLevel.High) Debug.Log("Extra Asset Library Plugin:Load Creature");
                 GameObject model;
 
                 if (AssetDbTryGetCreatureDataPatch.LoadedBefore != AssetDbTryGetCreatureDataPatch.LastLoaded)
                 {
                     stopSpawn = false;
-                    Debug.Log("Extra Asset Library Plugin:Loading Base");
+                    if (ExtraAssetPlugin.LogLevel.Value >= LogLevel.High) Debug.Log("Extra Asset Library Plugin:Loading Base");
                     model =
                         UI_AssetBrowserSetupAssetIndexPatch.Bases.ContainsKey(AssetDbTryGetCreatureDataPatch.LastLoaded)
                             ? UI_AssetBrowserSetupAssetIndexPatch.Bases[AssetDbTryGetCreatureDataPatch.LastLoaded](
@@ -60,7 +62,7 @@ namespace ExtraAssetsLibrary.Patches
                 }
                 else
                 {
-                    Debug.Log("Extra Asset Library Plugin:Loading Root");
+                    if (ExtraAssetPlugin.LogLevel.Value >= LogLevel.High) Debug.Log("Extra Asset Library Plugin:Loading Root");
                     if (blobs.ContainsKey(AssetDbTryGetCreatureDataPatch.LastLoaded))
                     {
                         data = blobs[AssetDbTryGetCreatureDataPatch.LastLoaded];
@@ -103,13 +105,13 @@ namespace ExtraAssetsLibrary.Patches
                 AssetDbTryGetCreatureDataPatch.LoadedBefore = AssetDbTryGetCreatureDataPatch.LastLoaded;
                 __instance.OnAssetLoaded(AssetDbTryGetCreatureDataPatch.LastLoaded, str, model);
 
-                Debug.Log("Extra Asset Library Plugin:Load Creature Done");
+                if (ExtraAssetPlugin.LogLevel.Value >= LogLevel.High) Debug.Log("Extra Asset Library Plugin:Load Creature Done");
                 return false;
             }
 
             if (TilePreviewBoardAssetInitPatch.LastLoaded != NGuid.Empty)
             {
-                Debug.Log("Extra Asset Library Plugin:Loading Tile");
+                if (ExtraAssetPlugin.LogLevel.Value >= LogLevel.High) Debug.Log("Extra Asset Library Plugin:Loading Tile");
                 if (blobs.ContainsKey(TilePreviewBoardAssetInitPatch.LastLoaded))
                 {
                     data = blobs[TilePreviewBoardAssetInitPatch.LastLoaded];
@@ -128,11 +130,11 @@ namespace ExtraAssetsLibrary.Patches
                 }
 
                 TilePreviewBoardAssetInitPatch.LastLoaded = NGuid.Empty;
-                Debug.Log("Extra Asset Library Plugin:Load Tile Done");
+                if (ExtraAssetPlugin.LogLevel.Value >= LogLevel.High) Debug.Log("Extra Asset Library Plugin:Load Tile Done");
                 return true;
             }
 
-            Debug.Log($"Extra Asset Library Plugin:ID:{data.Value.AssetPackId}");
+            if (ExtraAssetPlugin.LogLevel.Value >= LogLevel.High) Debug.Log($"Extra Asset Library Plugin:ID:{data.Value.AssetPackId}");
             return true;
         }
     }

@@ -24,7 +24,7 @@ namespace ExtraAssetsLibrary.Patches.Minis
         {
             if (!AssetDb.TryGetCreatureData(data.BoardAssetIds[0], out _) && !AssetDb.TryGetPlaceableData(data.BoardAssetIds[0], out _))
             {
-                cg.Add(data.CreatureId, data.UniqueId);
+                if (!cg.ContainsKey(data.CreatureId)) cg.Add(data.CreatureId, data.UniqueId);
                 if (ExtraAssetPlugin.AutoClear.Value) RemoveCreature();
                 else SystemMessage.SendSystemMessage("Error", "Creature spawn failed, do you want to remove creature?", "OK", RemoveCreature,"No");
                 return false;

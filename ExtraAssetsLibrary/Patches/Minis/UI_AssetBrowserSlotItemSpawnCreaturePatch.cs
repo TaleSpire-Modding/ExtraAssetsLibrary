@@ -13,11 +13,11 @@ namespace ExtraAssetsLibrary.Patches.Minis
         private static bool Prefix(UI_AssetBrowserSlotItem __instance, NGuid ____nGuid,
             AssetDb.DbEntry.EntryKind ____entityKind)
         {
-            Debug.Log($"Entry Kind:{(CustomEntryKind) ____entityKind}");
+            if (ExtraAssetPlugin.LogLevel.Value >= LogLevel.Medium) Debug.Log($"Entry Kind:{(CustomEntryKind) ____entityKind}");
             var pass = true;
             foreach (var action in ExtraAssetPlugin.CoreAssetPrefixCallbacks.Values)
                 pass = pass && action.Invoke(____nGuid, ____entityKind);
-            Debug.Log($"Extra Asset Library Plugin: CoreAssetPrefixCallbacks: {pass}");
+            if (ExtraAssetPlugin.LogLevel.Value >= LogLevel.High) Debug.Log($"Extra Asset Library Plugin: CoreAssetPrefixCallbacks: {pass}");
 
             if (pass)
             {
@@ -25,7 +25,7 @@ namespace ExtraAssetsLibrary.Patches.Minis
                 {
                     if (SlotItemSpawnPatch(____nGuid))
                     {
-                        Debug.Log("Extra Asset Library Plugin: Aura being called");
+                        if (ExtraAssetPlugin.LogLevel.Value >= LogLevel.High) Debug.Log("Extra Asset Library Plugin: Aura being called");
                         //var asset = UI_AssetBrowserSetupAssetIndexPatch.assets[____nGuid];
                         //asset.ModelCallback(____nGuid);
                         __instance.call("SpawnCreature");
@@ -35,7 +35,7 @@ namespace ExtraAssetsLibrary.Patches.Minis
                 {
                     if (SlotItemSpawnPatch(____nGuid))
                     {
-                        Debug.Log("Extra Asset Library Plugin: Effects being called");
+                        if (ExtraAssetPlugin.LogLevel.Value >= LogLevel.High) Debug.Log("Extra Asset Library Plugin: Effects being called");
                         //var asset = UI_AssetBrowserSetupAssetIndexPatch.assets[____nGuid];
                         //asset.ModelCallback(____nGuid);
                         __instance.call("SpawnCreature");
@@ -45,7 +45,7 @@ namespace ExtraAssetsLibrary.Patches.Minis
                 {
                     if (SlotItemSpawnPatch(____nGuid))
                     {
-                        Debug.Log("Extra Asset Library Plugin: Slab being called");
+                        if (ExtraAssetPlugin.LogLevel.Value >= LogLevel.High) Debug.Log("Extra Asset Library Plugin: Slab being called");
                         var asset = UI_AssetBrowserSetupAssetIndexPatch.assets[____nGuid];
                         asset.ModelCallback(____nGuid);
                     }
@@ -54,7 +54,7 @@ namespace ExtraAssetsLibrary.Patches.Minis
                 {
                     if (SlotItemSpawnPatch(____nGuid))
                     {
-                        Debug.Log("Extra Asset Library Plugin: Audio being called");
+                        if (ExtraAssetPlugin.LogLevel.Value >= LogLevel.High) Debug.Log("Extra Asset Library Plugin: Audio being called");
                         var asset = UI_AssetBrowserSetupAssetIndexPatch.assets[____nGuid];
                         asset.ModelCallback(____nGuid);
                     }
@@ -70,11 +70,11 @@ namespace ExtraAssetsLibrary.Patches.Minis
             {
                 var asset = UI_AssetBrowserSetupAssetIndexPatch.assets[id];
                 var canLoad = asset.PreCallback == null || asset.PreCallback(id);
-                Debug.Log($"Extra Asset Library Plugin: Pre-callback called and value: {canLoad}");
+                if (ExtraAssetPlugin.LogLevel.Value >= LogLevel.High) Debug.Log($"Extra Asset Library Plugin: Pre-callback called and value: {canLoad}");
                 return canLoad;
             }
 
-            Debug.Log("Extra Asset Library Plugin: Core Asset loaded into Spawner");
+            if (ExtraAssetPlugin.LogLevel.Value >= LogLevel.High) Debug.Log("Extra Asset Library Plugin: Core Asset loaded into Spawner");
             return true;
         }
     }
@@ -111,7 +111,7 @@ namespace ExtraAssetsLibrary.Patches.Minis
     {
         private static bool Prefix()
         {
-            Debug.Log("Extra Asset Library Plugin: SetLocationData Triggered");
+            if (ExtraAssetPlugin.LogLevel.Value >= LogLevel.High) Debug.Log("Extra Asset Library Plugin: SetLocationData Triggered");
             return true;
         }
     }
@@ -138,7 +138,7 @@ namespace ExtraAssetsLibrary.Patches.Minis
                 headPos = asset.headPos;
                 spellPos = asset.spellPos;
                 hitPos = asset.hitPos;
-                Debug.Log("Extra Asset Library Plugin: SetLocationData Triggered");
+                if (ExtraAssetPlugin.LogLevel.Value >= LogLevel.High) Debug.Log("Extra Asset Library Plugin: SetLocationData Triggered");
             }
 
             return true;

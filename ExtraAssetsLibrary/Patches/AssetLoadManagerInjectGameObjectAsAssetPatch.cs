@@ -57,13 +57,15 @@ namespace ExtraAssetsLibrary.Patches
                         blobBuilder.CreateBlobAssetReference<AssetLoaderData.Packed>(Allocator.Persistent);
                     ____injectedBlobData.Add(in blobAssetReference);
 
-                    ____assets.Add(
+                    if (!____assets.ContainsKey(string.IsNullOrWhiteSpace(FullyQualifiedIdReplacer)
+                        ? blobAssetReference.Value.GenFullyQualifiedId()
+                        : FullyQualifiedIdReplacer)) ____assets.Add(
                         string.IsNullOrWhiteSpace(FullyQualifiedIdReplacer)
                             ? blobAssetReference.Value.GenFullyQualifiedId()
                             : FullyQualifiedIdReplacer, src);
 
                     __result = blobAssetReference.TakeView();
-                    Debug.Log($"Extra Asset Library Plugin:{blobAssetReference.Value.GenFullyQualifiedId()}");
+                    if (ExtraAssetPlugin.LogLevel.Value >= LogLevel.Medium) Debug.Log($"Extra Asset Library Plugin:{blobAssetReference.Value.GenFullyQualifiedId()}");
                 }
 
                 return false;

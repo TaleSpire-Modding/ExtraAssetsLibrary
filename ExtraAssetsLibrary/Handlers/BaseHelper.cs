@@ -31,7 +31,11 @@ namespace ExtraAssetsLibrary.Handlers
         {
             if (AssetLoadManager.Instance.TryGetAsset(
                     "d71427a1-5535-4fa7-82d7-4ca1e75edbfdchar_base01_1462710208clothBase", out var reference) ==
-                AssetLoadManager.AssetLoadStatus.Loaded) return reference;
+                AssetLoadManager.AssetLoadStatus.Loaded)
+            {
+                ExtraAssetPlugin.ClothBaseLoaded = true;
+                return reference;
+            }
             return new GameObject();
 
             /*

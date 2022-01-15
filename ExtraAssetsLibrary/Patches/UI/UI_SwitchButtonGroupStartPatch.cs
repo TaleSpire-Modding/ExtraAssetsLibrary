@@ -69,8 +69,8 @@ namespace ExtraAssetsLibrary.Patches.UI
         public static void Prefix(UI_SwitchButtonGroup __instance,
             ref List<Button> ____buttons)
         {
-            Debug.Log($"UI_SwitchButtonGroup Count:{____buttons.Count}");
-            Debug.Log($"UI_SwitchButtonGroup Name:{__instance.gameObject.name}");
+            if (ExtraAssetPlugin.LogLevel.Value >= LogLevel.High) Debug.Log($"UI_SwitchButtonGroup Count:{____buttons.Count}");
+            if (ExtraAssetPlugin.LogLevel.Value >= LogLevel.High) Debug.Log($"UI_SwitchButtonGroup Name:{__instance.gameObject.name}");
             if (__instance.gameObject.name == "Catagory")
             {
                 var template = ____buttons[0];
@@ -87,10 +87,10 @@ namespace ExtraAssetsLibrary.Patches.UI
                 var template = ____buttons[0];
                 var secondButton = ____buttons[2];
                 var distance = template.transform.position.y - secondButton.transform.position.y;
-                Debug.Log($"Extra Asset Library: UI Distance - {distance}");
+                if (ExtraAssetPlugin.LogLevel.Value >= LogLevel.High) Debug.Log($"Extra Asset Library: UI Distance - {distance}");
                 for (var i = 0; i < addedButtons.Count; i++)
                 {
-                    Debug.Log($"Adding item:{i}");
+                    if (ExtraAssetPlugin.LogLevel.Value >= LogLevel.High) Debug.Log($"Adding item:{i}");
                     var clone = addedButtons[i];
                     var newPost = new Vector3(clone.transform.position.x,
                         clone.transform.position.y - distance * (i + 3), clone.transform.position.z);

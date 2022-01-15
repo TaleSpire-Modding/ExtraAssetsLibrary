@@ -6,6 +6,7 @@ using BepInEx.Configuration;
 using Bounce.TaleSpire.AssetManagement;
 using Bounce.Unmanaged;
 using ExtraAssetsLibrary.DTO;
+using ExtraAssetsLibrary;
 using ExtraAssetsLibrary.Handlers;
 using ExtraAssetsLibrary.Patches;
 using ExtraAssetsLibrary.Patches.Projectile;
@@ -16,6 +17,16 @@ using UnityEngine;
 
 namespace ExtraAssetsLibrary
 {
+    public enum LogLevel
+    {
+        None,
+        Low,
+        Medium,
+        High,
+        All,
+    }
+
+
     [BepInPlugin(Guid, Name, Version)]
     [BepInDependency(FileAccessPlugin.Guid)]
     [BepInDependency(RadialUIPlugin.Guid)]
@@ -27,6 +38,7 @@ namespace ExtraAssetsLibrary
         private const string Name = "HolloFoxes' Extra Asset Library";
 
         internal static ConfigEntry<bool> AutoClear { get; set; }
+        internal static ConfigEntry<LogLevel> LogLevel { get; set; }
 
         private const BindingFlags bindFlags =
             BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static;
@@ -46,20 +58,55 @@ namespace ExtraAssetsLibrary
             harmony.PatchAll();
         }
 
+        
+
         public static void DoConfig(ConfigFile Config)
         {
             AutoClear = Config.Bind("Mini Loading", "Auto Clear Failed Minis", false);
+            LogLevel = Config.Bind("Logging", "Level", ExtraAssetsLibrary.LogLevel.Low);
         }
 
         private void Awake()
         {
-            Debug.Log($"Extra Asset Library Plugin:{Name} is Active.");
+            DoConfig(Config);
+            if (LogLevel.Value > ExtraAssetsLibrary.LogLevel.None) Debug.Log($"Extra Asset Library Plugin:{Name} is Active.");
             UI_AssetBrowserSetupAssetIndexPatch.initStatic();
             DoPatching();
-            DoConfig(Config);
+            
         }
 
-        
+        internal static bool ClothBaseLoaded;
+        internal static bool Reloaded;
+
+        private void Update()
+        {
+            if (OnBoard())
+            {
+                if(!ClothBaseLoaded) AssertClothBaseLoaded();
+                else if (!Reloaded)
+                {
+                    var _info = BoardSessionManager.CurrentBoardInfo;
+                    CampaignSessionManager.LoadBoard(_info);
+                    Reloaded = true;
+                }
+            }
+        }
+
+        private void AssertClothBaseLoaded()
+        {
+            var command = $"talespire://asset/32fbdb43-e809-4eea-a834-5d120886bd81";
+            System.Diagnostics.Process.Start(command).WaitForExit();
+            SingletonBehaviour<BoardToolManager>.Instance.SwitchToTool<BoardTool>();
+            BaseHelper.DefaultBase();
+        }
+
+        private bool OnBoard()
+        {
+            return (CameraController.HasInstance &&
+                    BoardSessionManager.HasInstance &&
+                    BoardSessionManager.HasBoardAndIsInNominalState &&
+                    !BoardSessionManager.IsLoading);
+        }
 
         /// <summary>
         ///     This method should be run on awake by your plugin.
@@ -98,7 +145,7 @@ namespace ExtraAssetsLibrary
                 return;
             }
 
-            Debug.Log($"Extra Asset Library Plugin:Adding: {asset.Id}");
+            if (LogLevel.Value >= ExtraAssetsLibrary.LogLevel.Medium) Debug.Log($"Extra Asset Library Plugin:Adding: {asset.Id}");
             if (!UI_AssetBrowserSetupAssetIndexPatch.assets.ContainsKey(asset.Id))
                 UI_AssetBrowserSetupAssetIndexPatch.assets.Add(asset.Id, asset);
             var group = UI_AssetBrowserSetupAssetIndexPatch.AddGroup(asset.Kind, asset.GroupName);
@@ -118,7 +165,7 @@ namespace ExtraAssetsLibrary
             if (asset.BaseCallback != null) UI_AssetBrowserSetupAssetIndexPatch.Bases.Add(asset.Id, asset.BaseCallback);
             UI_AssetBrowserSetupAssetIndexPatch.AddEntity(asset.Kind, entry.GroupTagName, entry, cd,
                 asset.ModelCallback);
-            Debug.Log($"Extra Asset Library Plugin:{asset.Id} Added");
+            if (LogLevel.Value >= ExtraAssetsLibrary.LogLevel.Medium) Debug.Log($"Extra Asset Library Plugin:{asset.Id} Added");
         }
     }
 }

@@ -32,7 +32,7 @@ namespace ExtraAssetsLibrary.Patches.Projectile
         }
     }
 
-    [HarmonyPatch(typeof(VFXMissile), "OnPlayFromOriginToTarget",typeof(Transform), typeof(Transform))]
+    [HarmonyPatch(typeof(VFXMissile), "OnPlayFromOriginToTarget",typeof(Transform),typeof(Transform))]
     public class VFXMissilePatch
     {
         private static void Postfix(Transform origin, Transform target, ref Transform ___visual, ref Renderer[] ___renderers)

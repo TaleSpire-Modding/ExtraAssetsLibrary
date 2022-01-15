@@ -24,6 +24,20 @@ namespace ExtraAssetsLibrary.DTO
         Projectile,
     }
 
+    public enum Category
+    {
+        Tile,
+        Creature,
+        Prop,
+
+        /// <summary>
+        ///     Planned to extend UI. Currently just setting up infrastructure.
+        /// </summary>
+        AuraAndEffects,
+        Audio,
+        Projectile,
+    }
+
     public class Asset
     {
         /// <summary>

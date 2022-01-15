@@ -20,7 +20,7 @@ namespace ExtraAssetsLibrary.Patches
                     temp.AddRange(asset.Value.tags);
             tags = temp.Distinct().ToList();
             var end = tags.Count;
-            Debug.Log($"Extra Asset Library Plugin:Added {end - start} tags");
+            if (ExtraAssetPlugin.LogLevel.Value >= LogLevel.High) Debug.Log($"Extra Asset Library Plugin:Added {end - start} tags");
             return original;
         }
     }

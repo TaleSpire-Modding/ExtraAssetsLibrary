@@ -7,15 +7,13 @@ namespace ExtraAssetsLibrary.Patches
 
     [HarmonyPatch(typeof(CreatureSpawnerBoardTool), "SwitchCreatureTool")]
     public class CreatureSpawnBoardAssetSpawnPatch
-    {
-
+    { 
         internal static bool respawn;
         internal static CreatureDataV2? tinfo;
 
         private static void Prefix(CreatureDataV2 info)
         {
             tinfo = info;
-            
         }
 
         private static void Postfix(CreatureDataV2 info, ref CreaturePreviewBoardAsset ____pickupObject)
@@ -24,13 +22,6 @@ namespace ExtraAssetsLibrary.Patches
             {
                 var asset = UI_AssetBrowserSetupAssetIndexPatch.assets[____pickupObject.DbEntry.Id];
                 ____pickupObject.Scale = asset.DefaultScale;
-            }
-
-            if (AssetLoaderInitPatch.stopSpawn)
-            {
-                Debug.Log("Extra Asset Library Plugin:Closing Spawner");
-                AssetLoaderInitPatch.stopSpawn = false;
-                SingletonBehaviour<BoardToolManager>.Instance.SwitchToTool<BoardTool>();
             }
         }
     }

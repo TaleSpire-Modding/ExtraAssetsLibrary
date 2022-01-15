@@ -30,7 +30,7 @@ namespace ExtraAssetsLibrary.Handlers
             }
             catch (Exception e)
             {
-                Debug.Log($"Extra Asset Library Plugin:ConstructBlobError:{e}");
+                if (ExtraAssetPlugin.LogLevel.Value >= LogLevel.Low) Debug.Log($"Extra Asset Library Plugin:ConstructBlobError:{e}");
             }
 
             return builder.CreateBlobAssetReference<BlobArray<BlobString>>(Allocator.Persistent).Value;

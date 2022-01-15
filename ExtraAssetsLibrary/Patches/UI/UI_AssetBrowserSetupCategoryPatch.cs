@@ -74,7 +74,7 @@ namespace ExtraAssetsLibrary.Patches.UI
             ref UI_AssetBrowser ___searchListItem
         )
         {
-            Debug.Log(__instance == null);
+            if (ExtraAssetPlugin.LogLevel.Value >= LogLevel.High) Debug.Log(__instance == null);
             setIndex = index;
             instance = __instance;
             _searchFolder = ____searchFolder;

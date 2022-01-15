@@ -24,7 +24,7 @@ namespace ExtraAssetsLibrary.Patches
             list.Add(((AssetDb.DbEntry.EntryKind) CustomEntryKind.Audio,
                 UI_AssetBrowserSetupAssetIndexPatch._injecting[6]));
             __result = list.ToArray();
-            Debug.Log($"Extra Asset Library Plugin: Added {__result.Length} Catagories");
+            if (ExtraAssetPlugin.LogLevel.Value >= LogLevel.High) Debug.Log($"Extra Asset Library Plugin: Added {__result.Length} Catagories");
         }
     }
 

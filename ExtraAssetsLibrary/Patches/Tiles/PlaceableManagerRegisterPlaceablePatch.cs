@@ -13,7 +13,7 @@ namespace ExtraAssetsLibrary.Patches
         {
             if (TilePreviewBoardAssetInitPatch.newDb.Contains(placeableId))
             {
-                Debug.Log($"Extra Asset Library Plugin:Found tile: {placeableId}");
+                if (ExtraAssetPlugin.LogLevel.Value >= LogLevel.Medium) Debug.Log($"Extra Asset Library Plugin:Found tile: {placeableId}");
                 ____placeableInfoMap[placeableId] = new PlaceableLoadState(0, 1);
                 return true;
             }

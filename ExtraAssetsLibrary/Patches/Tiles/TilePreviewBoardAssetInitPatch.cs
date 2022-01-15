@@ -24,10 +24,10 @@ namespace ExtraAssetsLibrary.Patches
                 if (!AssetDb.Placeables.ContainsKey(boardAssetId))
                 {
                     AssetDb.AddIdAsDummyPlaceable(boardAssetId, PlaceableKind.Tile);
-                    Debug.Log($"Extra Asset Library Plugin:Create dummy for {boardAssetId}");
+                    if (ExtraAssetPlugin.LogLevel.Value >= LogLevel.Medium) Debug.Log($"Extra Asset Library Plugin:Create dummy for {boardAssetId}");
                 }
 
-                Debug.Log("Extra Asset Library Plugin:Load Exist");
+                if (ExtraAssetPlugin.LogLevel.Value >= LogLevel.Medium) Debug.Log("Extra Asset Library Plugin:Load Exist");
                 LastLoaded = boardAssetId;
                 ___AssetId = boardAssetId;
 
