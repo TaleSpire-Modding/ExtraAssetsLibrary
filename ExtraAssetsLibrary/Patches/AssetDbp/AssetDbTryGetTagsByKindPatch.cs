@@ -6,6 +6,7 @@ namespace ExtraAssetsLibrary.Patches
 {
     internal class AssetDbTryGetTagsByKindPatch
     {
+        /*
         public static bool PostFix(
             bool original,
             AssetDb.DbEntry.EntryKind kind,
@@ -22,6 +23,6 @@ namespace ExtraAssetsLibrary.Patches
             var end = tags.Count;
             if (ExtraAssetPlugin.LogLevel.Value >= LogLevel.High) Debug.Log($"Extra Asset Library Plugin:Added {end - start} tags");
             return original;
-        }
+        }*/
     }
 }

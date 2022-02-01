@@ -45,6 +45,7 @@ namespace ExtraAssetsLibrary.DTO
         /// </summary>
         [CanBeNull] public Func<NGuid, GameObject> BaseCallback;
 
+        public ProjectileProperties ProjectileProperties;
         public float DefaultScale = 1;
         public string Description;
         public string GroupName;
@@ -52,6 +53,7 @@ namespace ExtraAssetsLibrary.DTO
         public float3 headPos = new float3(0, 1, 0);
         public float3 hitPos = new float3(-0.03812894f, 0.9740211f, -0.1837122f);
         public Sprite Icon;
+        public Category Category = (DTO.Category) 7;
 
         public NGuid Id;
         public bool isDeprecated = false;

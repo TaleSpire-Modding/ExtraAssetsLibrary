@@ -15,12 +15,6 @@ namespace ExtraAssetsLibrary.Patches
     {
         internal static List<AssetDb.DbGroup>[] _injecting;
 
-        public static Dictionary<NGuid, Func<NGuid, GameObject>> NguidMethods =
-            new Dictionary<NGuid, Func<NGuid, GameObject>>();
-
-        public static Dictionary<NGuid, Func<NGuid, GameObject>> Bases =
-            new Dictionary<NGuid, Func<NGuid, GameObject>>();
-
         public static Dictionary<NGuid, Asset> assets = new Dictionary<NGuid, Asset>();
 
         public static AssetDb.DbEntry GetInjecting(NGuid id)
@@ -48,14 +42,14 @@ namespace ExtraAssetsLibrary.Patches
                 };
         }
 
-        public static AssetDb.DbGroup AddGroup(AssetDb.DbEntry.EntryKind kind, string groupName)
+        public static AssetDb.DbGroup AddGroup(Category kind, string groupName)
         {
             var groups = _injecting[(int) kind];
             if (groups.All(g => g.Name != groupName)) groups.Add(new AssetDb.DbGroup(groupName));
             return groups.Single(g => g.Name == groupName);
         }
 
-        public static void AddEntity(AssetDb.DbEntry.EntryKind kind, string groupName,
+        public static void AddEntity(Category kind, string groupName,
             (AssetDb.DbEntry entity, CreatureData creatures, Func<NGuid, GameObject> callback)[] t)
         {
             AddGroup(kind, groupName);
@@ -63,14 +57,11 @@ namespace ExtraAssetsLibrary.Patches
             var group = groups.Single(g => g.Name.Equals(groupName));
             group.Entries.AddRange(t.ToList().Select(e => e.entity));
 
-            foreach (var tup in t) if (!NguidMethods.ContainsKey(tup.creatures.Id)) NguidMethods.Add(tup.creatures.Id, tup.callback);
-
             foreach (var en in t.ToList().Select(e => e.entity).Where(e =>
                 !AssetDbTryGetCreatureDataPatch.newDb.ContainsKey(e.Id) &&
                 e.Kind == AssetDb.DbEntry.EntryKind.Creature))
             {
                 var cd = t.ToList().Select(e => e.creatures).Single(c => c.Id == en.Id);
-                // var asset = AssetLoadManager.Instance.InjectGameObjectAsAsset(,new float3(0,0,0), new quaternion(0,0,0,0), new float3(1,1,1));
                 if (!AssetDbTryGetCreatureDataPatch.newDb.ContainsKey(en.Id)) AssetDbTryGetCreatureDataPatch.newDb.Add(en.Id, BlobHandler.ToView(cd));
             }
 
@@ -80,7 +71,7 @@ namespace ExtraAssetsLibrary.Patches
         }
 
 
-        public static void AddEntity(AssetDb.DbEntry.EntryKind kind, string groupName, AssetDb.DbEntry entity,
+        public static void AddEntity(Category kind, string groupName, AssetDb.DbEntry entity,
             CreatureData creatures, Func<NGuid, GameObject> callback)
         {
             AddEntity(kind, groupName, new[] {(entity, creatures, callback)});
@@ -90,7 +81,6 @@ namespace ExtraAssetsLibrary.Patches
         private static void Prefix(ref (AssetDb.DbEntry.EntryKind, List<AssetDb.DbGroup>)[] all)
         {
             Inject(ref all);
-            // Print(ref all);
         }
 
         private static void Inject(ref (AssetDb.DbEntry.EntryKind, List<AssetDb.DbGroup>)[] all)

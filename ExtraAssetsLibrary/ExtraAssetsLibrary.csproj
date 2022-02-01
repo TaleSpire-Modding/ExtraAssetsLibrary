@@ -439,19 +439,22 @@
     <Compile Include="AssetDbExtension\AuraDb.cs" />
     <Compile Include="DTO\Audio.cs" />
     <Compile Include="DTO\Asset.cs" />
+    <Compile Include="DTO\ProjectileProperties.cs" />
     <Compile Include="DTO\TileProperties.cs" />
     <Compile Include="Handlers\BaseHelper.cs" />
     <Compile Include="Handlers\BlobHandler.cs" />
     <Compile Include="Handlers\ImageHandler.cs" />
-    <Compile Include="Patches\AssetDb\AssetDbAddIdAsDummyPlaceablePatch.cs" />
-    <Compile Include="Patches\AssetDb\AssetDbGetIndexDataPatch.cs" />
+    <Compile Include="Patches\AssetDbp\AssetDbAddIdAsDummyPlaceablePatch.cs" />
+    <Compile Include="Patches\AssetDbp\AssetDbGetIndexDataPatch.cs" />
+    <Compile Include="Patches\AssetDbp\OnAssetLoadedPatch.cs" />
     <Compile Include="Patches\Minis\AssetDbTryGetCreatureDataPatch.cs" />
-    <Compile Include="Patches\AssetDb\AssetDbTryGetTagsByKindPatch.cs" />
+    <Compile Include="Patches\AssetDbp\AssetDbTryGetTagsByKindPatch.cs" />
     <Compile Include="Patches\AssetLoaderInitPatch.cs" />
     <Compile Include="Patches\AssetLoadManagerInjectGameObjectAsAssetPatch.cs" />
+    <Compile Include="Patches\Minis\Base\Class1.cs" />
     <Compile Include="Patches\Minis\CreatureManagerPatchAddOrRequestAddCreature.cs" />
     <Compile Include="Patches\Minis\CreaturePresenterPatch.cs" />
-    <Compile Include="Patches\Projectile\UI_AssetBrowserSlotItemSpawnCreaturePatch.cs" />
+    <Compile Include="Patches\Projectile\VFXMissilePatch.cs" />
     <Compile Include="Patches\Tiles\BoardApplyOpAddAssetPatch.cs" />
     <Compile Include="Patches\Minis\CreaturePreviewBoardAssetSpawnPatch.cs" />
     <Compile Include="Patches\Minis\UI_AssetBrowserSlotItemSpawnCreaturePatch.cs" />
@@ -464,7 +467,7 @@
     <Compile Include="Patches\UI\UI_SwitchButtonGroupStartPatch.cs" />
     <Compile Include="Patches\UI\UI_AssetBrowserSetupAssetIndexPatch.cs" />
     <Compile Include="ExtraAssetPlugin.cs" />
-    <Compile Include="Patches\AssetDb\AssetDbGetAllGroupsPatch.cs" />
+    <Compile Include="Patches\AssetDbp\AssetDbGetAllGroupsPatch.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

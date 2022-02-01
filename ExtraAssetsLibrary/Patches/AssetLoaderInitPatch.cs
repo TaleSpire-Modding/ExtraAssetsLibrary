@@ -44,16 +44,15 @@ namespace ExtraAssetsLibrary.Patches
             {
                 if (ExtraAssetPlugin.LogLevel.Value >= LogLevel.High) Debug.Log("Extra Asset Library Plugin:Load Creature");
                 GameObject model;
+                var id = AssetDbTryGetCreatureDataPatch.LastLoaded;
+                var asset = UI_AssetBrowserSetupAssetIndexPatch.assets[id];
+
 
                 if (AssetDbTryGetCreatureDataPatch.LoadedBefore != AssetDbTryGetCreatureDataPatch.LastLoaded)
                 {
                     stopSpawn = false;
                     if (ExtraAssetPlugin.LogLevel.Value >= LogLevel.High) Debug.Log("Extra Asset Library Plugin:Loading Base");
-                    model =
-                        UI_AssetBrowserSetupAssetIndexPatch.Bases.ContainsKey(AssetDbTryGetCreatureDataPatch.LastLoaded)
-                            ? UI_AssetBrowserSetupAssetIndexPatch.Bases[AssetDbTryGetCreatureDataPatch.LastLoaded](
-                                AssetDbTryGetCreatureDataPatch.LastLoaded)
-                            : BaseHelper.DefaultBase();
+                    model = asset.BaseCallback != null ? asset.BaseCallback(id) : BaseHelper.DefaultBase();
                     if (model == null)
                     {
                         stopSpawn = true;
@@ -69,8 +68,7 @@ namespace ExtraAssetsLibrary.Patches
                     }
                     else
                     {
-                        model = UI_AssetBrowserSetupAssetIndexPatch.NguidMethods[
-                            AssetDbTryGetCreatureDataPatch.LastLoaded](AssetDbTryGetCreatureDataPatch.LastLoaded);
+                        model = asset.ModelCallback(id);
                         if (model == null)
                         {
                             model = new GameObject();
@@ -111,6 +109,9 @@ namespace ExtraAssetsLibrary.Patches
 
             if (TilePreviewBoardAssetInitPatch.LastLoaded != NGuid.Empty)
             {
+                var id = TilePreviewBoardAssetInitPatch.LastLoaded;
+                var asset = UI_AssetBrowserSetupAssetIndexPatch.assets[id];
+
                 if (ExtraAssetPlugin.LogLevel.Value >= LogLevel.High) Debug.Log("Extra Asset Library Plugin:Loading Tile");
                 if (blobs.ContainsKey(TilePreviewBoardAssetInitPatch.LastLoaded))
                 {
@@ -118,9 +119,7 @@ namespace ExtraAssetsLibrary.Patches
                 }
                 else
                 {
-                    var model =
-                        UI_AssetBrowserSetupAssetIndexPatch.NguidMethods[TilePreviewBoardAssetInitPatch.LastLoaded](
-                            TilePreviewBoardAssetInitPatch.LastLoaded);
+                    var model = asset.ModelCallback(id);
                     var blob = AssetLoadManagerInjectGameObjectAsAssetPatch.InjectGameObjectAsAssetPatch(
                         model, new float3(0, 0, 0), new quaternion(0, 0, 0, 0), new float3(1, 1, 1),
                         TilePreviewBoardAssetInitPatch.LastLoaded, TilePreviewBoardAssetInitPatch.LastLoaded

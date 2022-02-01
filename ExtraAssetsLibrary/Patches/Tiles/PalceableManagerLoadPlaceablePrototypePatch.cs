@@ -1,13 +1,22 @@
-﻿using HarmonyLib;
+﻿using Bounce.Unmanaged;
+using HarmonyLib;
+using UnityEngine;
 
 namespace ExtraAssetsLibrary.Patches.Tiles
 {
-    [HarmonyPatch(typeof(PlaceableManager), "LoadPlaceablePrototype")]
+
+
+    [HarmonyPatch(assembly, "OnAssetLoaded")]
     internal class PalceableManagerLoadPlaceablePrototypePatch
     {
-        public static bool Prefix()
+        private const string assembly = "PlaceableManager+LoadingTilePrototype,Bouncyrock.TaleSpire.AssetManagement, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null";
+        public static void Prefix(NGuid assetPackId, string assetId, ref GameObject asset)
         {
-            return true;
+            if (UI_AssetBrowserSetupAssetIndexPatch.assets.ContainsKey(assetPackId))
+            {
+                var x = UI_AssetBrowserSetupAssetIndexPatch.assets[assetPackId];
+                asset = x.ModelCallback(assetPackId);
+            }
         }
     }
 }

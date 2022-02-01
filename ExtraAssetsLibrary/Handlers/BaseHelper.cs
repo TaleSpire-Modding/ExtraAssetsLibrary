@@ -37,28 +37,8 @@ namespace ExtraAssetsLibrary.Handlers
                 return reference;
             }
             return new GameObject();
-
-            /*
-            var myBundle = AssetBundle.LoadFromFile($"{assemblyFolder}\\Taleweaver\\d71427a1-5535-4fa7-82d7-4ca1e75edbfd\\Assets\\char_base01_1462710208");
-            var miniBase = myBundle.LoadAsset<GameObject>("clothBase");
-            var baseRenderer = miniBase.GetComponent<Renderer>();
-            baseRenderer.material.shader = Shader.Find("Taleweaver/CreatureShader");
-            foreach (var renderer in miniBase.GetComponentsInChildren<Renderer>())
-            {
-                renderer.material.shader = Shader.Find("Taleweaver/CreatureShader");
-            }
-
-            AssetLoadManagerInjectGameObjectAsAssetPatch.InjectGameObjectAsAssetPatch(
-                miniBase,
-                float3.zero,
-                new quaternion(0, 0, 0, 0),
-                new float3(1, 1, 1),
-                new NGuid("d71427a1-5535-4fa7-82d7-4ca1e75edbfd"),
-                new NGuid("d71427a1-5535-4fa7-82d7-4ca1e75edbfd"),
-                "d71427a1-5535-4fa7-82d7-4ca1e75edbfdchar_base01_1462710208clothBase"
-            );
-
-            return miniBase;*/
         }
+
+        public static bool BaseIsLoaded() => ExtraAssetPlugin.ClothBaseLoaded;
     }
 }

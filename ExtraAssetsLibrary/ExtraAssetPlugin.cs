@@ -6,13 +6,10 @@ using BepInEx.Configuration;
 using Bounce.TaleSpire.AssetManagement;
 using Bounce.Unmanaged;
 using ExtraAssetsLibrary.DTO;
-using ExtraAssetsLibrary;
 using ExtraAssetsLibrary.Handlers;
 using ExtraAssetsLibrary.Patches;
-using ExtraAssetsLibrary.Patches.Projectile;
 using HarmonyLib;
 using LordAshes;
-using RadialUI;
 using UnityEngine;
 
 namespace ExtraAssetsLibrary
@@ -29,7 +26,6 @@ namespace ExtraAssetsLibrary
 
     [BepInPlugin(Guid, Name, Version)]
     [BepInDependency(FileAccessPlugin.Guid)]
-    [BepInDependency(RadialUIPlugin.Guid)]
     public class ExtraAssetPlugin : BaseUnityPlugin
     {
         // constants
@@ -68,6 +64,8 @@ namespace ExtraAssetsLibrary
 
         private void Awake()
         {
+            Debug.Log("AQN:"+typeof(PlaceableManager.IPlaceableLoadSubscriber).AssemblyQualifiedName);
+
             DoConfig(Config);
             if (LogLevel.Value > ExtraAssetsLibrary.LogLevel.None) Debug.Log($"Extra Asset Library Plugin:{Name} is Active.");
             UI_AssetBrowserSetupAssetIndexPatch.initStatic();
@@ -78,44 +76,7 @@ namespace ExtraAssetsLibrary
         internal static bool ClothBaseLoaded;
         internal static bool Reloaded;
 
-        private void Update()
-        {
-            if (OnBoard())
-            {
-                if(!ClothBaseLoaded) AssertClothBaseLoaded();
-                else if (!Reloaded)
-                {
-                    var _info = BoardSessionManager.CurrentBoardInfo;
-                    CampaignSessionManager.LoadBoard(_info);
-                    Reloaded = true;
-                }
-            }
-        }
-
-        private void AssertClothBaseLoaded()
-        {
-            var command = $"talespire://asset/32fbdb43-e809-4eea-a834-5d120886bd81";
-            System.Diagnostics.Process.Start(command).WaitForExit();
-            SingletonBehaviour<BoardToolManager>.Instance.SwitchToTool<BoardTool>();
-            BaseHelper.DefaultBase();
-        }
-
-        private bool OnBoard()
-        {
-            return (CameraController.HasInstance &&
-                    BoardSessionManager.HasInstance &&
-                    BoardSessionManager.HasBoardAndIsInNominalState &&
-                    !BoardSessionManager.IsLoading);
-        }
-
-        /// <summary>
-        ///     This method should be run on awake by your plugin.
-        /// </summary>
-        /// <param name="audio">Description of your audio you are injecting.</param>
-        private static void AddAudio(Audio audio)
-        {
-        }
-
+        
         public static void AddOnCatagoryChange(string Guid, Action<CustomEntryKind> Callback)
         {
             if (!OnCatagoryChange.ContainsKey(Guid)) OnCatagoryChange.Add(Guid, Callback);
@@ -134,21 +95,47 @@ namespace ExtraAssetsLibrary
         {
             if (asset.CustomKind == CustomEntryKind.Projectile)
             {
-                RadialUIPlugin.AddCustomButtonAttacksSubmenu(Guid, new MapMenu.ItemArgs
-                    {
-                        Action = ParticleStack.CustomParticle,
-                        Title = asset.Name,
-                        Icon = asset.Icon,
-                        Obj = asset.ModelCallback
-                    }, ParticleStack.Check
-                );
                 return;
+            }
+
+            if ((int)asset.Category == 7)
+            {
+                switch (asset.CustomKind)
+                {
+                    case CustomEntryKind.Creature:
+                        asset.Category = Category.Creature;
+                        break;
+                    case CustomEntryKind.Tile:
+                        asset.Category = Category.Tile;
+                        break;
+                    case CustomEntryKind.Projectile:
+                        asset.Category = Category.AuraAndEffects;
+                        break;
+                    case CustomEntryKind.Aura:
+                        asset.Category = Category.AuraAndEffects;
+                        break;
+                    case CustomEntryKind.Effects:
+                        asset.Category = Category.AuraAndEffects;
+                        break;
+                    case CustomEntryKind. Prop:
+                        asset.Category = Category.Prop;
+                        break;
+                    case CustomEntryKind.Audio:
+                        asset.Category = Category.Audio;
+                        break;
+                    case CustomEntryKind.Slab:
+                        asset.Category = Category.Tile;
+                        break;
+                    default:
+                        asset.Category = Category.Creature;
+                        break;
+                }
             }
 
             if (LogLevel.Value >= ExtraAssetsLibrary.LogLevel.Medium) Debug.Log($"Extra Asset Library Plugin:Adding: {asset.Id}");
             if (!UI_AssetBrowserSetupAssetIndexPatch.assets.ContainsKey(asset.Id))
                 UI_AssetBrowserSetupAssetIndexPatch.assets.Add(asset.Id, asset);
-            var group = UI_AssetBrowserSetupAssetIndexPatch.AddGroup(asset.Kind, asset.GroupName);
+            var group = UI_AssetBrowserSetupAssetIndexPatch.AddGroup(asset.Category, asset.GroupName);
             var tags = BlobHandler.ConstructBlobData(asset.tags);
             var entry = new AssetDb.DbEntry(asset.Id, asset.Kind, asset.Name,
                 asset.Description, group, group.Name, asset.groupTagOrder, ref tags, asset.isDeprecated, asset.Icon);
@@ -156,14 +143,12 @@ namespace ExtraAssetsLibrary
             var cd = new CreatureData
             {
                 Id = asset.Id,
-                // ModelAsset = *modelAsset.Value,
                 Tags = tags,
                 DefaultScale = asset.DefaultScale,
                 BaseRadius = asset.DefaultScale
             };
 
-            if (asset.BaseCallback != null) UI_AssetBrowserSetupAssetIndexPatch.Bases.Add(asset.Id, asset.BaseCallback);
-            UI_AssetBrowserSetupAssetIndexPatch.AddEntity(asset.Kind, entry.GroupTagName, entry, cd,
+            UI_AssetBrowserSetupAssetIndexPatch.AddEntity(asset.Category, entry.GroupTagName, entry, cd,
                 asset.ModelCallback);
             if (LogLevel.Value >= ExtraAssetsLibrary.LogLevel.Medium) Debug.Log($"Extra Asset Library Plugin:{asset.Id} Added");
         }
