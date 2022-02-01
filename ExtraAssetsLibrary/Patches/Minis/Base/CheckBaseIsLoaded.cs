@@ -2,7 +2,7 @@
 
 namespace ExtraAssetsLibrary.Patches.Minis.Base
 {
-    internal class Class1: BaseUnityPlugin
+    internal class CheckBaseIsLoaded: BaseUnityPlugin
     {
         public void Awake()
         {

@@ -29,13 +29,9 @@ namespace ExtraAssetsLibrary.DTO
         Tile,
         Creature,
         Prop,
-
-        /// <summary>
-        ///     Planned to extend UI. Currently just setting up infrastructure.
-        /// </summary>
         AuraAndEffects,
+        Slab,
         Audio,
-        Projectile,
     }
 
     public class Asset

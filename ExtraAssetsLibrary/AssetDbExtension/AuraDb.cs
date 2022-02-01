@@ -1,32 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
 
 namespace ExtraAssetsLibrary.AssetDbExtension
 {
     public static class ExtraDb
     {
-        public static List<AssetDb.DbGroup> Zip(List<AssetDb.DbGroup> list1, List<AssetDb.DbGroup> list2)
-        {
-            var actual = new List<AssetDb.DbGroup>();
-            actual.AddRange(list1);
-            foreach (var item in list2)
-                if (actual.Any(a => a.Name == item.Name))
-                {
-                    var group = actual.Single(a => a.Name == item.Name);
-                    @group.Entries.AddRange(item.Entries);
-                    @group.Entries.OrderBy(a => a.Name).ToList();
-                }
-                else
-                {
-                    actual.Add(item);
-                }
-
-            actual = actual.OrderBy(a => a.Name).ToList();
-            return actual;
-        }
-
         public static object call(this object o, string methodName, params object[] args)
         {
             var mi = o.GetType().GetMethod(methodName, BindingFlags.NonPublic | BindingFlags.Instance);

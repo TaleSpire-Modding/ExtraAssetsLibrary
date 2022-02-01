@@ -32,13 +32,11 @@ namespace ExtraAssetsLibrary.Patches
                 _injecting = new[]
                 {
                     new List<AssetDb.DbGroup>(), // Tiles
-                    new List<AssetDb.DbGroup>(), // 
-                    new List<AssetDb.DbGroup>(), // 
-                    new List<AssetDb.DbGroup>(), // Auras
-                    new List<AssetDb.DbGroup>(), // Effects
-                    new List<AssetDb.DbGroup>(), // Slabs
+                    new List<AssetDb.DbGroup>(), // Minis
+                    new List<AssetDb.DbGroup>(), // Props
+                    new List<AssetDb.DbGroup>(), // Auras and Effects
                     new List<AssetDb.DbGroup>(), // Audio
-                    new List<AssetDb.DbGroup>() // Projectiles
+                    new List<AssetDb.DbGroup>(), // Slabs
                 };
         }
 
@@ -62,7 +60,11 @@ namespace ExtraAssetsLibrary.Patches
                 e.Kind == AssetDb.DbEntry.EntryKind.Creature))
             {
                 var cd = t.ToList().Select(e => e.creatures).Single(c => c.Id == en.Id);
-                if (!AssetDbTryGetCreatureDataPatch.newDb.ContainsKey(en.Id)) AssetDbTryGetCreatureDataPatch.newDb.Add(en.Id, BlobHandler.ToView(cd));
+                if (!AssetDbTryGetCreatureDataPatch.newDb.ContainsKey(en.Id))
+                {
+                    
+                    AssetDbTryGetCreatureDataPatch.newDb.Add(en.Id, BlobHandler.ToView(cd));
+                }
             }
 
             foreach (var en in t.ToList().Select(e => e.entity).Where(e =>
@@ -109,9 +111,8 @@ namespace ExtraAssetsLibrary.Patches
 
             var al = all.ToList();
             al.Add(((AssetDb.DbEntry.EntryKind) CustomEntryKind.Aura, _injecting[3]));
-            al.Add(((AssetDb.DbEntry.EntryKind) CustomEntryKind.Effects, _injecting[4]));
-            al.Add(((AssetDb.DbEntry.EntryKind) CustomEntryKind.Slab, _injecting[5]));
-            al.Add(((AssetDb.DbEntry.EntryKind) CustomEntryKind.Audio, _injecting[6]));
+            al.Add(((AssetDb.DbEntry.EntryKind) CustomEntryKind.Slab, _injecting[4]));
+            al.Add(((AssetDb.DbEntry.EntryKind) CustomEntryKind.Audio, _injecting[5]));
             all = al.ToArray();
         }
 

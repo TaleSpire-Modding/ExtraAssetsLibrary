@@ -19,13 +19,13 @@ namespace ExtraAssetsLibrary.Patches.UI
                 switch (index)
                 {
                     case 3:
-                        ____search.SwitchAssetKind((AssetDb.DbEntry.EntryKind) CustomEntryKind.Aura);
+                        ____search.SwitchAssetKind((AssetDb.DbEntry.EntryKind) Category.AuraAndEffects);
                         break;
                     case 4:
-                        ____search.SwitchAssetKind((AssetDb.DbEntry.EntryKind) CustomEntryKind.Slab);
+                        ____search.SwitchAssetKind((AssetDb.DbEntry.EntryKind) Category.Slab);
                         break;
                     case 5:
-                        ____search.SwitchAssetKind((AssetDb.DbEntry.EntryKind) CustomEntryKind.Audio);
+                        ____search.SwitchAssetKind((AssetDb.DbEntry.EntryKind) Category.Audio);
                         break;
                 }
 

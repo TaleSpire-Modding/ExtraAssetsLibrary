@@ -44,23 +44,23 @@ namespace ExtraAssetsLibrary.Patches.UI
             }
             else
             {
-                if (setIndex == 3)
+                var assets = UI_AssetBrowserSetupAssetIndexPatch._injecting[setIndex];
+                var folder = assets[folderIndex];
+                instance.call("BrowseFolder", folder, false);
+                switch (setIndex)
                 {
-                    var aura = UI_AssetBrowserSetupAssetIndexPatch._injecting[3];
-                    var effects = UI_AssetBrowserSetupAssetIndexPatch._injecting[4];
-                    var actual = ExtraDb.Zip(aura, effects);
-                    var folder = actual[folderIndex];
-                    instance.call("BrowseFolder", folder, false);
-                    Parallel.ForEach(ExtraAssetPlugin.OnCatagoryChange, a => { a.Value(CustomEntryKind.Effects); });
-                }
-
-                if (setIndex > 4)
-                {
-                    var assets = UI_AssetBrowserSetupAssetIndexPatch._injecting[setIndex + 1];
-                    var folder = assets[folderIndex];
-                    instance.call("BrowseFolder", folder, false);
-                    Parallel.ForEach(ExtraAssetPlugin.OnCatagoryChange,
-                        a => { a.Value((CustomEntryKind) (setIndex + 1)); });
+                    case 3:
+                        Parallel.ForEach(ExtraAssetPlugin.OnCatagoryChange,
+                            a => { a.Value(Category.AuraAndEffects); });
+                        break;
+                    case 4:
+                        Parallel.ForEach(ExtraAssetPlugin.OnCatagoryChange,
+                            a => { a.Value(Category.Slab); });
+                        break;
+                    case 5:
+                        Parallel.ForEach(ExtraAssetPlugin.OnCatagoryChange,
+                            a => { a.Value(Category.Audio); });
+                        break;
                 }
             }
         }
@@ -78,7 +78,7 @@ namespace ExtraAssetsLibrary.Patches.UI
             setIndex = index;
             instance = __instance;
             _searchFolder = ____searchFolder;
-            if (index > 2)
+            if (6 > index && index > 2)
             {
                 __instance.SetValue("_currentCategory", null);
                 _activeListItems = ____activeListItems;
@@ -93,38 +93,13 @@ namespace ExtraAssetsLibrary.Patches.UI
                 _activeListItems.Clear();
                 Action<UIListItemClickEvents> ListClickCallback = UI_AssetBrowserSetupCategoryPatch.ListClickCallback;
 
-                if (index == 3)
+                var actual = UI_AssetBrowserSetupAssetIndexPatch._injecting[index];
+                for (var index1 = 0; index1 < actual.Count; ++index1)
                 {
-                    var aura = UI_AssetBrowserSetupAssetIndexPatch._injecting[3];
-                    var effects = UI_AssetBrowserSetupAssetIndexPatch._injecting[4];
-                    var actual = ExtraDb.Zip(aura, effects);
-                    for (var index1 = 0; index1 < actual.Count; ++index1)
-                    {
-                        var listItemClickEvents = _listItems.HireItem();
-                        _activeListItems.Add(listItemClickEvents);
-                        listItemClickEvents.SetupClick(index1, ListClickCallback);
-                        listItemClickEvents.SetTitle(actual[index1].Name);
-                    }
-                }
-                else if (index == 4)
-                {
-                    for (var index1 = 0; index1 < UI_AssetBrowserSetupAssetIndexPatch._injecting[5].Count; ++index1)
-                    {
-                        var listItemClickEvents = _listItems.HireItem();
-                        _activeListItems.Add(listItemClickEvents);
-                        listItemClickEvents.SetupClick(index1, ListClickCallback);
-                        listItemClickEvents.SetTitle(UI_AssetBrowserSetupAssetIndexPatch._injecting[5][index1].Name);
-                    }
-                }
-                else if (index == 5)
-                {
-                    for (var index1 = 0; index1 < UI_AssetBrowserSetupAssetIndexPatch._injecting[6].Count; ++index1)
-                    {
-                        var listItemClickEvents = _listItems.HireItem();
-                        _activeListItems.Add(listItemClickEvents);
-                        listItemClickEvents.SetupClick(index1, ListClickCallback);
-                        listItemClickEvents.SetTitle(UI_AssetBrowserSetupAssetIndexPatch._injecting[6][index1].Name);
-                    }
+                    var listItemClickEvents = _listItems.HireItem();
+                    _activeListItems.Add(listItemClickEvents);
+                    listItemClickEvents.SetupClick(index1, ListClickCallback);
+                    listItemClickEvents.SetTitle(actual[index1].Name);
                 }
 
                 ___catagoryList.Arrange();

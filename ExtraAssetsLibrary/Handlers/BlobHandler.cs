@@ -43,7 +43,11 @@ namespace ExtraAssetsLibrary.Handlers
             var nodeArray = builder.Allocate(ref root, 1);
             nodeArray[0] = cdata;
             var blobArray = builder.CreateBlobAssetReference<BlobArray<CreatureData>>(Allocator.Persistent).Value;
-            return blobArray.TakeView(0);
+            var response = blobArray.TakeView(0);
+            response.Value.Name = cdata.Name;
+            response.Value.DefaultScale = cdata.DefaultScale;
+            response.Value.BaseRadius = cdata.BaseRadius;
+            return response;
         }
 
         internal static BlobView<PlaceableData> ToView(PlaceableData cdata)

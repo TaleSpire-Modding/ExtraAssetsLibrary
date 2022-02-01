@@ -12,17 +12,12 @@ namespace ExtraAssetsLibrary.Patches
         public static void Postfix(ref (AssetDb.DbEntry.EntryKind, List<AssetDb.DbGroup>)[] __result)
         {
             var list = __result.ToList();
-            // var aura = UI_AssetBrowserSetupAssetIndexPatch._injecting[3];
-            // var effects = UI_AssetBrowserSetupAssetIndexPatch._injecting[4];
-            // var actual = ExtraDb.Zip(aura, effects);
-            list.Add(((AssetDb.DbEntry.EntryKind) CustomEntryKind.Aura,
+            list.Add(((AssetDb.DbEntry.EntryKind) Category.AuraAndEffects,
                 UI_AssetBrowserSetupAssetIndexPatch._injecting[3]));
-            list.Add(((AssetDb.DbEntry.EntryKind) CustomEntryKind.Effects,
+            list.Add(((AssetDb.DbEntry.EntryKind) Category.Slab,
                 UI_AssetBrowserSetupAssetIndexPatch._injecting[4]));
-            list.Add(((AssetDb.DbEntry.EntryKind) CustomEntryKind.Slab,
+            list.Add(((AssetDb.DbEntry.EntryKind) Category.Audio,
                 UI_AssetBrowserSetupAssetIndexPatch._injecting[5]));
-            list.Add(((AssetDb.DbEntry.EntryKind) CustomEntryKind.Audio,
-                UI_AssetBrowserSetupAssetIndexPatch._injecting[6]));
             __result = list.ToArray();
             if (ExtraAssetPlugin.LogLevel.Value >= LogLevel.High) Debug.Log($"Extra Asset Library Plugin: Added {__result.Length} Catagories");
         }
@@ -33,11 +28,10 @@ namespace ExtraAssetsLibrary.Patches
     {
         public static void Postfix(ref AssetDb.DbEntry.EntryKind kind, ref List<AssetDb.DbGroup> __result)
         {
-            var actualKind = (CustomEntryKind) kind;
-            if (actualKind == CustomEntryKind.Aura) __result = UI_AssetBrowserSetupAssetIndexPatch._injecting[3];
-            if (actualKind == CustomEntryKind.Effects) __result = UI_AssetBrowserSetupAssetIndexPatch._injecting[4];
-            if (actualKind == CustomEntryKind.Slab) __result = UI_AssetBrowserSetupAssetIndexPatch._injecting[5];
-            if (actualKind == CustomEntryKind.Audio) __result = UI_AssetBrowserSetupAssetIndexPatch._injecting[6];
+            var actualKind = (Category) kind;
+            if (actualKind == Category.AuraAndEffects) __result = UI_AssetBrowserSetupAssetIndexPatch._injecting[3];
+            if (actualKind == Category.Slab) __result = UI_AssetBrowserSetupAssetIndexPatch._injecting[4];
+            if (actualKind == Category.Audio) __result = UI_AssetBrowserSetupAssetIndexPatch._injecting[5];
         }
     }
 }

@@ -39,8 +39,8 @@ namespace ExtraAssetsLibrary
         private const BindingFlags bindFlags =
             BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static;
 
-        internal static Dictionary<string, Action<CustomEntryKind>> OnCatagoryChange =
-            new Dictionary<string, Action<CustomEntryKind>>();
+        internal static Dictionary<string, Action<Category>> OnCatagoryChange =
+            new Dictionary<string, Action<Category>>();
 
         /// <summary>
         ///     List of all callbacks being run on an asset being loaded
@@ -77,7 +77,7 @@ namespace ExtraAssetsLibrary
         internal static bool Reloaded;
 
         
-        public static void AddOnCatagoryChange(string Guid, Action<CustomEntryKind> Callback)
+        public static void AddOnCatagoryChange(string Guid, Action<Category> Callback)
         {
             if (!OnCatagoryChange.ContainsKey(Guid)) OnCatagoryChange.Add(Guid, Callback);
         }
@@ -98,7 +98,7 @@ namespace ExtraAssetsLibrary
                 return;
             }
 
-            if ((int)asset.Category == 7)
+            if ((int)asset.Category >= 7)
             {
                 switch (asset.CustomKind)
                 {
@@ -124,7 +124,7 @@ namespace ExtraAssetsLibrary
                         asset.Category = Category.Audio;
                         break;
                     case CustomEntryKind.Slab:
-                        asset.Category = Category.Tile;
+                        asset.Category = Category.Slab;
                         break;
                     default:
                         asset.Category = Category.Creature;

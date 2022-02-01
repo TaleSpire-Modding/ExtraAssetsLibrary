@@ -124,15 +124,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\AppData\Roaming\r2modmanPlus-local\TaleSpire\profiles\Default\BepInEx\plugins\HolloFox_TS-Photon_Universal_Plugin_PUP\PhotonUtil.dll</HintPath>
     </Reference>
-    <Reference Include="RadialUI">
-      <HintPath>..\..\..\..\AppData\Roaming\r2modmanPlus-local\TaleSpire\profiles\CMPDev\BepInEx\plugins\HolloFox_TS-RadialUIPlugin\RadialUI.dll</HintPath>
-    </Reference>
     <Reference Include="ShapesRuntime, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\TaleSpire\TaleSpire_Data\Managed\ShapesRuntime.dll</HintPath>
-    </Reference>
-    <Reference Include="StatMessaging">
-      <HintPath>..\..\..\..\AppData\Roaming\r2modmanPlus-local\TaleSpire\profiles\CMPDev\BepInEx\plugins\LordAshes-StatMessagingPlugin\StatMessaging.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
@@ -446,12 +440,10 @@
     <Compile Include="Handlers\ImageHandler.cs" />
     <Compile Include="Patches\AssetDbp\AssetDbAddIdAsDummyPlaceablePatch.cs" />
     <Compile Include="Patches\AssetDbp\AssetDbGetIndexDataPatch.cs" />
-    <Compile Include="Patches\AssetDbp\OnAssetLoadedPatch.cs" />
     <Compile Include="Patches\Minis\AssetDbTryGetCreatureDataPatch.cs" />
-    <Compile Include="Patches\AssetDbp\AssetDbTryGetTagsByKindPatch.cs" />
     <Compile Include="Patches\AssetLoaderInitPatch.cs" />
     <Compile Include="Patches\AssetLoadManagerInjectGameObjectAsAssetPatch.cs" />
-    <Compile Include="Patches\Minis\Base\Class1.cs" />
+    <Compile Include="Patches\Minis\Base\CheckBaseIsLoaded.cs" />
     <Compile Include="Patches\Minis\CreatureManagerPatchAddOrRequestAddCreature.cs" />
     <Compile Include="Patches\Minis\CreaturePresenterPatch.cs" />
     <Compile Include="Patches\Projectile\VFXMissilePatch.cs" />

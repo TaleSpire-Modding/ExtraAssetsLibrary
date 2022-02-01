@@ -133,7 +133,6 @@ namespace ExtraAssetsLibrary.Patches.Minis
             if (UI_AssetBrowserSetupAssetIndexPatch.assets.ContainsKey(id))
             {
                 var asset = UI_AssetBrowserSetupAssetIndexPatch.assets[id];
-                defaultScale = 1; // asset.DefaultScale;
                 torchPos = asset.torchPos;
                 headPos = asset.headPos;
                 spellPos = asset.spellPos;
