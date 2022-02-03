@@ -37,6 +37,7 @@ namespace ExtraAssetsLibrary.Patches
                     new List<AssetDb.DbGroup>(), // Auras and Effects
                     new List<AssetDb.DbGroup>(), // Audio
                     new List<AssetDb.DbGroup>(), // Slabs
+                    new List<AssetDb.DbGroup>(), // Extra
                 };
         }
 
@@ -56,8 +57,8 @@ namespace ExtraAssetsLibrary.Patches
             group.Entries.AddRange(t.ToList().Select(e => e.entity));
 
             foreach (var en in t.ToList().Select(e => e.entity).Where(e =>
-                !AssetDbTryGetCreatureDataPatch.newDb.ContainsKey(e.Id) &&
-                e.Kind == AssetDb.DbEntry.EntryKind.Creature))
+                !AssetDbTryGetCreatureDataPatch.newDb.ContainsKey(e.Id) &&(
+                e.Kind == AssetDb.DbEntry.EntryKind.Creature || (int)e.Kind > 3)))
             {
                 var cd = t.ToList().Select(e => e.creatures).Single(c => c.Id == en.Id);
                 if (!AssetDbTryGetCreatureDataPatch.newDb.ContainsKey(en.Id))
@@ -110,9 +111,9 @@ namespace ExtraAssetsLibrary.Patches
             }
 
             var al = all.ToList();
-            al.Add(((AssetDb.DbEntry.EntryKind) CustomEntryKind.Aura, _injecting[3]));
-            al.Add(((AssetDb.DbEntry.EntryKind) CustomEntryKind.Slab, _injecting[4]));
-            al.Add(((AssetDb.DbEntry.EntryKind) CustomEntryKind.Audio, _injecting[5]));
+            al.Add(((AssetDb.DbEntry.EntryKind) Category.AuraAndEffects, _injecting[3]));
+            al.Add(((AssetDb.DbEntry.EntryKind) Category.Slab, _injecting[4]));
+            al.Add(((AssetDb.DbEntry.EntryKind) Category.Audio, _injecting[5]));
             all = al.ToArray();
         }
 

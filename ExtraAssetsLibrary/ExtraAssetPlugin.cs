@@ -30,7 +30,7 @@ namespace ExtraAssetsLibrary
     {
         // constants
         public const string Guid = "org.TMC.plugins.ExtraAssetLib";
-        public const string Version = "1.3.0.0";
+        public const string Version = "1.3.1.0";
         private const string Name = "HolloFoxes' Extra Asset Library";
 
         internal static ConfigEntry<bool> AutoClear { get; set; }

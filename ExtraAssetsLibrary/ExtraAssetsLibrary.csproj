@@ -454,7 +454,6 @@
     <Compile Include="Patches\Tiles\PlaceableManagerRegisterPlaceablePatch.cs" />
     <Compile Include="Patches\Tiles\BoardSessionManagerPatch.cs" />
     <Compile Include="Patches\Tiles\TilePreviewBoardAssetInitPatch.cs" />
-    <Compile Include="Patches\UI\UI_AssetBrowserListClickCallbackPatch.cs" />
     <Compile Include="Patches\UI\UI_AssetBrowserSetupCategoryPatch.cs" />
     <Compile Include="Patches\UI\UI_SwitchButtonGroupStartPatch.cs" />
     <Compile Include="Patches\UI\UI_AssetBrowserSetupAssetIndexPatch.cs" />
