@@ -48,7 +48,7 @@ namespace ExtraAssetsLibrary.Patches
                 var asset = UI_AssetBrowserSetupAssetIndexPatch.assets[id];
 
 
-                if (AssetDbTryGetCreatureDataPatch.LoadedBefore != AssetDbTryGetCreatureDataPatch.LastLoaded)
+                if (AssetDbTryGetCreatureDataPatch.LoadedBefore == NGuid.Empty)
                 {
                     stopSpawn = false;
                     if (ExtraAssetPlugin.LogLevel.Value >= LogLevel.High) Debug.Log("Extra Asset Library Plugin:Loading Base");
@@ -74,6 +74,8 @@ namespace ExtraAssetsLibrary.Patches
                             model = new GameObject();
                             stopSpawn = true;
                             CreatureSpawnBoardAssetSpawnPatch.respawn = false;
+                            AssetDbTryGetCreatureDataPatch.LastLoaded = NGuid.Empty;
+                            AssetDbTryGetCreatureDataPatch.LoadedBefore = NGuid.Empty;
                             return false;
                         }
 
@@ -107,7 +109,7 @@ namespace ExtraAssetsLibrary.Patches
                 return false;
             }
 
-            if (TilePreviewBoardAssetInitPatch.LastLoaded != NGuid.Empty)
+            else if (TilePreviewBoardAssetInitPatch.LastLoaded != NGuid.Empty)
             {
                 var id = TilePreviewBoardAssetInitPatch.LastLoaded;
                 var asset = UI_AssetBrowserSetupAssetIndexPatch.assets[id];
