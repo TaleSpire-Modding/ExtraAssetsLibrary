@@ -12,6 +12,13 @@ namespace ExtraAssetsLibrary.AssetDbExtension
             return null;
         }
 
+        public static object call<T>(this object o, string methodName, params object[] args)
+        {
+            var mi = o.GetType().GetMethod(methodName, BindingFlags.NonPublic | BindingFlags.Instance, null,  new []{typeof(T)}, null);
+            if (mi != null) return mi.Invoke(o, args);
+            return null;
+        }
+
         public static void call<T>(string methodName, params object[] args)
         {
             var myClassType = Assembly.GetExecutingAssembly().GetType(typeof(T).Namespace + ".myClass"); 
@@ -23,7 +30,6 @@ namespace ExtraAssetsLibrary.AssetDbExtension
             var mi = typeof(T).GetField(methodName, BindingFlags.NonPublic | BindingFlags.Static);
             return (I) mi?.GetValue(null);
         }
-
 
         public static void SetValue(this object o, string methodName, object value)
         {

@@ -1,7 +1,10 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using ExtraAssetsLibrary.AssetDbExtension;
 using ExtraAssetsLibrary.DTO;
 using HarmonyLib;
@@ -75,6 +78,16 @@ namespace ExtraAssetsLibrary.Patches.UI
         )
         {
             if (ExtraAssetPlugin.LogLevel.Value >= LogLevel.High) Debug.Log(__instance == null);
+
+            var info = typeof(UI_AssetBrowser).GetField("_categoryList", BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.GetField | BindingFlags.Instance);
+            var list = info.GetValue(__instance) as IList;
+            foreach (var e in list as IList)
+            {
+                List<AssetDb.DbGroup> groupList = (List<AssetDb.DbGroup>) e.GetType().GetField("groupList").GetValue(e);
+                groupList.RemoveAll(g => ExtraAssetPlugin.HiddenGroups.Contains(g.Name.ToLower()));
+                e.GetType().GetField("groupList").SetValue(e,groupList);
+            }
+
             setIndex = index;
             instance = __instance;
             _searchFolder = ____searchFolder;
@@ -113,4 +126,5 @@ namespace ExtraAssetsLibrary.Patches.UI
             return true;
         }
     }
+
 }

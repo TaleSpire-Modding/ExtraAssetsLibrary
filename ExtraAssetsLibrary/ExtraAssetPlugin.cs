@@ -10,6 +10,7 @@ using ExtraAssetsLibrary.Handlers;
 using ExtraAssetsLibrary.Patches;
 using HarmonyLib;
 using LordAshes;
+using Newtonsoft.Json;
 using UnityEngine;
 
 namespace ExtraAssetsLibrary
@@ -30,11 +31,18 @@ namespace ExtraAssetsLibrary
     {
         // constants
         public const string Guid = "org.TMC.plugins.ExtraAssetLib";
-        public const string Version = "1.3.2.0";
+        public const string Version = "1.3.3.0";
         private const string Name = "HolloFoxes' Extra Asset Library";
 
         internal static ConfigEntry<bool> AutoClear { get; set; }
         internal static ConfigEntry<LogLevel> LogLevel { get; set; }
+        private static ConfigEntry<string> _hiddenGroups { get; set; }
+
+        public static List<string> HiddenGroups
+        {
+            get => JsonConvert.DeserializeObject<List<string>>(_hiddenGroups.Value);
+            set => _hiddenGroups.Value = JsonConvert.SerializeObject(value);
+        }
 
         private const BindingFlags bindFlags =
             BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static;
@@ -60,6 +68,10 @@ namespace ExtraAssetsLibrary
         {
             AutoClear = Config.Bind("Mini Loading", "Auto Clear Failed Minis", false);
             LogLevel = Config.Bind("Logging", "Level", ExtraAssetsLibrary.LogLevel.Low);
+            _hiddenGroups = Config.Bind("Groups", "Hidden", JsonConvert.SerializeObject(new List<string>
+            {
+                "[variants]"
+            }));
         }
 
         private void Awake()
