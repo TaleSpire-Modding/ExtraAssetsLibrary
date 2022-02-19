@@ -62,8 +62,6 @@ namespace ExtraAssetsLibrary
             harmony.PatchAll();
         }
 
-        
-
         public static void DoConfig(ConfigFile Config)
         {
             AutoClear = Config.Bind("Mini Loading", "Auto Clear Failed Minis", false);
@@ -76,13 +74,10 @@ namespace ExtraAssetsLibrary
 
         private void Awake()
         {
-            Debug.Log("AQN:"+typeof(PlaceableManager.IPlaceableLoadSubscriber).AssemblyQualifiedName);
-
             DoConfig(Config);
             if (LogLevel.Value > ExtraAssetsLibrary.LogLevel.None) Debug.Log($"Extra Asset Library Plugin:{Name} is Active.");
             UI_AssetBrowserSetupAssetIndexPatch.initStatic();
             DoPatching();
-            
         }
 
         internal static bool ClothBaseLoaded;
