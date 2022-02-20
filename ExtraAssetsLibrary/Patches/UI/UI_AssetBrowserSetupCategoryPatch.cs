@@ -81,12 +81,13 @@ namespace ExtraAssetsLibrary.Patches.UI
 
             var info = typeof(UI_AssetBrowser).GetField("_categoryList", BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.GetField | BindingFlags.Instance);
             var list = info.GetValue(__instance) as IList;
-            foreach (var e in list as IList)
+            foreach (var e in list)
             {
                 List<AssetDb.DbGroup> groupList = (List<AssetDb.DbGroup>) e.GetType().GetField("groupList").GetValue(e);
-                groupList.RemoveAll(g => ExtraAssetPlugin.HiddenGroups.Contains(g.Name.ToLower()));
+                groupList.RemoveAll(g => ExtraAssetPlugin.HiddenGroups.Any(h => h.ToLower() == g.Name.ToLower()));
                 e.GetType().GetField("groupList").SetValue(e,groupList);
             }
+            info.SetValue(__instance,list);
 
             setIndex = index;
             instance = __instance;
