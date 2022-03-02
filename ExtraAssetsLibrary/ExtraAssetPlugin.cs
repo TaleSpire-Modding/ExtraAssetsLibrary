@@ -134,7 +134,7 @@ namespace ExtraAssetsLibrary
                         break;
                 }
             }
-
+            /*
             if (LogLevel.Value >= ExtraAssetsLibrary.LogLevel.Medium) Debug.Log($"Extra Asset Library Plugin:Adding: {asset.Id}");
             if (!UI_AssetBrowserSetupAssetIndexPatch.assets.ContainsKey(asset.Id))
                 UI_AssetBrowserSetupAssetIndexPatch.assets.Add(asset.Id, asset);
@@ -150,29 +150,32 @@ namespace ExtraAssetsLibrary
                 DefaultScale = asset.DefaultScale,
                 BaseRadius = asset.DefaultScale
             };
-
-            
-            if (AssetDbOnSetupInternalsPatch.HasInstantiated)
+            */
+            switch (asset.Category)
             {
-                switch (asset.Category)
-                {
-                    case Category.Creature:
-                        AssetDbOnSetupInternalsPatch.InjectCreature(asset);
-                        break;
-                    case Category.Prop:
-                        AssetDbOnSetupInternalsPatch.InjectProps(asset);
-                        break;
-                    case Category.Tile:
-                        AssetDbOnSetupInternalsPatch.InjectTiles(asset);
-                        break;
-                    default:
-                        AssetDbOnSetupInternalsPatch.InjectCreature(asset);
-                        break;
-                }
+                case Category.Creature:
+                    AssetDbOnSetupInternalsPatch.InjectCreature(asset);
+                    break;
+                case Category.Prop:
+                    AssetDbOnSetupInternalsPatch.InjectProps(asset);
+                    break;
+                case Category.Tile:
+                    AssetDbOnSetupInternalsPatch.InjectTiles(asset);
+                    break;
+                case Category.AuraAndEffects:
+                    break;
+                case Category.Slab:
+                    break;
+                case Category.Audio:
+                    break;
+                default:
+                    AssetDbOnSetupInternalsPatch.InjectCreature(asset);
+                    break;
             }
+            
 
 
-            UI_AssetBrowserSetupAssetIndexPatch.AddEntity(asset.Category, entry.GroupTagName, entry, cd, asset.ModelCallback);
+            // UI_AssetBrowserSetupAssetIndexPatch.AddEntity(asset.Category, entry.GroupTagName, entry, cd, asset.ModelCallback);
         }
     }
 }

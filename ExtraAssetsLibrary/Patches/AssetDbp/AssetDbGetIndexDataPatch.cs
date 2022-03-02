@@ -5,7 +5,7 @@ using HarmonyLib;
 
 namespace ExtraAssetsLibrary.Patches
 {
-    [HarmonyPatch(typeof(AssetDb), "GetIndexData")]
+    // [HarmonyPatch(typeof(AssetDb), "GetIndexData")]
     public class AssetDbGetIndexDataPatch
     {
         private static bool Prefix(ref Dictionary<NGuid, AssetDb.DbEntry> ____indexData, NGuid id,

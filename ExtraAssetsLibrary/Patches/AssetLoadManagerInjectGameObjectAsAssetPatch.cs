@@ -25,9 +25,9 @@ namespace ExtraAssetsLibrary.Patches
             InjectAssetNGuid = assetId;
             InjectPackNGuid = packId;
             FullyQualifiedIdReplacer = fullyQualifiedIdReplacer;
+            InjectAssetNGuid = assetId;
+            InjectPackNGuid = packId;
             var o = AssetLoadManager.Instance.InjectGameObjectAsAsset(src, position, rotation, scale);
-            InjectAssetNGuid = NGuid.Empty;
-            InjectPackNGuid = NGuid.Empty;
             FullyQualifiedIdReplacer = "";
             return o;
         }
@@ -45,14 +45,19 @@ namespace ExtraAssetsLibrary.Patches
                     var builder = blobBuilder;
                     ref var local = ref builder.ConstructRoot<AssetLoaderData.Packed>();
                     var nguid = InjectAssetNGuid;
-                    new AssetLoaderData
+                    var data = new AssetLoaderData
                     {
                         path = "_injected_",
                         assetName = nguid.ToString(),
                         position = position,
                         rotation = rotation,
                         scale = scale
-                    }.Pack(builder, InjectPackNGuid, ref local);
+                    };
+                        
+                    data.Pack(builder, InjectPackNGuid, ref local);
+                    // builder.AllocateString(ref local.AssetId, );
+                    
+
                     var blobAssetReference =
                         blobBuilder.CreateBlobAssetReference<AssetLoaderData.Packed>(Allocator.Persistent);
                     ____injectedBlobData.Add(in blobAssetReference);

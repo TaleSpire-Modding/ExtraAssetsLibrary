@@ -40,8 +40,7 @@ namespace ExtraAssetsLibrary.DTO
         ///     Occurs when base is being fetched and called
         /// </summary>
         [CanBeNull] public Func<NGuid, GameObject> BaseCallback;
-
-        public ProjectileProperties ProjectileProperties;
+        
         public float DefaultScale = 1;
         public string Description;
         public string GroupName;

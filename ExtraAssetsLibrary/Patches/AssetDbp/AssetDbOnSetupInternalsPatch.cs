@@ -20,9 +20,9 @@ namespace ExtraAssetsLibrary.Patches
     [HarmonyPatch(typeof(AssetDb), "OnInstanceSetup")]
     internal class AssetDbOnSetupInternalsPatch
     {
-        // instantiate completed
-        internal static bool HasInstantiated;
-        // internal static BlobPtr<AssetLoaderData.Packed> clothBase;
+        internal static bool Instantiated = false;
+        internal static BlobPtr<AssetLoaderData.Packed> clothBase;
+        const BindingFlags flags = BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Static | BindingFlags.Instance;
 
         // Other
         internal static NativeList<BlobAssetReference<AssetPackIndex>> _assetPacksIndicies;
@@ -59,7 +59,8 @@ namespace ExtraAssetsLibrary.Patches
             ref NativeHashMap<NGuid, BlobView<MusicData>> ____music,
             ref CollisionFilter ____explorerTiles,
             ref CollisionFilter ____explorerProps,
-            ref NativeList<BlobAssetReference<PlaceableData>> ____dummyPlaceables 
+            ref NativeList<BlobAssetReference<PlaceableData>> ____dummyPlaceables,
+            ref List<AssetDb.DbGroup> ____creatureGroups
         )
         {
             Debug.Log("Postfix DB Initialization");
@@ -72,33 +73,26 @@ namespace ExtraAssetsLibrary.Patches
             _explorerTiles = ____explorerTiles;
             _explorerProps = ____explorerProps;
             _dummyPlaceables = ____dummyPlaceables;
-
-            //clothBase = _creatures
-            //    .First().Value.Value.BaseAsset;
-
-            foreach (var asset in UI_AssetBrowserSetupAssetIndexPatch.assets)
-            {
-                switch (asset.Value.Category)
-                {
-                    case Category.Creature:
-                        InjectCreature(asset.Value);
-                        break;
-                    case Category.Tile:
-                        InjectTiles(asset.Value);
-                        break;
-                    case Category.Prop:
-                        InjectProps(asset.Value);
-                        break;
-                    default:
-                        InjectCreature(asset.Value);
-                        break;
-                }
-            }
-            HasInstantiated = true;
+            _creatureGroups = ____creatureGroups;
         }
 
         internal static void InjectCreature(Asset asset)
         {
+            if (!Instantiated)
+            {
+                bool first = true;
+                foreach (var creature in _creatures)
+                {
+                    if (first)
+                    {
+                        clothBase = creature.Value.Value.BaseAsset;
+                        first = false;
+                    }
+                }
+
+                Instantiated = true;
+            }
+
             Debug.Log($"Injecting Creature: {asset.Name}");
             var builder = new BlobBuilder(Allocator.Persistent);
             ref var root = ref builder.ConstructRoot <BlobArray<CreatureData>>();
@@ -111,7 +105,7 @@ namespace ExtraAssetsLibrary.Patches
 
             assetArray[0] = new CreatureData
             {
-                // BaseAsset = clothBase,
+                BaseAsset = clothBase,
                 Id = asset.Id,
                 BaseRadius = asset.DefaultScale,
                 DefaultScale = asset.DefaultScale,
@@ -129,16 +123,15 @@ namespace ExtraAssetsLibrary.Patches
             builder.AllocateString(ref assetArray[0].Name,asset.Name + "from Patch");
             builder.AllocateString(ref assetArray[0].Description,asset.Description);
             builder.AllocateString(ref assetArray[0].Group,asset.GroupName);
+            
+            var icons = (Dictionary<NGuid, Sprite>)typeof(AssetDb).GetField("_icons", flags).GetValue(null);
+            icons.Add(asset.Id, asset.Icon);
+            typeof(AssetDb).GetField("_icons", flags).SetValue(null, icons);
 
             var result = builder.CreateBlobAssetReference<BlobArray<CreatureData>>(Allocator.Persistent);
-            var flags = BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Static;
             var creaturesView = result.Value.TakeSubView(0,result.Value.Length);
             var methodInfo = typeof(AssetDb).GetMethod("PopulateCreatureIndex", flags);
             methodInfo.Invoke(null, new object[] {creaturesView});
-            
-            var icons = (Dictionary<NGuid,Sprite>) typeof(AssetDb).GetField("_icons",flags).GetValue(null);
-            icons.Add(asset.Id, asset.Icon);
-            typeof(AssetDb).GetField("_icons", flags).SetValue(null,icons);
         }
 
         internal static void InjectTiles(Asset asset)
@@ -157,7 +150,7 @@ namespace ExtraAssetsLibrary.Patches
             NGuid nguid
             )
         {
-            using (var blobBuilder = new BlobBuilder(Allocator.TempJob))
+            using (var blobBuilder = new BlobBuilder(Allocator.Persistent))
             {
                 var builder = blobBuilder;
                 ref var local = ref builder.ConstructRoot<AssetLoaderData.Packed>();
@@ -169,9 +162,25 @@ namespace ExtraAssetsLibrary.Patches
                     rotation = rotation,
                     scale = scale
                 }.Pack(builder, nguid, ref local);
-                var blobAssetReference = blobBuilder.CreateBlobAssetReference<AssetLoaderData.Packed>(Allocator.Persistent);
-                // AssetLoadManager._injectedBlobData.Add(in blobAssetReference);
-                // AssetLoadManager.Instance._assets.Add(blobAssetReference.Value.GenFullyQualifiedId(), src);
+                var blobAssetReference = builder.CreateBlobAssetReference<AssetLoaderData.Packed>(Allocator.Persistent);
+                var i = 0;
+                Debug.Log(i++);
+                var _injectedBlobData = (NativeList<BlobAssetReference<AssetLoaderData.Packed>>) typeof(AssetLoadManager).GetField("_injectedBlobData", flags).GetValue(null);
+                Debug.Log(i++);
+                _injectedBlobData.Add(in blobAssetReference);
+                
+                
+                
+                Debug.Log(i++);
+                typeof(AssetLoadManager).GetField("_injectedBlobData", flags).SetValue(null, _injectedBlobData);
+                Debug.Log(i++);
+                var _assets = (Dictionary<string, GameObject>)typeof(AssetLoadManager).GetField("_assets", flags).GetValue(AssetLoadManager.Instance);
+                Debug.Log(i++);
+                _assets.Add(blobAssetReference.Value.GenFullyQualifiedId(), src);
+                Debug.Log(i++);
+                typeof(AssetLoadManager).GetField("_assets", flags).SetValue(
+                    AssetLoadManager.Instance, _assets);
+                Debug.Log(i++);
                 return blobAssetReference.TakeView();
             }
         }
