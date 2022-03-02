@@ -31,7 +31,7 @@ namespace ExtraAssetsLibrary
     {
         // constants
         public const string Guid = "org.TMC.plugins.ExtraAssetLib";
-        public const string Version = "1.3.4.0";
+        public const string Version = "2.0.0.0";
         private const string Name = "HolloFoxes' Extra Asset Library";
 
         internal static ConfigEntry<bool> AutoClear { get; set; }
@@ -43,9 +43,6 @@ namespace ExtraAssetsLibrary
             get => JsonConvert.DeserializeObject<List<string>>(_hiddenGroups.Value);
             set => _hiddenGroups.Value = JsonConvert.SerializeObject(value);
         }
-
-        private const BindingFlags bindFlags =
-            BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static;
 
         internal static Dictionary<string, Action<Category>> OnCatagoryChange =
             new Dictionary<string, Action<Category>>();
@@ -81,9 +78,8 @@ namespace ExtraAssetsLibrary
         }
 
         internal static bool ClothBaseLoaded;
-        internal static bool Reloaded;
 
-        
+
         public static void AddOnCatagoryChange(string Guid, Action<Category> Callback)
         {
             if (!OnCatagoryChange.ContainsKey(Guid)) OnCatagoryChange.Add(Guid, Callback);
@@ -155,9 +151,28 @@ namespace ExtraAssetsLibrary
                 BaseRadius = asset.DefaultScale
             };
 
-            UI_AssetBrowserSetupAssetIndexPatch.AddEntity(asset.Category, entry.GroupTagName, entry, cd,
-                asset.ModelCallback);
-            if (LogLevel.Value >= ExtraAssetsLibrary.LogLevel.Medium) Debug.Log($"Extra Asset Library Plugin:{asset.Id} Added");
+            
+            if (AssetDbOnSetupInternalsPatch.HasInstantiated)
+            {
+                switch (asset.Category)
+                {
+                    case Category.Creature:
+                        AssetDbOnSetupInternalsPatch.InjectCreature(asset);
+                        break;
+                    case Category.Prop:
+                        AssetDbOnSetupInternalsPatch.InjectProps(asset);
+                        break;
+                    case Category.Tile:
+                        AssetDbOnSetupInternalsPatch.InjectTiles(asset);
+                        break;
+                    default:
+                        AssetDbOnSetupInternalsPatch.InjectCreature(asset);
+                        break;
+                }
+            }
+
+
+            UI_AssetBrowserSetupAssetIndexPatch.AddEntity(asset.Category, entry.GroupTagName, entry, cd, asset.ModelCallback);
         }
     }
 }

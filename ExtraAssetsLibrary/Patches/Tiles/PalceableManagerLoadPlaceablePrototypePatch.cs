@@ -5,6 +5,15 @@ using UnityEngine;
 namespace ExtraAssetsLibrary.Patches.Tiles
 {
 
+    /*
+    [HarmonyPatch(typeof(PlaceableManager), "LoadPlaceablePrototype")]
+    internal class PlaceableManagerLoadPlaceablePrototypePatch
+    {
+        public static void Prefix(NGuid assetPackId, string assetId, ref GameObject asset)
+        {
+            
+        }
+    }*/
 
     [HarmonyPatch(assembly, "OnAssetLoaded")]
     internal class PalceableManagerLoadPlaceablePrototypePatch

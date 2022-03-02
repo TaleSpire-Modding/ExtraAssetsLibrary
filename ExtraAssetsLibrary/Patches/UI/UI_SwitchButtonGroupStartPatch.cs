@@ -8,7 +8,7 @@ using UnityEngine.UI;
 
 namespace ExtraAssetsLibrary.Patches.UI
 {
-    [HarmonyPatch(typeof(UI_AssetBrowser), "SwitchCatagory")]
+    // [HarmonyPatch(typeof(UI_AssetBrowser), "SwitchCatagory")]
     internal class UI_AssetBrowserSwitchCatagoryPatch
     {
         public static bool Prefix(ref int index, ref UI_AssetBrowser __instance, AssetBrowserSearch ____search)
@@ -36,7 +36,7 @@ namespace ExtraAssetsLibrary.Patches.UI
         }
     }
 
-    [HarmonyPatch(typeof(UI_SwitchButtonGroup), "Start")]
+    // [HarmonyPatch(typeof(UI_SwitchButtonGroup), "Start")]
     internal class UI_SwitchButtonGroupStartPatch
     {
         private static readonly List<Button> addedButtons = new List<Button>();

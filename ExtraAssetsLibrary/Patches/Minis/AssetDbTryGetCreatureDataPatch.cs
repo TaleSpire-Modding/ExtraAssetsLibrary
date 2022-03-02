@@ -6,7 +6,7 @@ using HarmonyLib;
 
 namespace ExtraAssetsLibrary.Patches
 {
-    [HarmonyPatch(typeof(AssetDb), "TryGetCreatureData")]
+    // [HarmonyPatch(typeof(AssetDb), "TryGetCreatureData")]
     public class AssetDbTryGetCreatureDataPatch
     {
         public static NGuid LastLoaded;

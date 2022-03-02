@@ -12,7 +12,7 @@ using UnityEngine;
 
 namespace ExtraAssetsLibrary.Patches.UI
 {
-    [HarmonyPatch(typeof(UI_AssetBrowser), "SetupCategory")]
+    // [HarmonyPatch(typeof(UI_AssetBrowser), "SetupCategory")]
     internal class UI_AssetBrowserSetupCategoryPatch
     {
         private static UI_AssetBrowser instance;

@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace ExtraAssetsLibrary.Patches.Minis
 {
-    [HarmonyPatch(typeof(CreaturePresenter), "Present")]
+    // [HarmonyPatch(typeof(CreaturePresenter), "Present")]
     public class CreaturePresenterPatch
     {
         private static Dictionary<CreatureGuid,UniqueCreatureGuid> cg =

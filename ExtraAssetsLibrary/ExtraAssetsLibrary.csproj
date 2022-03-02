@@ -431,28 +431,23 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AssetDbExtension\AuraDb.cs" />
-    <Compile Include="DTO\Audio.cs" />
     <Compile Include="DTO\Asset.cs" />
-    <Compile Include="DTO\ProjectileProperties.cs" />
     <Compile Include="DTO\TileProperties.cs" />
     <Compile Include="Handlers\BaseHelper.cs" />
     <Compile Include="Handlers\BlobHandler.cs" />
-    <Compile Include="Handlers\ImageHandler.cs" />
     <Compile Include="Patches\AssetDbp\AssetDbAddIdAsDummyPlaceablePatch.cs" />
+    <Compile Include="Patches\AssetDbp\AssetDbOnSetupInternalsPatch.cs" />
     <Compile Include="Patches\AssetDbp\AssetDbGetIndexDataPatch.cs" />
     <Compile Include="Patches\Minis\AssetDbTryGetCreatureDataPatch.cs" />
     <Compile Include="Patches\AssetLoaderInitPatch.cs" />
     <Compile Include="Patches\AssetLoadManagerInjectGameObjectAsAssetPatch.cs" />
-    <Compile Include="Patches\Minis\Base\CheckBaseIsLoaded.cs" />
     <Compile Include="Patches\Minis\CreatureManagerPatchAddOrRequestAddCreature.cs" />
     <Compile Include="Patches\Minis\CreaturePresenterPatch.cs" />
     <Compile Include="Patches\Projectile\VFXMissilePatch.cs" />
-    <Compile Include="Patches\Tiles\BoardApplyOpAddAssetPatch.cs" />
     <Compile Include="Patches\Minis\CreaturePreviewBoardAssetSpawnPatch.cs" />
     <Compile Include="Patches\Minis\UI_AssetBrowserSlotItemSpawnCreaturePatch.cs" />
     <Compile Include="Patches\Tiles\PalceableManagerLoadPlaceablePrototypePatch.cs" />
     <Compile Include="Patches\Tiles\PlaceableManagerRegisterPlaceablePatch.cs" />
-    <Compile Include="Patches\Tiles\BoardSessionManagerPatch.cs" />
     <Compile Include="Patches\Tiles\TilePreviewBoardAssetInitPatch.cs" />
     <Compile Include="Patches\UI\UI_AssetBrowserSetupCategoryPatch.cs" />
     <Compile Include="Patches\UI\UI_SwitchButtonGroupStartPatch.cs" />

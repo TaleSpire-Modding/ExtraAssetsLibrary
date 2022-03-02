@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace ExtraAssetsLibrary.Patches
 {
-    [HarmonyPatch(typeof(PlaceableManager), "RegisterPlaceable")]
+    // [HarmonyPatch(typeof(PlaceableManager), "RegisterPlaceable")]
     internal class PlaceableManagerRegisterPlaceablePatch
     {
         public static bool Prefix(NGuid placeableId, ref NativeHashMap<NGuid, PlaceableLoadState> ____placeableInfoMap)
@@ -22,7 +22,7 @@ namespace ExtraAssetsLibrary.Patches
         }
     }
 
-    [HarmonyPatch(typeof(PlaceableManager), "ProcessAssetForPlaceable")]
+    // [HarmonyPatch(typeof(PlaceableManager), "ProcessAssetForPlaceable")]
     internal class PlaceableManagerProcessAssetForPlaceablePatch
     {
         public static bool Prefix(NGuid assetPackId, string fullyQualifiedAssetId, ref GameObject asset)

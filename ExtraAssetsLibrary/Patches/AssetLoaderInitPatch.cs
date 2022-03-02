@@ -8,7 +8,8 @@ using UnityEngine;
 
 namespace ExtraAssetsLibrary.Patches
 {
-    [HarmonyPatch(typeof(AssetLoader), "Init")]
+    
+    // [HarmonyPatch(typeof(AssetLoader), "Init")]
     public class AssetLoaderInitPatch
     {
         private static readonly DictionaryList<NGuid, BlobView<AssetLoaderData.Packed>> blobs =

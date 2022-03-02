@@ -10,7 +10,7 @@ using UnityEngine;
 
 namespace ExtraAssetsLibrary.Patches
 {
-    [HarmonyPatch(typeof(UI_AssetBrowser), "SetupAssetIndex")]
+    // [HarmonyPatch(typeof(UI_AssetBrowser), "SetupAssetIndex")]
     public class UI_AssetBrowserSetupAssetIndexPatch
     {
         internal static List<AssetDb.DbGroup>[] _injecting;

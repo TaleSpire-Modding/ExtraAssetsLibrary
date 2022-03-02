@@ -7,7 +7,7 @@ using Unity.Entities;
 
 namespace ExtraAssetsLibrary.Patches
 {
-    [HarmonyPatch(typeof(AssetDb), "AddIdAsDummyPlaceable")]
+    // [HarmonyPatch(typeof(AssetDb), "AddIdAsDummyPlaceable")]
     internal class AssetDbAddIdAsDummyPlaceablePatch
     {
         private static bool Prefix(NGuid id, PlaceableKind kind, ref BlobAssetReference<PlaceableData> __result

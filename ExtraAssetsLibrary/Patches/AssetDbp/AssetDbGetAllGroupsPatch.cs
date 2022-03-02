@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace ExtraAssetsLibrary.Patches
 {
-    [HarmonyPatch(typeof(AssetDb), "GetAllGroups")]
+    // [HarmonyPatch(typeof(AssetDb), "GetAllGroups")]
     internal class AssetDbGetAllGroupsPatch
     {
         public static void Postfix(ref (AssetDb.DbEntry.EntryKind, List<AssetDb.DbGroup>)[] __result)
@@ -23,7 +23,7 @@ namespace ExtraAssetsLibrary.Patches
         }
     }
 
-    [HarmonyPatch(typeof(AssetDb), "GetGroupsByKind")]
+    // [HarmonyPatch(typeof(AssetDb), "GetGroupsByKind")]
     internal class AssetDbGetGroupsByKindPatch
     {
         public static void Postfix(ref AssetDb.DbEntry.EntryKind kind, ref List<AssetDb.DbGroup> __result)

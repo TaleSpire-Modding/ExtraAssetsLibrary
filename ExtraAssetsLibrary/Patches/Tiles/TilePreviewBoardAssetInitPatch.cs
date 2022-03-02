@@ -21,6 +21,12 @@ namespace ExtraAssetsLibrary.Patches
         {
             if (newDb.Contains(boardAssetId))
             {
+                var a = UI_AssetBrowserSetupAssetIndexPatch.assets[boardAssetId];
+
+                var x = a.TileProperties.Width ;
+                var y = a.TileProperties.Height ;
+                var z = a.TileProperties.Depth ;
+
                 if (!AssetDb.Placeables.ContainsKey(boardAssetId))
                 {
                     AssetDb.AddIdAsDummyPlaceable(boardAssetId, PlaceableKind.Tile);
@@ -32,7 +38,6 @@ namespace ExtraAssetsLibrary.Patches
                 ___AssetId = boardAssetId;
 
                 ___OrientationOffset = 0;
-                ___ColliderBoundsBound = new Bounds(new Vector3(0.5f, 0.5f, 0.5f), Vector3.one);
                 var length = 1;
                 ____assetLoaders = new AssetLoader[length];
                 for (var index = 0; index < length; ++index)
@@ -42,6 +47,10 @@ namespace ExtraAssetsLibrary.Patches
                 }
 
                 ____assetsStillToLoad = length;
+                ___ColliderBoundsBound = new Bounds(new Vector3(0, y/2, z/2), 
+                    new Vector3(
+                        x,y,z
+                        ));
                 for (var index = 0; index < length; ++index)
                     ____assetLoaders[index].Init(__instance, ____container.transform,
                         new BlobView<AssetLoaderData.Packed>());

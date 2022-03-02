@@ -5,7 +5,7 @@ using UnityEngine;
 namespace ExtraAssetsLibrary.Patches
 {
 
-    [HarmonyPatch(typeof(CreatureSpawnerBoardTool), "SwitchCreatureTool")]
+    // [HarmonyPatch(typeof(CreatureSpawnerBoardTool), "SwitchCreatureTool")]
     public class CreatureSpawnBoardAssetSpawnPatch
     { 
         internal static bool respawn;

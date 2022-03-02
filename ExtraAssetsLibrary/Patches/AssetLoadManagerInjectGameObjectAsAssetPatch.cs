@@ -10,7 +10,7 @@ using UnityEngine;
 
 namespace ExtraAssetsLibrary.Patches
 {
-    [HarmonyPatch(typeof(AssetLoadManager), "InjectGameObjectAsAsset")]
+    // [HarmonyPatch(typeof(AssetLoadManager), "InjectGameObjectAsAsset")]
     public class AssetLoadManagerInjectGameObjectAsAssetPatch
     {
         public static NGuid InjectAssetNGuid;

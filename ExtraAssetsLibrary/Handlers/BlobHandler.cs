@@ -9,14 +9,6 @@ namespace ExtraAssetsLibrary.Handlers
 {
     public static class BlobHandler
     {
-        public static BlobString ConstructBlobString(string input)
-        {
-            if (input == null) input = "";
-            var builder = new BlobBuilder(Allocator.Temp);
-            // builder.AllocateString(input, input.Length);
-            return builder.CreateBlobAssetReference<BlobString>(Allocator.Persistent).Value;
-        }
-
         public static BlobArray<BlobString> ConstructBlobData(string[] tags)
         {
             if (tags == null) tags = new string[0];
@@ -25,7 +17,7 @@ namespace ExtraAssetsLibrary.Handlers
             {
                 ref var root = ref builder.ConstructRoot<BlobArray<BlobString>>();
                 var nodearray = builder.Allocate(ref root, tags.Length);
-                // for (var i = 0; i < tags.Length; i++) nodearray[i] = ConstructBlobString(tags[i]);
+                for (var i = 0; i < tags.Length; i++) builder.AllocateString(ref nodearray[i], tags[i]);
                 return builder.CreateBlobAssetReference<BlobArray<BlobString>>(Allocator.Persistent).Value;
             }
             catch (Exception e)
@@ -49,22 +41,5 @@ namespace ExtraAssetsLibrary.Handlers
             response.Value.BaseRadius = cdata.BaseRadius;
             return response;
         }
-
-        internal static BlobView<PlaceableData> ToView(PlaceableData cdata)
-        {
-            var builder = new BlobBuilder(Allocator.Temp);
-            ref var root = ref builder.ConstructRoot<BlobArray<PlaceableData>>();
-            var nodeArray = builder.Allocate(ref root, 1);
-            nodeArray[0] = cdata;
-            var blobArray = builder.CreateBlobAssetReference<BlobArray<PlaceableData>>(Allocator.Persistent).Value;
-            return blobArray.TakeView(0);
-        }
-
-        /*public static BlobPtr<AssetLoaderData.Packed> ConstructBlobPtr(AssetLoaderData.Packed pack)
-        {
-            BlobPtr<AssetLoaderData.Packed> o;
-
-            return o;
-        }*/
     }
 }
