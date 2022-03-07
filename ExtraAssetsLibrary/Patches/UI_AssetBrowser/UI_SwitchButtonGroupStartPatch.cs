@@ -1,17 +1,17 @@
 ﻿using System.Collections.Generic;
-using ExtraAssetsLibrary.AssetDbExtension;
 using ExtraAssetsLibrary.DTO;
+using ExtraAssetsLibrary.ReflecExt;
 using HarmonyLib;
 using LordAshes;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace ExtraAssetsLibrary.Patches.UI
+namespace ExtraAssetsLibrary.Patches.UI_AssetBrowser
 {
-    // [HarmonyPatch(typeof(UI_AssetBrowser), "SwitchCatagory")]
+    [HarmonyPatch(typeof(global::UI_AssetBrowser), "SwitchCatagory")]
     internal class UI_AssetBrowserSwitchCatagoryPatch
     {
-        public static bool Prefix(ref int index, ref UI_AssetBrowser __instance, AssetBrowserSearch ____search)
+        public static bool Prefix(ref int index, ref global::UI_AssetBrowser __instance, AssetBrowserSearch ____search)
         {
             if (index > 2)
             {
@@ -28,7 +28,6 @@ namespace ExtraAssetsLibrary.Patches.UI
                         ____search.SwitchAssetKind((AssetDb.DbEntry.EntryKind) Category.Audio);
                         break;
                 }
-
                 return false;
             }
 
@@ -36,7 +35,7 @@ namespace ExtraAssetsLibrary.Patches.UI
         }
     }
 
-    // [HarmonyPatch(typeof(UI_SwitchButtonGroup), "Start")]
+    [HarmonyPatch(typeof(UI_SwitchButtonGroup), "Start")]
     internal class UI_SwitchButtonGroupStartPatch
     {
         private static readonly List<Button> addedButtons = new List<Button>();
@@ -69,8 +68,6 @@ namespace ExtraAssetsLibrary.Patches.UI
         public static void Prefix(UI_SwitchButtonGroup __instance,
             ref List<Button> ____buttons)
         {
-            if (ExtraAssetPlugin.LogLevel.Value >= LogLevel.High) Debug.Log($"UI_SwitchButtonGroup Count:{____buttons.Count}");
-            if (ExtraAssetPlugin.LogLevel.Value >= LogLevel.High) Debug.Log($"UI_SwitchButtonGroup Name:{__instance.gameObject.name}");
             if (__instance.gameObject.name == "Catagory")
             {
                 var template = ____buttons[0];

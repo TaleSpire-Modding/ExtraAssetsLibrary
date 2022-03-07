@@ -1,12 +1,9 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
 using Bounce.BlobAssets;
 using Bounce.TaleSpire.AssetManagement;
 using Bounce.Unmanaged;
-using ExtraAssetsLibrary.DTO;
 using HarmonyLib;
-using Newtonsoft.Json;
 using Unity.Collections;
 using Unity.Entities;
 using Unity.Mathematics;
@@ -92,13 +89,12 @@ namespace ExtraAssetsLibrary.Patches
 
                 Instantiated = true;
             }
-
-            Debug.Log($"Injecting Creature: {asset.Name}");
+            if (ExtraAssetPlugin.LogLevel.Value == LogLevel.All) Debug.Log($"Injecting Creature: {asset.Name}");
             var builder = new BlobBuilder(Allocator.Persistent);
             ref var root = ref builder.ConstructRoot <BlobArray<CreatureData>>();
             var assetArray = builder.Allocate(ref root,1);
             BlobView<AssetLoaderData.Packed> packed =
-                InjectGameObjectAsAsset(null, float3.zero, quaternion.identity, float3.zero, NGuid.Empty);
+                InjectGameObjectAsAsset(asset.ModelCallback(asset.Id), float3.zero, quaternion.identity, float3.zero, asset.Id);
             var builder2 = new BlobBuilder(Allocator.Persistent);
             ref var modelAsset = ref builder2.ConstructRoot<BlobPtr<AssetLoaderData.Packed>>();
             modelAsset.Value = packed.Value;
@@ -150,39 +146,35 @@ namespace ExtraAssetsLibrary.Patches
             NGuid nguid
             )
         {
-            using (var blobBuilder = new BlobBuilder(Allocator.Persistent))
+            var builder = new BlobBuilder(Allocator.Persistent);
+            ref var local = ref builder.ConstructRoot<AssetLoaderData.Packed>();
+            new AssetLoaderData
             {
-                var builder = blobBuilder;
-                ref var local = ref builder.ConstructRoot<AssetLoaderData.Packed>();
-                new AssetLoaderData
-                {
-                    path = "_injected_",
-                    assetName = nguid.ToString(),
-                    position = position,
-                    rotation = rotation,
-                    scale = scale
-                }.Pack(builder, nguid, ref local);
-                var blobAssetReference = builder.CreateBlobAssetReference<AssetLoaderData.Packed>(Allocator.Persistent);
-                var i = 0;
-                Debug.Log(i++);
-                var _injectedBlobData = (NativeList<BlobAssetReference<AssetLoaderData.Packed>>) typeof(AssetLoadManager).GetField("_injectedBlobData", flags).GetValue(null);
-                Debug.Log(i++);
-                _injectedBlobData.Add(in blobAssetReference);
-                
-                
-                
-                Debug.Log(i++);
-                typeof(AssetLoadManager).GetField("_injectedBlobData", flags).SetValue(null, _injectedBlobData);
-                Debug.Log(i++);
-                var _assets = (Dictionary<string, GameObject>)typeof(AssetLoadManager).GetField("_assets", flags).GetValue(AssetLoadManager.Instance);
-                Debug.Log(i++);
-                _assets.Add(blobAssetReference.Value.GenFullyQualifiedId(), src);
-                Debug.Log(i++);
-                typeof(AssetLoadManager).GetField("_assets", flags).SetValue(
-                    AssetLoadManager.Instance, _assets);
-                Debug.Log(i++);
-                return blobAssetReference.TakeView();
-            }
+                path = "_injected_",
+                assetName = nguid.ToString(),
+                position = position,
+                rotation = rotation,
+                scale = scale
+            }.Pack(builder, nguid, ref local);
+            var blobAssetReference = builder.CreateBlobAssetReference<AssetLoaderData.Packed>(Allocator.Persistent);
+            var i = 0;
+            Debug.Log(i++);
+            var _injectedBlobData = (NativeList<BlobAssetReference<AssetLoaderData.Packed>>) typeof(AssetLoadManager).GetField("_injectedBlobData", flags).GetValue(null);
+            Debug.Log(i++);
+            _injectedBlobData.Add(in blobAssetReference);
+
+            Debug.Log(i++);
+            typeof(AssetLoadManager).GetField("_injectedBlobData", flags).SetValue(null, _injectedBlobData);
+            Debug.Log(i++);
+            var _assets = (Dictionary<string, GameObject>)typeof(AssetLoadManager).GetField("_assets", flags).GetValue(AssetLoadManager.Instance);
+            Debug.Log(i++);
+            _assets.Add(blobAssetReference.Value.GenFullyQualifiedId(), src);
+            Debug.Log(i++);
+            typeof(AssetLoadManager).GetField("_assets", flags).SetValue(
+                AssetLoadManager.Instance, _assets);
+            Debug.Log(i++);
+            return blobAssetReference.TakeView();
+            
         }
 
     }

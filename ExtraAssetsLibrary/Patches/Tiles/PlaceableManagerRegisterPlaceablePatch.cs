@@ -27,9 +27,9 @@ namespace ExtraAssetsLibrary.Patches
     {
         public static bool Prefix(NGuid assetPackId, string fullyQualifiedAssetId, ref GameObject asset)
         {
-            if (UI_AssetBrowserSetupAssetIndexPatch.assets.ContainsKey(assetPackId))
+            if (ExtraAssetPlugin.RegisteredAssets.ContainsKey(assetPackId))
             {
-                asset = UI_AssetBrowserSetupAssetIndexPatch.assets[assetPackId].ModelCallback(assetPackId);
+                asset = ExtraAssetPlugin.RegisteredAssets[assetPackId].ModelCallback(assetPackId);
             }
             return true;
         }

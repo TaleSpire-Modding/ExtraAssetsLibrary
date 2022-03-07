@@ -18,9 +18,9 @@ namespace ExtraAssetsLibrary.Patches
 
         private static void Postfix(CreatureDataV2 info, ref CreaturePreviewBoardAsset ____pickupObject)
         {
-            if (UI_AssetBrowserSetupAssetIndexPatch.assets.ContainsKey(____pickupObject.DbEntry.Id))
+            if (ExtraAssetPlugin.RegisteredAssets.ContainsKey(____pickupObject.DbEntry.Id))
             {
-                var asset = UI_AssetBrowserSetupAssetIndexPatch.assets[____pickupObject.DbEntry.Id];
+                var asset = ExtraAssetPlugin.RegisteredAssets[____pickupObject.DbEntry.Id];
                 ____pickupObject.Scale = asset.DefaultScale;
             }
         }

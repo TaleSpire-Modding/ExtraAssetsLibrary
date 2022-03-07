@@ -430,7 +430,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AssetDbExtension\AuraDb.cs" />
+    <Compile Include="ReflecExt\SysReflec.cs" />
     <Compile Include="DTO\Asset.cs" />
     <Compile Include="DTO\TileProperties.cs" />
     <Compile Include="Handlers\BaseHelper.cs" />
@@ -445,13 +445,13 @@
     <Compile Include="Patches\Minis\CreaturePresenterPatch.cs" />
     <Compile Include="Patches\Projectile\VFXMissilePatch.cs" />
     <Compile Include="Patches\Minis\CreaturePreviewBoardAssetSpawnPatch.cs" />
-    <Compile Include="Patches\Minis\UI_AssetBrowserSlotItemSpawnCreaturePatch.cs" />
-    <Compile Include="Patches\Tiles\PalceableManagerLoadPlaceablePrototypePatch.cs" />
+    <Compile Include="Patches\UI_AssetBrowser\UI_AssetBrowserSlotItemSpawnCreaturePatch.cs" />
+    <Compile Include="Patches\Tiles\PlaceableManagerLoadPlaceablePrototypePatch.cs" />
     <Compile Include="Patches\Tiles\PlaceableManagerRegisterPlaceablePatch.cs" />
     <Compile Include="Patches\Tiles\TilePreviewBoardAssetInitPatch.cs" />
-    <Compile Include="Patches\UI\UI_AssetBrowserSetupCategoryPatch.cs" />
-    <Compile Include="Patches\UI\UI_SwitchButtonGroupStartPatch.cs" />
-    <Compile Include="Patches\UI\UI_AssetBrowserSetupAssetIndexPatch.cs" />
+    <Compile Include="Patches\UI_AssetBrowser\UI_AssetBrowserSetupCategoryPatch.cs" />
+    <Compile Include="Patches\UI_AssetBrowser\UI_SwitchButtonGroupStartPatch.cs" />
+    <Compile Include="Patches\UI_AssetBrowser\UI_AssetBrowserSetupAssetIndexPatch.cs" />
     <Compile Include="ExtraAssetPlugin.cs" />
     <Compile Include="Patches\AssetDbp\AssetDbGetAllGroupsPatch.cs" />
     <Compile Include="Properties\Resources.Designer.cs">

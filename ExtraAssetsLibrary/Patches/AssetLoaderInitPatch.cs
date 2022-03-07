@@ -46,7 +46,7 @@ namespace ExtraAssetsLibrary.Patches
                 if (ExtraAssetPlugin.LogLevel.Value >= LogLevel.High) Debug.Log("Extra Asset Library Plugin:Load Creature");
                 GameObject model;
                 var id = AssetDbTryGetCreatureDataPatch.LastLoaded;
-                var asset = UI_AssetBrowserSetupAssetIndexPatch.assets[id];
+                var asset = ExtraAssetPlugin.RegisteredAssets[id];
 
 
                 if (AssetDbTryGetCreatureDataPatch.LoadedBefore == NGuid.Empty)
@@ -86,7 +86,7 @@ namespace ExtraAssetsLibrary.Patches
                         );
                         blobs.Add(AssetDbTryGetCreatureDataPatch.LastLoaded, blob);
                         data = blob;
-                        model.transform.localScale = model.transform.localScale/ UI_AssetBrowserSetupAssetIndexPatch.assets[AssetDbTryGetCreatureDataPatch.LastLoaded].DefaultScale;
+                        model.transform.localScale = model.transform.localScale/ ExtraAssetPlugin.RegisteredAssets[AssetDbTryGetCreatureDataPatch.LastLoaded].DefaultScale;
                     }
 
                     AssetDbTryGetCreatureDataPatch.LastLoaded = NGuid.Empty;
@@ -113,7 +113,7 @@ namespace ExtraAssetsLibrary.Patches
             else if (TilePreviewBoardAssetInitPatch.LastLoaded != NGuid.Empty)
             {
                 var id = TilePreviewBoardAssetInitPatch.LastLoaded;
-                var asset = UI_AssetBrowserSetupAssetIndexPatch.assets[id];
+                var asset = ExtraAssetPlugin.RegisteredAssets[id];
 
                 if (ExtraAssetPlugin.LogLevel.Value >= LogLevel.High) Debug.Log("Extra Asset Library Plugin:Loading Tile");
                 if (blobs.ContainsKey(TilePreviewBoardAssetInitPatch.LastLoaded))

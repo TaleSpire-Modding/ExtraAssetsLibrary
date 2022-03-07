@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Reflection;
 
-namespace ExtraAssetsLibrary.AssetDbExtension
+namespace ExtraAssetsLibrary.ReflecExt
 {
-    public static class ExtraDb
+    public static class SysReflec
     {
         public static object call(this object o, string methodName, params object[] args)
         {

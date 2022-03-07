@@ -48,7 +48,7 @@ namespace ExtraAssetsLibrary.DTO
         public float3 headPos = new float3(0, 1, 0);
         public float3 hitPos = new float3(-0.03812894f, 0.9740211f, -0.1837122f);
         public Sprite Icon;
-        public Category Category = (DTO.Category) 7;
+        public Category Category = (Category) 7;
 
         public NGuid Id;
         public bool isDeprecated = false;
@@ -91,6 +91,8 @@ namespace ExtraAssetsLibrary.DTO
             get => (CustomEntryKind) (int) Kind;
             set => Kind = (AssetDb.DbEntry.EntryKind) (int) value;
         }
+
+        public string FullyQualifiedId => $"{Id}{Name}{Id}";
 
         /// <summary>
         ///     Generates a static NGuid based on a string.

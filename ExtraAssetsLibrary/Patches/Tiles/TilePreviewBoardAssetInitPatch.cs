@@ -21,7 +21,7 @@ namespace ExtraAssetsLibrary.Patches
         {
             if (newDb.Contains(boardAssetId))
             {
-                var a = UI_AssetBrowserSetupAssetIndexPatch.assets[boardAssetId];
+                var a = ExtraAssetPlugin.RegisteredAssets[boardAssetId];
 
                 var x = a.TileProperties.Width ;
                 var y = a.TileProperties.Height ;

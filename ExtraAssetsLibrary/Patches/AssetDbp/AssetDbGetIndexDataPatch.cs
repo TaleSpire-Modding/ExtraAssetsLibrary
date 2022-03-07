@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Bounce.Unmanaged;
+using ExtraAssetsLibrary.Patches.UI_AssetBrowser;
 using HarmonyLib;
 
 namespace ExtraAssetsLibrary.Patches

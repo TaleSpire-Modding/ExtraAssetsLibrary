@@ -1,11 +1,11 @@
 ﻿using Bounce.Unmanaged;
-using ExtraAssetsLibrary.AssetDbExtension;
 using ExtraAssetsLibrary.DTO;
+using ExtraAssetsLibrary.ReflecExt;
 using HarmonyLib;
 using Unity.Mathematics;
 using UnityEngine;
 
-namespace ExtraAssetsLibrary.Patches.Minis
+namespace ExtraAssetsLibrary.Patches.UI_AssetBrowser
 {
     [HarmonyPatch(typeof(UI_AssetBrowserSlotItem), "Spawn")]
     public class UI_AssetBrowserSlotItemSpawnPatch
@@ -26,7 +26,7 @@ namespace ExtraAssetsLibrary.Patches.Minis
                     if (SlotItemSpawnPatch(____nGuid))
                     {
                         if (ExtraAssetPlugin.LogLevel.Value >= LogLevel.High) Debug.Log("Extra Asset Library Plugin: Aura being called");
-                        //var asset = UI_AssetBrowserSetupAssetIndexPatch.assets[____nGuid];
+                        //var asset = ExtraAssetPlugin.RegisteredAssets[____nGuid];
                         //asset.ModelCallback(____nGuid);
                         __instance.call("SpawnCreature");
                     }
@@ -36,7 +36,7 @@ namespace ExtraAssetsLibrary.Patches.Minis
                     if (SlotItemSpawnPatch(____nGuid))
                     {
                         if (ExtraAssetPlugin.LogLevel.Value >= LogLevel.High) Debug.Log("Extra Asset Library Plugin: Effects being called");
-                        //var asset = UI_AssetBrowserSetupAssetIndexPatch.assets[____nGuid];
+                        //var asset = ExtraAssetPlugin.RegisteredAssets[____nGuid];
                         //asset.ModelCallback(____nGuid);
                         __instance.call("SpawnCreature");
                     }
@@ -46,7 +46,7 @@ namespace ExtraAssetsLibrary.Patches.Minis
                     if (SlotItemSpawnPatch(____nGuid))
                     {
                         if (ExtraAssetPlugin.LogLevel.Value >= LogLevel.High) Debug.Log("Extra Asset Library Plugin: Slab being called");
-                        var asset = UI_AssetBrowserSetupAssetIndexPatch.assets[____nGuid];
+                        var asset = ExtraAssetPlugin.RegisteredAssets[____nGuid];
                         asset.ModelCallback(____nGuid);
                     }
                 }
@@ -55,7 +55,7 @@ namespace ExtraAssetsLibrary.Patches.Minis
                     if (SlotItemSpawnPatch(____nGuid))
                     {
                         if (ExtraAssetPlugin.LogLevel.Value >= LogLevel.High) Debug.Log("Extra Asset Library Plugin: Audio being called");
-                        var asset = UI_AssetBrowserSetupAssetIndexPatch.assets[____nGuid];
+                        var asset = ExtraAssetPlugin.RegisteredAssets[____nGuid];
                         asset.ModelCallback(____nGuid);
                     }
                 }
@@ -66,9 +66,9 @@ namespace ExtraAssetsLibrary.Patches.Minis
 
         internal static bool SlotItemSpawnPatch(NGuid id)
         {
-            if (UI_AssetBrowserSetupAssetIndexPatch.assets.ContainsKey(id))
+            if (ExtraAssetPlugin.RegisteredAssets.ContainsKey(id))
             {
-                var asset = UI_AssetBrowserSetupAssetIndexPatch.assets[id];
+                var asset = ExtraAssetPlugin.RegisteredAssets[id];
                 var canLoad = asset.PreCallback == null || asset.PreCallback(id);
                 if (ExtraAssetPlugin.LogLevel.Value >= LogLevel.High) Debug.Log($"Extra Asset Library Plugin: Pre-callback called and value: {canLoad}");
                 return canLoad;
@@ -130,9 +130,9 @@ namespace ExtraAssetsLibrary.Patches.Minis
             ref float defaultScale)
         {
             var id = creatureData.BoardAssetIds[0];
-            if (UI_AssetBrowserSetupAssetIndexPatch.assets.ContainsKey(id))
+            if (ExtraAssetPlugin.RegisteredAssets.ContainsKey(id))
             {
-                var asset = UI_AssetBrowserSetupAssetIndexPatch.assets[id];
+                var asset = ExtraAssetPlugin.RegisteredAssets[id];
                 torchPos = asset.torchPos;
                 headPos = asset.headPos;
                 spellPos = asset.spellPos;

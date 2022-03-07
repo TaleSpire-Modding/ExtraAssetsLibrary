@@ -1,12 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Reflection;
 using BepInEx;
 using BepInEx.Configuration;
-using Bounce.TaleSpire.AssetManagement;
 using Bounce.Unmanaged;
 using ExtraAssetsLibrary.DTO;
-using ExtraAssetsLibrary.Handlers;
 using ExtraAssetsLibrary.Patches;
 using HarmonyLib;
 using LordAshes;
@@ -37,6 +34,7 @@ namespace ExtraAssetsLibrary
         internal static ConfigEntry<bool> AutoClear { get; set; }
         internal static ConfigEntry<LogLevel> LogLevel { get; set; }
         private static ConfigEntry<string> _hiddenGroups { get; set; }
+        internal static Dictionary<NGuid, Asset> RegisteredAssets { get; set; } = new Dictionary<NGuid, Asset>();
 
         public static List<string> HiddenGroups
         {
@@ -57,6 +55,7 @@ namespace ExtraAssetsLibrary
         {
             var harmony = new Harmony(Guid);
             harmony.PatchAll();
+            if (LogLevel.Value > ExtraAssetsLibrary.LogLevel.None) Debug.Log($"Extra Asset Library Plugin: Patched.");
         }
 
         public static void DoConfig(ConfigFile Config)
@@ -67,14 +66,14 @@ namespace ExtraAssetsLibrary
             {
                 "[variants]"
             }));
+            if (LogLevel.Value > ExtraAssetsLibrary.LogLevel.None) Debug.Log($"Extra Asset Library Plugin: Config Bound.");
         }
 
         private void Awake()
         {
             DoConfig(Config);
-            if (LogLevel.Value > ExtraAssetsLibrary.LogLevel.None) Debug.Log($"Extra Asset Library Plugin:{Name} is Active.");
-            UI_AssetBrowserSetupAssetIndexPatch.initStatic();
             DoPatching();
+            if (LogLevel.Value > ExtraAssetsLibrary.LogLevel.None) Debug.Log($"Extra Asset Library Plugin:{Name} is Active.");
         }
 
         internal static bool ClothBaseLoaded;
@@ -134,23 +133,9 @@ namespace ExtraAssetsLibrary
                         break;
                 }
             }
-            /*
-            if (LogLevel.Value >= ExtraAssetsLibrary.LogLevel.Medium) Debug.Log($"Extra Asset Library Plugin:Adding: {asset.Id}");
-            if (!UI_AssetBrowserSetupAssetIndexPatch.assets.ContainsKey(asset.Id))
-                UI_AssetBrowserSetupAssetIndexPatch.assets.Add(asset.Id, asset);
-            var group = UI_AssetBrowserSetupAssetIndexPatch.AddGroup(asset.Category, asset.GroupName);
-            var tags = BlobHandler.ConstructBlobData(asset.tags);
-            var entry = new AssetDb.DbEntry(asset.Id, asset.Kind, asset.Name,
-                asset.Description, group, group.Name, asset.groupTagOrder, ref tags, asset.isDeprecated, asset.Icon);
 
-            var cd = new CreatureData
-            {
-                Id = asset.Id,
-                Tags = tags,
-                DefaultScale = asset.DefaultScale,
-                BaseRadius = asset.DefaultScale
-            };
-            */
+            RegisteredAssets.Add(asset.Id, asset);
+
             switch (asset.Category)
             {
                 case Category.Creature:
@@ -163,19 +148,19 @@ namespace ExtraAssetsLibrary
                     AssetDbOnSetupInternalsPatch.InjectTiles(asset);
                     break;
                 case Category.AuraAndEffects:
+                    // AssetDbOnSetupInternalsPatch.InjectAura(asset);
                     break;
                 case Category.Slab:
+                    // AssetDbOnSetupInternalsPatch.InjectSlab(asset);
                     break;
                 case Category.Audio:
+                    // AssetDbOnSetupInternalsPatch.InjectAudio(asset);
                     break;
                 default:
                     AssetDbOnSetupInternalsPatch.InjectCreature(asset);
                     break;
             }
-            
-
-
-            // UI_AssetBrowserSetupAssetIndexPatch.AddEntity(asset.Category, entry.GroupTagName, entry, cd, asset.ModelCallback);
+            if (LogLevel.Value == ExtraAssetsLibrary.LogLevel.All) Debug.Log($"Extra Asset Library Plugin: Registered Asset {asset.Name}");
         }
     }
 }

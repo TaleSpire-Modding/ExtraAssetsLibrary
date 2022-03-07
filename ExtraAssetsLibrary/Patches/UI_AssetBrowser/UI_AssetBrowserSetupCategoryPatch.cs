@@ -4,21 +4,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
-using System.Windows.Forms;
-using ExtraAssetsLibrary.AssetDbExtension;
 using ExtraAssetsLibrary.DTO;
+using ExtraAssetsLibrary.ReflecExt;
 using HarmonyLib;
 using UnityEngine;
 
-namespace ExtraAssetsLibrary.Patches.UI
+namespace ExtraAssetsLibrary.Patches.UI_AssetBrowser
 {
-    // [HarmonyPatch(typeof(UI_AssetBrowser), "SetupCategory")]
+    [HarmonyPatch(typeof(global::UI_AssetBrowser), "SetupCategory")]
     internal class UI_AssetBrowserSetupCategoryPatch
     {
-        private static UI_AssetBrowser instance;
+        private static global::UI_AssetBrowser instance;
 
         internal static int setIndex;
-        internal static UI_AssetBrowser searchListItem;
+        internal static global::UI_AssetBrowser searchListItem;
         internal static List<UIListItemClickEvents> _activeListItems;
         internal static AssetDb.DbGroup _searchFolder;
 
@@ -72,14 +71,14 @@ namespace ExtraAssetsLibrary.Patches.UI
             ref List<UIListItemClickEvents> ____activeListItems,
             ref SpawnFactory<UIListItemClickEvents> ____listItems,
             ref UI_List ___catagoryList,
-            UI_AssetBrowser __instance,
+            global::UI_AssetBrowser __instance,
             AssetDb.DbGroup ____searchFolder,
-            ref UI_AssetBrowser ___searchListItem
+            ref global::UI_AssetBrowser ___searchListItem
         )
         {
             if (ExtraAssetPlugin.LogLevel.Value >= LogLevel.High) Debug.Log(__instance == null);
 
-            var info = typeof(UI_AssetBrowser).GetField("_categoryList", BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.GetField | BindingFlags.Instance);
+            var info = typeof(global::UI_AssetBrowser).GetField("_categoryList", BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.GetField | BindingFlags.Instance);
             var list = info.GetValue(__instance) as IList;
             foreach (var e in list)
             {
@@ -107,7 +106,7 @@ namespace ExtraAssetsLibrary.Patches.UI
                 _activeListItems.Clear();
                 Action<UIListItemClickEvents> ListClickCallback = UI_AssetBrowserSetupCategoryPatch.ListClickCallback;
 
-                var actual = UI_AssetBrowserSetupAssetIndexPatch._injecting[index];
+                var actual = UI_AssetBrowserSetupAssetIndexPatch._injecting[index-3];
                 for (var index1 = 0; index1 < actual.Count; ++index1)
                 {
                     var listItemClickEvents = _listItems.HireItem();

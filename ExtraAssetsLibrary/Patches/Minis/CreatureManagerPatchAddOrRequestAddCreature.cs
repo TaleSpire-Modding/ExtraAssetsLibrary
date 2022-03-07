@@ -13,9 +13,9 @@ namespace ExtraAssetsLibrary.Patches
             bool sync,
             bool spawnedByLoad)
         {
-            if (UI_AssetBrowserSetupAssetIndexPatch.assets.ContainsKey(LastLoaded))
+            if (ExtraAssetPlugin.RegisteredAssets.ContainsKey(LastLoaded))
             {
-                var asset = UI_AssetBrowserSetupAssetIndexPatch.assets[LastLoaded];
+                var asset = ExtraAssetPlugin.RegisteredAssets[LastLoaded];
                 asset.PostCallback?.Invoke(LastLoaded, data.CreatureId);
                 LastLoaded = NGuid.Empty;
             }

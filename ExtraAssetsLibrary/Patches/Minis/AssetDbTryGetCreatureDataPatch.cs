@@ -21,7 +21,7 @@ namespace ExtraAssetsLibrary.Patches
             {
                 original = true;
                 data = newDb[id];
-                data.Value.DefaultScale = UI_AssetBrowserSetupAssetIndexPatch.assets[id].DefaultScale;
+                data.Value.DefaultScale = ExtraAssetPlugin.RegisteredAssets[id].DefaultScale;
                 LastLoaded = id;
                 CreatureManagerPatchAddOrRequestAddCreature.LastLoaded = id;
             }
